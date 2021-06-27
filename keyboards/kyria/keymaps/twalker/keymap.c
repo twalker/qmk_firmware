@@ -40,8 +40,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [QWERTY] = LAYOUT(
       KC_TAB,   KC_Q,   KC_W,     KC_E,   KC_R,   KC_T,                                           KC_Y,   KC_U,   KC_I,   KC_O,      KC_P, KC_PIPE,
       KC_ESC, HOME_A, HOME_S,   HOME_D, HOME_F,   KC_G,                                           KC_H, HOME_J, HOME_K, HOME_L, HOME_SCLN, KC_QUOT,
-      KC_NO,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   MO(NUM),  KC_NO, KC_NO, KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
-              KC_NO, KC_NO, MO(SYM), LT(NAV, KC_SPC), KC_BSPC,             KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
+      KC_NO,            KC_Z,   KC_X,      KC_C,   KC_V,   KC_B,   MO(NUM),  KC_NO, KC_NO, KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
+              KC_NO, KC_NO, MO(SYM), MO(NAV),    KC_BSPC,             KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
     ),
 /*
  * Symbols
@@ -108,9 +108,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, SYM, NUM, NAV);
-}
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//     return update_tri_layer_state(state, SYM, NAV, NUM);
+// }
 
 #ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -185,9 +185,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         // Volume control
         if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
             tap_code(KC_VOLD);
+        } else {
+            tap_code(KC_VOLU);
         }
     }
     else if (index == 1) {
