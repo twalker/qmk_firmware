@@ -40,8 +40,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [QWERTY] = LAYOUT(
       KC_TAB,   KC_Q,   KC_W,     KC_E,   KC_R,   KC_T,                                           KC_Y,   KC_U,   KC_I,   KC_O,      KC_P, KC_PIPE,
       KC_ESC, HOME_A, HOME_S,   HOME_D, HOME_F,   KC_G,                                           KC_H, HOME_J, HOME_K, HOME_L, HOME_SCLN, KC_QUOT,
-      KC_NO,            KC_Z,   KC_X,      KC_C,   KC_V,   KC_B,   MO(NUM),  KC_NO, KC_NO, KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
-              KC_NO, KC_NO, MO(SYM), MO(NAV),    KC_BSPC,             KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
+      KC_NO,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B, MO(NUM), KC_NO,             KC_NO, KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
+                                          KC_NO, KC_NO, MO(SYM), MO(NAV), KC_BSPC,  KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
     ),
 /*
  * Symbols
@@ -72,17 +72,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        | LCTL | LALT | LGUI | LSFT |      |                              | LEFT | DOWN |  UP  | RGHT |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        | UNDO | CUT  | COPY | PSTE |      |      |      |  |      |      | <TAB |      |      | TAB> |      |        |
+ * |        | UNDO | CUT  | COPY | PSTE |      |      |      |  |      |      | MS L | MS D | MS U | MS R |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      |      |      |      |      |  | BTN2 | BTN1 |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [NAV] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______, _______,
       _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, _______, _______,
-      _______, KC_UNDO, KC_CUT,  KC_COPY, KC_PSTE, _______, _______, _______, _______, _______, C(KC_TAB), KC_NO, KC_NO, RCS(KC_TAB), _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+      _______, KC_UNDO, KC_CUT,  KC_COPY, KC_PSTE, _______, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
+                                 _______, _______, _______, _______, _______, KC_BTN2, KC_BTN1, _______, _______, _______
     ),
 
     /*
