@@ -43,7 +43,6 @@
 #define PERMISSIVE_HOLD
 
 
-
 // Left-hand home row mods
 #define HOME_A LCTL_T(KC_A)
 #define HOME_S LALT_T(KC_S)
@@ -55,3 +54,20 @@
 #define HOME_K RGUI_T(KC_K)
 #define HOME_L LALT_T(KC_L)
 #define HOME_SCLN RCTL_T(KC_SCLN)
+
+
+// Window management (rectange on macos)
+#define WIN_TL LCA(KC_U)
+#define WIN_TR LCA(KC_I)
+#define WIN_BL LCA(KC_J)
+#define WIN_BR LCA(KC_K)
+
+#define WIN_L LCA(KC_LEFT)
+#define WIN_R LCA(KC_RGHT)
+#define WIN_U LCA(KC_UP)
+#define WIN_D LCA(KC_DOWN)
+
+#define WIN_LG LCA(KC_EQL)
+#define WIN_SM LCA(KC_MINS)
+#define WIN_FUL LCA(KC_ENT)
+#define WIN_PSC SCMD(KC_5)
