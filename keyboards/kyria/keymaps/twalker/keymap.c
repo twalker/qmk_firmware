@@ -75,17 +75,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        | LCTL | LALT | LGUI | LSFT |      |                              | LEFT | DOWN |  UP  | RGHT |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        | UNDO | CUT  | COPY | PSTE |      |      |      |  |      |      | MS L | MS D | MS U | MS R |      |        |
+ * |        | UNDO | CUT  | COPY | PSTE |      |      |      |  |      |      | <TAB |      |      | TAB> |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  | BTN2 | BTN1 |      |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [NAV] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______, _______,
       _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT, _______, _______,
-      _______, KC_UNDO, KC_CUT,  KC_COPY, KC_PSTE, _______, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
-                                 _______, _______, _______, _______, _______, KC_BTN2, KC_BTN1, _______, _______, _______
+      _______, KC_UNDO, KC_CUT,  KC_COPY, KC_PSTE, _______, _______, _______, _______, _______, RCS(KC_TAB), KC_NO, KC_NO, C(KC_TAB), _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     /*
@@ -248,9 +248,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     else if (index == 1) {
         // Page up/Page down
         if (clockwise) {
-            tap_code(KC_PGDN);
-        } else {
+            // tap_code(KC_WH_U);
+            // tap_code(C(KC_TAB));
             tap_code(KC_PGUP);
+        } else {
+            tap_code(KC_PGDN);
         }
     }
     return true;
