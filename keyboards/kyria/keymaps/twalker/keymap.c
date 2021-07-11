@@ -34,7 +34,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |  ESC   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |   Z  |   X  |   C  |   V  |   B  |  Num |      |  |      |      |   N  |   M  | ,  < | . >  | /  ? | Enter  |
+ * |        |   Z  |   X  |   C  |   V  |   B  |  Num |      |  | MS   |      |   N  |   M  | ,  < | . >  | /  ? | Enter  |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      | BSPC |  | DEL  | Space|      |      |      |
  *                        |      |      | Sym  | Nav  | WIN  |  |      | Nav  |      |      |      |
@@ -43,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [QWERTY] = LAYOUT(
       KC_TAB,   KC_Q,   KC_W,     KC_E,   KC_R,   KC_T,                                           KC_Y,   KC_U,   KC_I,   KC_O,      KC_P, KC_BSLS,
       KC_ESC, HOME_A, HOME_S,   HOME_D, HOME_F,   KC_G,                                           KC_H, HOME_J, HOME_K, HOME_L, HOME_SCLN, KC_QUOT,
-      KC_NO,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B, MO(NUM), KC_NO,        MO(MOUSE), KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
+      KC_NO,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B, MO(NUM), KC_NO,      TG(MOUSE), KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
                        KC_NO,  MO(NUM), MO(SYM), MO(NAV), LT(WIN, KC_BSPC),  KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
     ),
 /*
@@ -133,9 +133,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * Mouse
     *
     * ,-------------------------------------------.                              ,-------------------------------------------.
-    * |        |      |      |      |      |      |                              |      |      | MS_U |      |      |        |
+    * |        |      |      |      |      |      |                              | WH_L | WH_D | WH_U | WH_R |      |        |
     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-    * |        | LCTL | LALT | LGUI | LSFT |      |                              | WH_L | MS_L | MS_D | MS_R | WH_R |        |
+    * |        | LCTL | LALT | LGUI | LSFT |      |                              | MS_L | MS_D | MS_U | MS_R |      |        |
     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
     * |        | UNDO | CUT  | COPY | PSTE |      |      |      |  |      |      |      |      |      |      |      |        |
     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -144,8 +144,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *                        `----------------------------------'  `----------------------------------'
     */
     [MOUSE] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     _______, _______, KC_MS_U, _______, _______, _______,
-      _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R, _______,
+      _______, _______, _______, _______, _______, _______,                                     KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
+      _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
       _______, KC_UNDO, KC_CUT,  KC_COPY, KC_PSTE, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, KC_ACL1, KC_ACL2, KC_BTN1, KC_BTN2, _______, _______, _______, _______, _______
     ),
