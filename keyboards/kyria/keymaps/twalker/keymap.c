@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
     * |  ESC   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-    * |        |   Z  |   X  |   C  |   V  |   B  |  Num | Win  |  | MS   |      |   N  |   M  | ,  < | . >  | /  ? | Enter  |
+    * |        |   Z  |   X  |   C  |   V  |   B  |      | Win  |  | MS   |      |   N  |   M  | ,  < | . >  | /  ? | Enter  |
     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
     *                        |      |      |      |      | BSPC |  | DEL  | Space|      |      |      |
     *                        |      | Num  | Sym  | Nav  |      |  |      | Nav  |      |      |      |
@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [QWERTY] = LAYOUT(
       TD(TD_TBCP),   KC_Q,   KC_W,     KC_E,   KC_R,   KC_T,                                           KC_Y,   KC_U,   KC_I,   KC_O,      KC_P, KC_BSLS,
       KC_ESC, HOME_A, HOME_S,   HOME_D, HOME_F,   KC_G,                                           KC_H, HOME_J, HOME_K, HOME_L, HOME_SCLN, KC_QUOT,
-      KC_NO,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B, MO(NUM), MO(WIN),      TG(MOUSE), KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
+      KC_NO,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B, KC_NO, MO(WIN),      TG(MOUSE), KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
                        KC_NO,  MO(NUM), MO(SYM), MO(NAV), KC_BSPC,  KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
     ),
     /*
@@ -124,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * ,-------------------------------------------.                              ,-------------------------------------------.
     * |        |      |      |      |      |      |                              | W TL |      |      |  TR  | W LG |        |
     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-    * |        |      |      |      |      |      |                              | W L  | W D  | W U  | W R  | W FUL| W PSC  |
+    * |        | MUTE | MPRV | MPLY | MNXT |      |                              | W L  | W D  | W U  | W R  | W FUL| W PSC  |
     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
     * |        |      |      |      |      |      |      |      |  |      |      | W BL |      |      | W BR | W SM |        |
     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -134,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
     [WIN] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     WIN_TL, KC_NO, KC_NO, WIN_TR, WIN_LG, KC_NO,
-      _______, _______, _______, _______, _______, _______,                                     WIN_L, WIN_D, WIN_U,  WIN_R, WIN_FUL, WIN_PSC,
+      _______, KC_MUTE, KC_MPRV, KC_MPLY, KC_MNXT, _______,                                     WIN_L, WIN_D, WIN_U,  WIN_R, WIN_FUL, WIN_PSC,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, WIN_BL, KC_NO, KC_NO, WIN_BR, WIN_SM, KC_NO,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
