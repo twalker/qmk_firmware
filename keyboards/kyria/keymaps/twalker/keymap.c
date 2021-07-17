@@ -239,9 +239,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         if (clockwise) {
             // tap_code(KC_WH_U);
             // tap_code(C(KC_TAB));
-            tap_code(KC_PGUP);
+            tap_code16(S(C(KC_TAB)));
+            // tap_code(KC_PGUP);
         } else {
-            tap_code(KC_PGDN);
+            // tap_code(KC_PGDN);
+            tap_code16(C(KC_TAB));
         }
     }
     return true;
