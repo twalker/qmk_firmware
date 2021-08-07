@@ -25,7 +25,7 @@ enum layers {
     MOUSE
 };
 
-// Tab dance
+// Tap dance
 enum {
   TD_TBCP = 0
 };

@@ -4,7 +4,6 @@ RGBLIGHT_ENABLE = no      # Enable keyboard RGB underglow
 MOUSEKEY_ENABLE = yes
 
 # Mirror Oryx tapping settings
-TAPPING_TERM = 175
 IGNORE_MOD_TAP_INTERRUPT = yes
 TAPPING_FORCE_HOLD = no    # Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 PERMISSIVE_HOLD = no
