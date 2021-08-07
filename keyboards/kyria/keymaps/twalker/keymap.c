@@ -25,6 +25,18 @@ enum layers {
     MOUSE
 };
 
+// Tapping term per key
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HOME_F:
+            return TT_SHIFT;
+        case HOME_J:
+            return TT_SHIFT;
+        default:
+            return TAPPING_TERM;
+    }
+};
+
 // Tap dance
 enum {
   TD_TBCP = 0
