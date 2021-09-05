@@ -1,18 +1,3 @@
-/* Copyright 2019 Thomas Baart <thomas@splitkb.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 #include QMK_KEYBOARD_H
 
 enum layers {
@@ -62,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *                        `----------------------------------'  `----------------------------------'
     */
     [QWERTY] = LAYOUT(
-      TD(TD_TBCP),   KC_Q,   KC_W,     KC_E,   KC_R,   KC_T,                                           KC_Y,   KC_U,   KC_I,   KC_O,      KC_P, KC_BSPC,
+      TD(TD_TBCP),   KC_Q,   KC_W,     KC_E,   KC_R,   KC_T,                                      KC_Y,   KC_U,   KC_I,   KC_O,      KC_P, KC_BSPC,
       KC_ESC, HOME_A, HOME_S,   HOME_D, HOME_F,   KC_G,                                           KC_H, HOME_J, HOME_K, HOME_L, HOME_SCLN, KC_QUOT,
       KC_NO,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B, KC_NO, MO(WIN),      MO(MOUSE), KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
                        KC_NO,  MO(NUM), MO(SYM), MO(NAV), KC_BSPC,           KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
@@ -71,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * Symbols
     *
     * ,-------------------------------------------.                              ,-------------------------------------------.
-    * |        |  !   |  @   |  {   |  }   |  |   |                              |  &   |  *   |      |      |      |        |
+    * |        |  !   |  @   |  {   |  }   |  |   |                              |  &   |  *   |  <   |  >   |  ?   |        |
     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
     * |        |  #   |  $   |  (   |  )   |  `   |                              |   -  |  =   |  +   |  _   | ; :  |  ' "   |
     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -82,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *                        `----------------------------------'  `----------------------------------'
     */
     [SYM] = LAYOUT(
-      _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     KC_AMPR, KC_ASTR,  KC_NO,   KC_NO,   KC_NO, _______,
+      _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     KC_AMPR, KC_ASTR,  KC_LT,   KC_GT,   KC_QUES, _______,
       _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_MINS, KC_EQL, KC_PLUS, KC_UNDS, KC_SCLN, KC_QUOT,
       _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_BSLS, KC_NO,  KC_COMM, KC_DOT,  KC_SLSH, _______,
                                  _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______
@@ -165,9 +150,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *                        `----------------------------------'  `----------------------------------'
     */
     [MOUSE] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
+      _______, KC_NO,    KC_NO,  KC_NO,   KC_NO,   _______,                                     KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
       _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
-      _______, OS_UNDO, OS_CUT,  OS_COPY, OS_PSTE, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+      _______, OS_UNDO, OS_CUT,  OS_COPY, OS_PSTE, _______, _______, _______, _______, _______, KC_NO,     KC_NO,   KC_NO,   KC_NO, _______, _______,
                                  _______, KC_ACL1, KC_ACL2, KC_BTN1, KC_BTN2, _______, _______, _______, _______, _______
     ),
 
@@ -238,7 +223,7 @@ void oled_task_user(void) {
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
-        // Volume control
+        // Page up/down
         if (clockwise) {
             tap_code(KC_PGUP);
         } else {
@@ -246,14 +231,10 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     }
     else if (index == 1) {
-        // Page up/Page down
+        //  Tab next/previous
         if (clockwise) {
-            // tap_code(KC_WH_U);
-            // tap_code(C(KC_TAB));
             tap_code16(S(C(KC_TAB)));
-            // tap_code(KC_PGUP);
         } else {
-            // tap_code(KC_PGDN);
             tap_code16(C(KC_TAB));
         }
     }
