@@ -2,6 +2,7 @@
 
 enum layers {
     QWERTY = 0,
+    CDH,
     SYM,
     NAV,
     NUM,
@@ -12,9 +13,13 @@ enum layers {
 // Tapping term per key
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case HOME_F:
+        case QTYHM_F:
             return TT_SHIFT;
-        case HOME_J:
+        case QTYHM_J:
+            return TT_SHIFT;
+        case CDHHM_T:
+            return TT_SHIFT;
+        case CDHHM_N:
             return TT_SHIFT;
         default:
             return TAPPING_TERM;
@@ -40,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
     * |  ESC   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-    * |        |   Z  |   X  |   C  |   V  |   B  |      | WIN  |  | MS   |      |   N  |   M  | ,  < | . >  | /  ? | Enter  |
+    * |        |   Z  |   X  |   C  |   V  |   B  |      | WIN  |  | MS   | CDH  |   N  |   M  | ,  < | . >  | /  ? | Enter  |
     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
     *                        |      |      |      |      |      |  |      | Space|      |      |      |
     *                        |      | Num  | Sym  | Nav  | BSPC |  | DEL  | Nav  |      |      |      |
@@ -48,10 +53,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
     [QWERTY] = LAYOUT(
       TD(TD_TBCP),   KC_Q,   KC_W,     KC_E,   KC_R,   KC_T,                                      KC_Y,   KC_U,   KC_I,   KC_O,      KC_P, KC_BSPC,
-      KC_ESC, HOME_A, HOME_S,   HOME_D, HOME_F,   KC_G,                                           KC_H, HOME_J, HOME_K, HOME_L, HOME_SCLN, KC_QUOT,
-      KC_NO,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B, KC_NO, MO(WIN),      MO(MOUSE), KC_NO, KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
+      KC_ESC, QTYHM_A, QTYHM_S,   QTYHM_D, QTYHM_F,   KC_G,                                       KC_H, QTYHM_J, QTYHM_K, QTYHM_L, QTYHM_SCLN, KC_QUOT,
+      KC_NO,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B, KC_NO, MO(WIN),      MO(MOUSE), TG(CDH), KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
                        KC_NO,  MO(NUM), MO(SYM), MO(NAV), KC_BSPC,           KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
     ),
+
+    /*
+    * COLEMAK DH
+    *
+    * ,-------------------------------------------.                              ,-------------------------------------------.
+    * |        |      |      |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  |   ;  |        |
+    * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+    * |        |      |   R  |   S  |   T  |      |                              |   M  |   N  |   E  |   I  |   O  |        |
+    * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+    * |        |      |      |      |   D  |   V  |      |      |  |      |      |   K  |   H  |      | .    |      |        |
+    * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+    *                        |      |      |      |      |      |  |      |      |      |      |      |
+    *                        |      |      |      |      |      |  |      |      |      |      |      |
+    *                        `----------------------------------'  `----------------------------------'
+    */
+    [CDH] = LAYOUT(
+      _______, _______, _______,    KC_F,    KC_P,    KC_B,                                      KC_J,    KC_L,    KC_U,   KC_Y,  KC_SCLN, _______,
+      _______, _______, CDHHM_R, CDHHM_S, CDHHM_T, _______,                                      KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, _______,
+      _______, _______, _______, _______,    KC_D,    KC_V, _______, _______,  _______, _______, KC_K,    KC_H, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______
+    ),
+
     /*
     * Symbols
     *
@@ -184,6 +211,9 @@ static void render_status(void) {
     switch (get_highest_layer(layer_state)) {
         case QWERTY:
             oled_write_P(PSTR("QWERTY\n"), false);
+            break;
+        case CDH:
+            oled_write_P(PSTR("Colemak DH\n"), false);
             break;
         case SYM:
             oled_write_P(PSTR("Symbols\n"), false);

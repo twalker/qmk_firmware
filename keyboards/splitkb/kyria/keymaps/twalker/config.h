@@ -41,19 +41,30 @@
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
 
+// QWERTY homerow mods
+// Left-hand
+#define QTYHM_A LCTL_T(KC_A)
+#define QTYHM_S LALT_T(KC_S)
+#define QTYHM_D LGUI_T(KC_D)
+#define QTYHM_F LSFT_T(KC_F)
 
-// Left-hand home row mods
-#define HOME_A LCTL_T(KC_A)
-#define HOME_S LALT_T(KC_S)
-#define HOME_D LGUI_T(KC_D)
-#define HOME_F LSFT_T(KC_F)
+// Right-hand
+#define QTYHM_J RSFT_T(KC_J)
+#define QTYHM_K RGUI_T(KC_K)
+#define QTYHM_L LALT_T(KC_L)
+#define QTYHM_SCLN RCTL_T(KC_SCLN)
 
-// Right-hand home row mods
-#define HOME_J RSFT_T(KC_J)
-#define HOME_K RGUI_T(KC_K)
-#define HOME_L LALT_T(KC_L)
-#define HOME_SCLN RCTL_T(KC_SCLN)
-
+// COLEMAK DH homerow mods
+// Left-hand
+#define CDHHM_A LCTL_T(KC_A)
+#define CDHHM_R LALT_T(KC_R)
+#define CDHHM_S LGUI_T(KC_S)
+#define CDHHM_T LSFT_T(KC_T)
+// Right-hand
+#define CDHHM_N RSFT_T(KC_N)
+#define CDHHM_E RGUI_T(KC_E)
+#define CDHHM_I LALT_T(KC_I)
+#define CDHHM_O RCTL_T(KC_O)
 
 // Window management (rectange on macos)
 #define WIN_TL LCA(KC_U)
