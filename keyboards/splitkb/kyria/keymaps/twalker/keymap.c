@@ -1,8 +1,8 @@
 #include QMK_KEYBOARD_H
 
 enum layers {
-    QWERTY = 0,
-    CDH,
+    CDH = 0,
+    QWERTY,
     SYM,
     NAV,
     NUM,
@@ -38,44 +38,44 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 // Keymap array
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
-    * Base Layer: QWERTY
+    * Base Layer: Colemak DH
     *
     * ,-------------------------------------------.                              ,-------------------------------------------.
-    * |  TAB   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  BS    |
+    * |  TAB   |   Q  |   W  |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  | ;  : |  BS    |
     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-    * |  ESC   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
+    * |  ESC   |   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |  O   |  ' "   |
     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-    * |        |   Z  |   X  |   C  |   V  |   B  |      | WIN  |  | MS   | CDH  |   N  |   M  | ,  < | . >  | /  ? | Enter  |
+    * |        |   Z  |   X  |   C  |   D  |   V  |      | WIN  |  | MS   | CDH  |   K  |   H  | ,  < | . >  | /  ? | Enter  |
     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
     *                        |      |      |      |      |      |  |      | Space|      |      |      |
     *                        |      | Num  | Sym  | Nav  | BSPC |  | DEL  | Nav  |      |      |      |
     *                        `----------------------------------'  `----------------------------------'
     */
-    [QWERTY] = LAYOUT(
-      TD(TD_TBCP),   KC_Q,   KC_W,     KC_E,   KC_R,   KC_T,                                      KC_Y,   KC_U,   KC_I,   KC_O,      KC_P, KC_BSPC,
-      KC_ESC, QTYHM_A, QTYHM_S,   QTYHM_D, QTYHM_F,   KC_G,                                       KC_H, QTYHM_J, QTYHM_K, QTYHM_L, QTYHM_SCLN, KC_QUOT,
-      KC_NO,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B, KC_NO, MO(WIN),      MO(MOUSE), TG(CDH), KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
+    [CDH] = LAYOUT(
+      TD(TD_TBCP),  KC_Q,   KC_W,     KC_F,   KC_P,   KC_B,                                       KC_J,   KC_L,   KC_U,   KC_Y,    KC_SCLN, KC_BSPC,
+      KC_ESC, CDHHM_A, CDHHM_R,   CDHHM_S, CDHHM_T,   KC_G,                                       KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
+      KC_NO,    KC_Z,   KC_X,     KC_C,   KC_D,   KC_V, KC_NO, MO(WIN),      MO(MOUSE), TG(QWERTY), KC_K,    KC_H, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
                        KC_NO,  MO(NUM), MO(SYM), MO(NAV), KC_BSPC,           KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
     ),
 
     /*
-    * COLEMAK DH
+    * QWERTY
     *
     * ,-------------------------------------------.                              ,-------------------------------------------.
-    * |        |      |      |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  |   ;  |        |
+    * |        |      |      |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |        |
     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-    * |        |      |   R  |   S  |   T  |      |                              |   M  |   N  |   E  |   I  |   O  |        |
+    * |        |      |   S  |   D  |   F  |      |                              |   H  |   J  |   K  |   L  |   ;  |        |
     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-    * |        |      |      |      |   D  |   V  |      |      |  |      |      |   K  |   H  |      |      |      |        |
+    * |        |      |      |      |   V  |   B  |      |      |  |      |      |   N  |   M  |      |      |      |        |
     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
     *                        |      |      |      |      |      |  |      |      |      |      |      |
     *                        |      |      |      |      |      |  |      |      |      |      |      |
     *                        `----------------------------------'  `----------------------------------'
     */
-    [CDH] = LAYOUT(
-      _______, _______, _______,    KC_F,    KC_P,    KC_B,                                      KC_J,    KC_L,    KC_U,   KC_Y,  KC_SCLN, _______,
-      _______, _______, CDHHM_R, CDHHM_S, CDHHM_T, _______,                                      KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, _______,
-      _______, _______, _______, _______,    KC_D,    KC_V, _______, _______,  _______, _______, KC_K,    KC_H, _______, _______, _______, _______,
+    [QWERTY] = LAYOUT(
+      _______, _______, _______,    KC_E,    KC_R,    KC_T,                                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______,
+      _______, _______, QTYHM_S, QTYHM_D, QTYHM_F, _______,                                      KC_H, QTYHM_J, QTYHM_K, QTYHM_L, QTYHM_SCLN, _______,
+      _______, _______, _______, _______,    KC_V,    KC_B, _______, _______,  _______, _______, KC_N,    KC_M, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______
     ),
 
