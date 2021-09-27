@@ -30,8 +30,50 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define USE_SERIAL_PD2
 
+// Configure the global tapping term (default: 200ms)
+#define TAPPING_TERM 180
+#define TAPPING_TERM_PER_KEY
+#define TT_SHIFT 150
+
+// Prevent normal rollover on alphas from accidentally triggering mods.
+#define IGNORE_MOD_TAP_INTERRUPT
+
+// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 100
+
+// Apply the modifier on keys that are tapped during a short hold of a modtap
+#define PERMISSIVE_HOLD
+
+// QWERTY homerow mods
+// Left-hand
+#define QTYHM_A LCTL_T(KC_A)
+#define QTYHM_S LALT_T(KC_S)
+#define QTYHM_D LGUI_T(KC_D)
+#define QTYHM_F LSFT_T(KC_F)
+
+// Right-hand
+#define QTYHM_J RSFT_T(KC_J)
+#define QTYHM_K RGUI_T(KC_K)
+#define QTYHM_L LALT_T(KC_L)
+#define QTYHM_SCLN RCTL_T(KC_SCLN)
+
+// COLEMAK DH homerow mods
+// Left-hand
+#define CDHHM_A LCTL_T(KC_A)
+#define CDHHM_R LALT_T(KC_R)
+#define CDHHM_S LGUI_T(KC_S)
+#define CDHHM_T LSFT_T(KC_T)
+// Right-hand
+#define CDHHM_N RSFT_T(KC_N)
+#define CDHHM_E RGUI_T(KC_E)
+#define CDHHM_I LALT_T(KC_I)
+#define CDHHM_O RCTL_T(KC_O)
+
+#define OS_COPY LGUI(KC_C)
+#define OS_UNDO LGUI(KC_Z)
+#define OS_PSTE LGUI(KC_V)
+#define OS_CUT LGUI(KC_X)
+
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
