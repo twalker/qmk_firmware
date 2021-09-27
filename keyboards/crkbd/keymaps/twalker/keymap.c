@@ -128,29 +128,37 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   return rotation;
 }
 
-#define L_BASE 0
-#define L_LOWER 2
-#define L_RAISE 4
-#define L_ADJUST 8
+#define L_CDH 0
+#define L_QTY 1
+#define L_SYM 2
+#define L_NAV 3
+#define L_NUM 4
+#define L_ADJ 5
+
 
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
-    switch (layer_state) {
-        case L_BASE:
+    switch (get_highest_layer(layer_state)) {
+        case L_CDH:
             oled_write_ln_P(PSTR("Default"), false);
             break;
-        case L_LOWER:
-            oled_write_ln_P(PSTR("Lower"), false);
+        case L_QTY:
+            oled_write_ln_P(PSTR("QWERTY"), false);
             break;
-        case L_RAISE:
-            oled_write_ln_P(PSTR("Raise"), false);
+        case L_SYM:
+            oled_write_ln_P(PSTR("Symbols"), false);
             break;
-        case L_ADJUST:
-        case L_ADJUST|L_LOWER:
-        case L_ADJUST|L_RAISE:
-        case L_ADJUST|L_LOWER|L_RAISE:
+        case L_NAV:
+            oled_write_ln_P(PSTR("Navigation"), false);
+            break;
+        case L_NUM:
+            oled_write_ln_P(PSTR("Numbers"), false);
+            break;
+        case L_ADJ:
             oled_write_ln_P(PSTR("Adjust"), false);
             break;
+        default:
+            oled_write_P(PSTR("Undefined"), false);
     }
 }
 
