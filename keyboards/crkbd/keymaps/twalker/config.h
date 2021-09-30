@@ -74,6 +74,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OS_PSTE LGUI(KC_V)
 #define OS_CUT LGUI(KC_X)
 
+// Win/Adjust
+#define WIN_TL LCA(KC_U)
+#define WIN_TR LCA(KC_I)
+#define WIN_BL LCA(KC_J)
+#define WIN_BR LCA(KC_K)
+
+#define WIN_L LCA(KC_LEFT)
+#define WIN_R LCA(KC_RGHT)
+#define WIN_U LCA(KC_UP)
+#define WIN_D LCA(KC_DOWN)
+
+#define WIN_LG LCA(KC_EQL)
+#define WIN_SM LCA(KC_MINS)
+#define WIN_FUL LCA(KC_ENT)
+#define WIN_PSC SCMD(KC_5)
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
