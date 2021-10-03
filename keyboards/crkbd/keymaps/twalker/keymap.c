@@ -30,6 +30,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TT_SHIFT;
         case CDHHM_N:
             return TT_SHIFT;
+        case CDHHM_R:
+            return TT_ALT;
+        case CDHHM_I:
+            return TT_ALT;
         default:
             return TAPPING_TERM;
     }
@@ -54,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         TG(1),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            MO(4),   MO(2),  MO(3),     LT(3, KC_SPC), KC_NO, MO(5)
+                                            MO(4),   MO(2),  MO(3),      KC_SPC,   MO(3), MO(5)
                                       //`--------------------------'  `--------------------------'
 
   ),
