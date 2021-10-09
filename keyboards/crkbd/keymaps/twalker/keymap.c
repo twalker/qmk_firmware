@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         TG(1),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            MO(4),   MO(2),  MO(3),      KC_SPC,   MO(3), MO(5)
+                                            MO(4),   MO(2),  LT(3, KC_BSPC),    LT(3, KC_SPC), MO(5), KC_NO
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -144,7 +144,7 @@ void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
         case L_CDH:
-            oled_write_ln_P(PSTR("Default"), false);
+            oled_write_ln_P(PSTR("Colemak-DH"), false);
             break;
         case L_QTY:
             oled_write_ln_P(PSTR("QWERTY"), false);
