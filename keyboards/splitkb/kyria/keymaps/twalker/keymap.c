@@ -21,6 +21,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TT_SHIFT;
         case CDHHM_N:
             return TT_SHIFT;
+        case CDHHM_R:
+            return TT_ALT;
+        case CDHHM_I:
+            return TT_ALT;
         default:
             return TAPPING_TERM;
     }
