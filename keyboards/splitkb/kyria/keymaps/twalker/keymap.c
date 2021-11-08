@@ -255,12 +255,15 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         // Page up/down
         if (clockwise) {
-            tap_code(KC_PGUP);
+            // tap_code(KC_PGUP);
+            // tap_code(KC_UP);
+            tap_code(KC_MS_WH_UP);
         } else {
-            tap_code(KC_PGDN);
+            // tap_code(KC_PGDN);
+            // tap_code(KC_DOWN);
+            tap_code(KC_MS_WH_DOWN);
         }
-    }
-    else if (index == 1) {
+    } else if (index == 1) {
         //  Tab next/previous
         if (clockwise) {
             tap_code16(S(C(KC_TAB)));
