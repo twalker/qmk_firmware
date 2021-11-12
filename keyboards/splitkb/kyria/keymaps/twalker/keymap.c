@@ -148,7 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
     * |        | LCTL | LALT | LGUI | LSFT |      |                              | MS_L | MS_D | MS_U | MS_R |      |        |
     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-    * |        | UNDO | CUT  | COPY | PSTE |      |      |      |  |      |      |      |      |      |      |      |        |
+    * | PLY1   | UNDO | CUT  | COPY | PSTE |      | RSTP | REC1 |  |      |      |      |      |      |      |      |        |
     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
     *                        |      | ACL1 | ACL2 | BTN1 | BTN2 |  |      |      |      |      |      |
     *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -157,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MOUSE] = LAYOUT(
       _______, KC_NO,    KC_NO,  KC_NO,   KC_NO,   _______,                                     KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
       _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
-      _______, OS_UNDO, OS_CUT,  OS_COPY, OS_PSTE, _______, _______, _______, _______, _______, KC_NO,     KC_NO,   KC_NO,   KC_NO, _______, _______,
+      DM_PLY1, OS_UNDO, OS_CUT,  OS_COPY, OS_PSTE, _______, DM_RSTP, DM_REC1, _______, _______, KC_NO,     KC_NO,   KC_NO,   KC_NO, _______, _______,
                                  _______, KC_ACL1, KC_ACL2, KC_BTN1, KC_BTN2, _______, _______, _______, _______, _______
     ),
 
