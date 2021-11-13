@@ -36,32 +36,28 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 // Macros
-enum {
-  MAC_USER = 0,
+enum custom_keycodes {
+  MAC_USER = SAFE_RANGE,
   MAC_EMAIL
 };
 
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-  switch(id) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case MAC_USER:
+            if (record->event.pressed) {
+                SEND_STRING("tiwalker");
+            }
+            break;
 
-    case MAC_USER: {
+        case MAC_EMAIL:
         if (record->event.pressed) {
-            SEND_STRING("tiwalker");
-            return false;
+            SEND_STRING("tiwalker@starbucks.com");
         }
+        break;
     }
 
-    case MAC_EMAIL: {
-      if (record->event.pressed) {
-          SEND_STRING("tiwalker@starbucks.com");
-          return false;
-      }
-    }
-  }
-  return MACRO_NONE;
+    return true;
 };
-
 
 // Keymap array
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -185,8 +181,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     *                        `----------------------------------'  `----------------------------------'
     */
     [MACROS] = LAYOUT(
-      _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, M(MAC_USER), _______, _______, _______,
-      _______, _______, _______, DM_RSTP, _______, _______,                                     _______, _______, M(MAC_EMAIL), _______, _______, _______,
+      _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, MAC_USER, _______, _______, _______,
+      _______, _______, _______, DM_RSTP, _______, _______,                                     _______, _______, MAC_EMAIL, _______, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, DM_REC1, DM_REC2, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
