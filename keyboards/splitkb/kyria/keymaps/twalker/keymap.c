@@ -35,6 +35,34 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_TBCP] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_CAPS)
 };
 
+// Macros
+enum {
+  MAC_USER = 0,
+  MAC_EMAIL
+};
+
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+{
+  switch(id) {
+
+    case MAC_USER: {
+        if (record->event.pressed) {
+            SEND_STRING("tiwalker");
+            return false;
+        }
+    }
+
+    case MAC_EMAIL: {
+      if (record->event.pressed) {
+          SEND_STRING("tiwalker@starbucks.com");
+          return false;
+      }
+    }
+  }
+  return MACRO_NONE;
+};
+
+
 // Keymap array
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
@@ -54,8 +82,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [CDH] = LAYOUT(
       TD(TD_TBCP),  KC_Q,   KC_W,     KC_F,   KC_P,   KC_B,                                       KC_J,   KC_L,   KC_U,   KC_Y,    KC_SCLN, KC_BSPC,
       KC_ESC, CDHHM_A, CDHHM_R,   CDHHM_S, CDHHM_T,   KC_G,                                       KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
-       KC_NO,    KC_Z,   KC_X,     KC_C,   KC_D,   KC_V, KC_NO, MO(WIN),      MO(MOUSE), KC_NO, KC_K,    KC_H, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
-                       MO(MACROS),  MO(NUM), MO(SYM), MO(NAV), KC_BSPC,           KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
+      MO(MACROS),    KC_Z,   KC_X,     KC_C,   KC_D,   KC_V, KC_NO, MO(WIN),      MO(MOUSE), KC_NO, KC_K,    KC_H, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
+                       KC_NO,  MO(NUM), MO(SYM), MO(NAV), KC_BSPC,           KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
     ),
 
     /*
@@ -142,16 +170,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 
-/*
-Macros layer keys:
-RSTP
-REC1
-REC2
-PLY1
-PLY2
-USER_NAME
-EMAIL
-*/
     /*
     * Macros
     *
@@ -167,8 +185,8 @@ EMAIL
     *                        `----------------------------------'  `----------------------------------'
     */
     [MACROS] = LAYOUT(
-      _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, DM_RSTP, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, M(MAC_USER), _______, _______, _______,
+      _______, _______, _______, DM_RSTP, _______, _______,                                     _______, _______, M(MAC_EMAIL), _______, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, DM_REC1, DM_REC2, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -193,7 +211,6 @@ EMAIL
       DM_PLY1, OS_UNDO, OS_CUT,  OS_COPY, OS_PSTE, _______, DM_RSTP, DM_REC1, _______, _______, KC_NO,     KC_NO,   KC_NO,   KC_NO, _______, _______,
                                  _______, KC_ACL1, KC_ACL2, KC_BTN1, KC_BTN2, _______, _______, _______, _______, _______
     ),
-
 
 };
 
