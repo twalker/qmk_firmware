@@ -6,6 +6,7 @@ enum layers {
     NAV,
     NUM,
     WIN,
+    MACROS,
     MOUSE
 };
 
@@ -44,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
     * |  ESC   |   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |  O   |  ' "   |
     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-    * |        |   Z  |   X  |   C  |   D  |   V  |      | WIN  |  | MS   |      |   K  |   H  | ,  < | . >  | /  ? | Enter  |
+    * | MACROS |   Z  |   X  |   C  |   D  |   V  |      | WIN  |  | MS   |      |   K  |   H  | ,  < | . >  | /  ? | Enter  |
     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
     *                        |      |      |      |      |      |  |      | Space|      |      |      |
     *                        |      | Num  | Sym  | Nav  | BSPC |  | DEL  | Nav  |      |      |      |
@@ -54,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       TD(TD_TBCP),  KC_Q,   KC_W,     KC_F,   KC_P,   KC_B,                                       KC_J,   KC_L,   KC_U,   KC_Y,    KC_SCLN, KC_BSPC,
       KC_ESC, CDHHM_A, CDHHM_R,   CDHHM_S, CDHHM_T,   KC_G,                                       KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
        KC_NO,    KC_Z,   KC_X,     KC_C,   KC_D,   KC_V, KC_NO, MO(WIN),      MO(MOUSE), KC_NO, KC_K,    KC_H, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
-                       KC_NO,  MO(NUM), MO(SYM), MO(NAV), KC_BSPC,           KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
+                       MO(MACROS),  MO(NUM), MO(SYM), MO(NAV), KC_BSPC,           KC_DEL, LT(NAV, KC_SPC), KC_NO,  KC_NO, KC_NO
     ),
 
     /*
@@ -140,6 +141,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
+
+/*
+Macros layer keys:
+RSTP
+REC1
+REC2
+PLY1
+PLY2
+USER_NAME
+EMAIL
+*/
+    /*
+    * Macros
+    *
+    * ,-------------------------------------------.                              ,-------------------------------------------.
+    * |        |      |      |      | PLY1 | PLY2 |                              |      |      | USER |      |      |        |
+    * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+    * |        |      |      | RSTP |      |      |                              |      |      | EMAIL|      |      |        |
+    * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+    * |        |      |      |      |      |      |      | REC1 |  | REC2 |      |      |      |      |      |      |        |
+    * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+    *                        |      |      |      |      |      |  |      |      |      |      |      |
+    *                        |      |      |      |      |      |  |      |      |      |      |      |
+    *                        `----------------------------------'  `----------------------------------'
+    */
+    [MACROS] = LAYOUT(
+      _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, DM_RSTP, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, DM_REC1, DM_REC2, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+
     /*
     * Mouse
     *
@@ -201,6 +234,9 @@ static void render_status(void) {
             break;
         case WIN:
             oled_write_P(PSTR("Window\n"), false);
+            break;
+        case MACROS:
+            oled_write_P(PSTR("Macros\n"), false);
             break;
         case MOUSE:
             oled_write_P(PSTR("Mouse\n"), false);
