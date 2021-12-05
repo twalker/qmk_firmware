@@ -20,6 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 
 
+enum layers {
+    CDH = 0,
+    SYM,
+    NAV,
+    NUM,
+    WIN,
+    MAC
+};
 // Tapping term per key
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -72,20 +80,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Colemak DH
-  [0] = LAYOUT_split_3x6_3(
+  [CDH] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      TD(TD_TBCP), KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                         KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       OSL(5),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
+     OSL(MAC), KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            MO(3),   MO(1),  LT(2, KC_BSPC),    LT(2, KC_SPC), MO(4), MO(3)
+                                            MO(NUM),   MO(SYM),  LT(NAV, KC_BSPC),    LT(NAV, KC_SPC), MO(WIN), MO(NUM)
                                       //`--------------------------'  `--------------------------'
 
   ),
   // Symbols
-  [1] = LAYOUT_split_3x6_3(
+  [SYM] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                      KC_AMPR, KC_ASTR,  KC_LT,    KC_GT, KC_QUES, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -97,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
   // Nav
-  [2] = LAYOUT_split_3x6_3(
+  [NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, _______, _______, _______, _______, _______,                      KC_HOME, KC_PGDN, KC_PGUP,  KC_END, _______,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -109,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
   // Num
-  [3] = LAYOUT_split_3x6_3(
+  [NUM] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4, _______,                        KC_NO,    KC_7,    KC_8,    KC_9,   KC_NO, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -121,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
   // Win/Adjust
-  [4] = LAYOUT_split_3x6_3(
+  [WIN] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         RESET, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       WIN_TL,   KC_NO,   KC_NO,  WIN_TR,  WIN_LG,   RESET,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -133,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
   // Macros
-  [5] = LAYOUT(
+  [MAC] = LAYOUT(
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
       _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, MAC_USER, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
@@ -154,33 +162,26 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   return rotation;
 }
 
-#define L_CDH 0
-#define L_SYM 1
-#define L_NAV 2
-#define L_NUM 3
-#define L_ADJ 4
-#define L_MAC 5
-
 
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
-        case L_CDH:
+        case CDH:
             oled_write_ln_P(PSTR("Colemak-DH"), false);
             break;
-        case L_SYM:
+        case SYM:
             oled_write_ln_P(PSTR("Symbols"), false);
             break;
-        case L_NAV:
+        case NAV:
             oled_write_ln_P(PSTR("Navigation"), false);
             break;
-        case L_NUM:
+        case NUM:
             oled_write_ln_P(PSTR("Numbers"), false);
             break;
-        case L_ADJ:
-            oled_write_ln_P(PSTR("Adjust"), false);
+        case WIN:
+            oled_write_ln_P(PSTR("Win"), false);
             break;
-        case L_MAC:
+        case MAC:
             oled_write_ln_P(PSTR("Macros"), false);
             break;
         default:
