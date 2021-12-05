@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
+
 // Tapping term per key
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -44,15 +45,40 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_TBCP] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_CAPS)
 };
 
+//Macros
+enum custom_keycodes {
+  MAC_USER = SAFE_RANGE,
+  MAC_EMAIL
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case MAC_USER:
+            if (record->event.pressed) {
+                SEND_STRING("tiwalker");
+            }
+            break;
+
+        case MAC_EMAIL:
+        if (record->event.pressed) {
+            SEND_STRING("tiwalker@starbucks.com");
+        }
+        break;
+    }
+
+    return true;
+};
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Colemak DH
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      TD(TD_TBCP), KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                         KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
+       KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                         KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        KC_NO,    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
+       OSL(5),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                             MO(3),   MO(1),  LT(2, KC_BSPC),    LT(2, KC_SPC), MO(4), MO(3)
                                       //`--------------------------'  `--------------------------'
@@ -105,7 +131,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______,  _______,   _______, _______, _______
                                       //`--------------------------'  `--------------------------'
-  )
+  ),
+  // Macros
+  [5] = LAYOUT(
+  //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
+      _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, MAC_USER, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
+      _______, _______, _______, DM_RSTP, _______, _______,                                     _______, _______, MAC_EMAIL, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______, DM_REC1,    DM_REC2, _______, _______
+                                      //`--------------------------'  `--------------------------'
+    ),
 };
 
 #ifdef OLED_ENABLE
@@ -121,6 +159,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 #define L_NAV 2
 #define L_NUM 3
 #define L_ADJ 4
+#define L_MAC 5
 
 
 void oled_render_layer_state(void) {
@@ -141,6 +180,9 @@ void oled_render_layer_state(void) {
         case L_ADJ:
             oled_write_ln_P(PSTR("Adjust"), false);
             break;
+        case L_MAC:
+            oled_write_ln_P(PSTR("Macros"), false);
+            break;
         default:
             oled_write_P(PSTR("Undefined"), false);
     }
@@ -152,34 +194,6 @@ void oled_render_lock_state(void) {
     oled_write_P(IS_LED_ON(led_usb_state, USB_LED_NUM_LOCK) ? PSTR("NUMLCK ") : PSTR("       "), false);
     oled_write_P(IS_LED_ON(led_usb_state, USB_LED_CAPS_LOCK) ? PSTR("CAPLCK ") : PSTR("       "), false);
     oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("SCRLCK ") : PSTR("       "), false);
-}
-
-char keylog_str[24] = {};
-
-const char code_to_name[60] = {
-    ' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
-    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-    'R', 'E', 'B', 'T', '_', '-', '=', '[', ']', '\\',
-    '#', ';', '\'', '`', ',', '.', '/', ' ', ' ', ' '};
-
-void set_keylog(uint16_t keycode, keyrecord_t *record) {
-  char name = ' ';
-    if ((keycode >= QK_MOD_TAP && keycode <= QK_MOD_TAP_MAX) ||
-        (keycode >= QK_LAYER_TAP && keycode <= QK_LAYER_TAP_MAX)) { keycode = keycode & 0xFF; }
-  if (keycode < 60) {
-    name = code_to_name[keycode];
-  }
-
-  // update keylog
-  snprintf(keylog_str, sizeof(keylog_str), "%dx%d, k%2d : %c",
-           record->event.key.row, record->event.key.col,
-           keycode, name);
-}
-
-void oled_render_keylog(void) {
-    oled_write(keylog_str, false);
 }
 
 void render_bootmagic_status(bool status) {
@@ -209,7 +223,6 @@ void oled_render_logo(void) {
 bool oled_task_user(void) {
   if (is_keyboard_master()) {
     oled_render_layer_state();
-    // oled_render_keylog();
     oled_render_lock_state();
   } else {
     oled_render_logo();
@@ -217,10 +230,4 @@ bool oled_task_user(void) {
   return false;
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    set_keylog(keycode, record);
-  }
-  return true;
-}
 #endif // OLED_ENABLE

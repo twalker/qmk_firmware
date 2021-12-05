@@ -8,3 +8,5 @@ PERMISSIVE_HOLD = no
 
 # Tap dance
 TAP_DANCE_ENABLE = yes
+
+DYNAMIC_MACRO_ENABLE = yes
