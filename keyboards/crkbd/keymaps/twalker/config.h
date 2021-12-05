@@ -45,19 +45,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
 
-// QWERTY homerow mods
-// Left-hand
-#define QTYHM_A LCTL_T(KC_A)
-#define QTYHM_S LALT_T(KC_S)
-#define QTYHM_D LGUI_T(KC_D)
-#define QTYHM_F LSFT_T(KC_F)
-
-// Right-hand
-#define QTYHM_J RSFT_T(KC_J)
-#define QTYHM_K RGUI_T(KC_K)
-#define QTYHM_L LALT_T(KC_L)
-#define QTYHM_SCLN RCTL_T(KC_SCLN)
-
 // COLEMAK DH homerow mods
 // Left-hand
 #define CDHHM_A LCTL_T(KC_A)
