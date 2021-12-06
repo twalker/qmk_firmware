@@ -26,15 +26,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 };
 
-// Tap dance
-enum {
-  TD_TBCP = 0
-};
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-  [TD_TBCP] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_CAPS)
-};
-
 // Macros
 enum custom_keycodes {
   MAC_USER = SAFE_RANGE,
@@ -57,13 +48,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     return true;
+}
+
+// Combos
+enum combos {
+  SS_CAPS,
+  COMBO_LENGTH
+};
+
+uint16_t COMBO_LEN = COMBO_LENGTH;
+
+const uint16_t PROGMEM ss_combo[] = {CDHHM_T, CDHHM_N, COMBO_END};
+
+combo_t key_combos[COMBO_LENGTH] = {
+  [SS_CAPS] = COMBO(ss_combo, KC_CAPS)
 };
 
 // Keymap array
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [CDH] = LAYOUT(
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-     TD(TD_TBCP),  KC_Q,   KC_W,     KC_F,   KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
+     KC_TAB,  KC_Q,   KC_W,     KC_F,   KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
        KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                                       KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
