@@ -26,6 +26,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 };
 
+#ifdef DYNAMIC_MACRO_ENABLE
 // Macros
 enum custom_keycodes {
   MAC_USER = SAFE_RANGE,
@@ -49,6 +50,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     return true;
 }
+#endif
 
 // Combos
 #ifdef COMBO_ENABLE
