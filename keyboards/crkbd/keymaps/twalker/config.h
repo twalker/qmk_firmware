@@ -76,6 +76,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define WIN_SM LCA(KC_MINS)
 #define WIN_FUL LCA(KC_ENT)
 #define WIN_PSC SCMD(KC_5)
+#define ZOOM_IN LGUI(KC_EQL)
+#define ZOOM_OUT LGUI(KC_MINS)
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
