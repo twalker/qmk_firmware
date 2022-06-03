@@ -40,21 +40,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 
-// Combos
-enum combos {
-  SS_CAPS,
-  COMBO_LENGTH
-};
-
-uint16_t COMBO_LEN = COMBO_LENGTH;
-
-const uint16_t PROGMEM ss_combo[] = {CDHHM_T, CDHHM_N, COMBO_END};
-
-combo_t key_combos[COMBO_LENGTH] = {
-  [SS_CAPS] = COMBO(ss_combo, KC_CAPS)
-};
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Colemak DH
   [CDH] = LAYOUT_split_3x6_3(

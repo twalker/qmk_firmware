@@ -16,6 +16,9 @@
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
 
+// CAPS_WORD rules!
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+
 // COLEMAK DH homerow mods
 // Left-hand
 #define CDHHM_A LCTL_T(KC_A)
@@ -50,3 +53,4 @@
 #define WIN_PSC SCMD(KC_5)
 #define ZOOM_IN LGUI(KC_EQL)
 #define ZOOM_OUT LGUI(KC_MINS)
+
