@@ -26,7 +26,7 @@
   #define RGBLIGHT_SLEEP
 #endif
 
-
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 // Configure the global tapping term (default: 200ms)
 #define TAPPING_TERM 170
@@ -42,7 +42,7 @@
 
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
-
+ 
 // COLEMAK DH homerow mods
 // Left-hand
 #define CDHHM_A LCTL_T(KC_A)

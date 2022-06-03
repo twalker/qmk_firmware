@@ -44,6 +44,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
 
+// CAPS_WORD rules!
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+
 // COLEMAK DH homerow mods
 // Left-hand
 #define CDHHM_A LCTL_T(KC_A)
