@@ -13,4 +13,4 @@ DYNAMIC_MACRO_ENABLE = yes
 # Combos
 COMBO_ENABLE = no
 
-
+UNICODE_ENABLE = yes

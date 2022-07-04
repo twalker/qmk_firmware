@@ -20,7 +20,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 };
 
 // Macros
-enum custom_keycodes { MAC_USER = SAFE_RANGE, MAC_EMAIL };
+enum custom_keycodes { MAC_USER = SAFE_RANGE, MAC_EMAIL, MAC_MDSH };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -33,6 +33,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case MAC_EMAIL:
             if (record->event.pressed) {
                 SEND_STRING("tiwalker@starbucks.com");
+            }
+            break;
+        case MAC_MDSH:
+            if (record->event.pressed) {
+                send_unicode_string("—");
             }
             break;
     }
@@ -108,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
       _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, MAC_USER, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, DM_RSTP, _______, _______,                                     _______, _______, MAC_EMAIL, _______, _______, _______,
+      _______, _______, _______, DM_RSTP, _______, _______,                                    UC(0xE2 0x80 0x94), _______, MAC_EMAIL, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
