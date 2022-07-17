@@ -86,6 +86,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ZOOM_IN LGUI(KC_EQL)
 #define ZOOM_OUT LGUI(KC_MINS)
 
+#define UNICODE_SELECTED_MODES UC_MAC, UC_LNX, UC_WINC
+
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
     #define RGBLIGHT_ANIMATIONS
@@ -97,3 +99,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
+
