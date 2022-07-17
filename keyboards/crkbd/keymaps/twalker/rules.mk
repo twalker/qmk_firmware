@@ -15,3 +15,6 @@ COMBO_ENABLE = no
 # Caps word
 CAPS_WORD_ENABLE = yes
 BOTH_SHIFTS_TURNS_ON_CAPS_WORD = yes
+
+# Unicode (for em—dash)
+UNICODE_ENABLE = yes
