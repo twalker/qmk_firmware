@@ -30,14 +30,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define USE_SERIAL_PD2
 
 // Configure the global tapping term (default: 200ms)
-#define TAPPING_TERM 150
-#define TAPPING_TERM_PER_KEY
-#define TT_SHIFT 120
-#define TT_ALT 180
 // #define TAPPING_TERM 170
 // #define TAPPING_TERM_PER_KEY
 // #define TT_SHIFT 150
 // #define TT_ALT 220
+#define TAPPING_TERM 150
+#define TAPPING_TERM_PER_KEY
+#define TT_SHIFT 120
+#define TT_ALT 180
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
