@@ -6,8 +6,7 @@ enum layers {
     NAV,
     NUM,
     WIN,
-    MAC,
-    MOUSE
+    MAC
 };
 
 // Tapping term per key
@@ -60,9 +59,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
        KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                                        KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-     OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,  KC_NO, MO(WIN),  MO(MOUSE), KC_NO,    KC_K,    KC_H, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
+     OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,  KC_NO, KC_NO,    KC_NO, KC_NO,        KC_K,    KC_H, KC_COMM, KC_DOT, KC_SLSH,  KC_ENT,
   //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
-                                   KC_NO, MO(NUM), MO(SYM), MO(NAV), KC_BSPC,  KC_DEL, LT(NAV, KC_SPC), MO(WIN), KC_NO, KC_NO
+                                   KC_NO, KC_NO, MO(NUM), MO(SYM), LT(NAV, KC_BSPC), LT(NAV, KC_SPC), MO(WIN), KC_MEH, KC_NO, KC_NO
                               //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
     ),
 
@@ -128,18 +127,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
     ),
 
-    [MOUSE] = LAYOUT(
-  //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-      _______,   KC_NO,   KC_NO,   KC_NO,   KC_NO, _______,                                     KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
-  //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-      _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
-  //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-      DM_PLY1, OS_UNDO,  OS_CUT, OS_COPY, OS_PSTE, _______, DM_RSTP, DM_REC1, _______, _______,   KC_NO,   KC_NO,   KC_NO,   KC_NO, _______, _______,
-  //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
-                                 _______, KC_ACL1, KC_ACL2, KC_BTN1, KC_BTN2, _______, _______, _______, _______, _______
-                              //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
-    ),
-
 };
 
 #ifdef OLED_ENABLE
@@ -182,9 +169,6 @@ static void render_status(void) {
             break;
         case MAC:
             oled_write_P(PSTR("Macros\n"), false);
-            break;
-        case MOUSE:
-            oled_write_P(PSTR("Mouse\n"), false);
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
