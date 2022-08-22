@@ -1,6 +1,4 @@
 #include QMK_KEYBOARD_H
-// Adapts from linux shortcuts to Mac OS BS shorcuts. 
-bool is_macos = false;
 
 enum layers {
     CDH = 0,
@@ -32,17 +30,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 enum custom_keycodes {
   MAC_USER = SAFE_RANGE,
   MAC_EMAIL,
-  TOG_MACOS,
-  TW_COPY,
-  TW_PSTE,
-  TW_CUT,
-  TW_UNDO,
-  TW_HOME,
-  TW_END, 
-  TW_FIND,
-  // TW_ALL
-  TW_CLOS,
-  TW_QUIT,
+  KC_LSTRT,
+  KC_LEND,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -58,92 +47,80 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING("tiwalker@starbucks.com");
             }
           break;
-        case TOG_MACOS:
+        case KC_LSTRT:
             if (record->event.pressed) {
-                is_macos = !is_macos; 
-            }
-            return false;
-        case TW_COPY:
-            if (record->event.pressed) {
-                if (is_macos) {
-                    SEND_STRING(SS_LGUI("c"));
-                } else {
-                    SEND_STRING(SS_LCTRL("c"));
-                }
-            }
-            break;
-        case TW_PSTE:
-            if (record->event.pressed) {
-                if (is_macos) {
-                    SEND_STRING(SS_LGUI("v"));
-                } else {
-                    SEND_STRING(SS_LCTRL("v"));
-                }
-            }
-            break;
-        case TW_CUT:
-            if (record->event.pressed) {
-                if (is_macos) {
-                    SEND_STRING(SS_LGUI("x"));
-                } else {
-                    SEND_STRING(SS_LCTRL("x"));
-                }
-            }
-            break;
-        case TW_UNDO:
-            if (record->event.pressed) {
-                if (is_macos) {
-                    SEND_STRING(SS_LGUI("z"));
-                } else {
-                    SEND_STRING(SS_LCTRL("z"));
-                }
-            }
-            break;
-        case TW_HOME:
-            if (record->event.pressed) {
-                if (is_macos) {
-                    SEND_STRING(SS_LGUI(SS_TAP(X_LEFT)));
+                if (keymap_config.swap_lctl_lgui) {
+                     //CMD-arrow on Mac, but we have CTL and GUI swapped
+                    register_mods(mod_config(MOD_LCTL));
+                    register_code(KC_LEFT);
                 } else {
                     register_code(KC_HOME);
                 }
+            } else {
+                if (keymap_config.swap_lctl_lgui) {
+                    unregister_mods(mod_config(MOD_LCTL));
+                    unregister_code(KC_LEFT);
+                } else {
+                    unregister_code(KC_HOME);
+                }
             }
             break;
-        case TW_END:
+        case KC_LEND:
             if (record->event.pressed) {
-                if (is_macos) {
-                    SEND_STRING(SS_LGUI(SS_TAP(X_RGHT)));
+                if (keymap_config.swap_lctl_lgui) {
+                    //CMD-arrow on Mac, but we have CTL and GUI swapped
+                    register_mods(mod_config(MOD_LCTL));
+                    register_code(KC_RIGHT);
                 } else {
                     register_code(KC_END);
                 }
-            }
-            break;
-        case TW_FIND:
-            if (record->event.pressed) {
-                if (is_macos) {
-                    SEND_STRING(SS_LGUI("f"));
+            } else {
+                if (keymap_config.swap_lctl_lgui) {
+                    unregister_mods(mod_config(MOD_LCTL));
+                    unregister_code(KC_RIGHT);
                 } else {
-                    SEND_STRING(SS_LCTRL("f"));
+                    unregister_code(KC_END);
                 }
             }
             break;
-        case TW_CLOS:
+        case KC_COPY:
             if (record->event.pressed) {
-                if (is_macos) {
-                    SEND_STRING(SS_LGUI("w"));
-                } else {
-                    SEND_STRING(SS_LCTRL("w"));
-                }
+                register_mods(mod_config(MOD_LCTL));
+                register_code(KC_C);
+            } else {
+                unregister_mods(mod_config(MOD_LCTL));
+                unregister_code(KC_C);
             }
-            break;
-        case TW_QUIT:
+            return false;
+        case KC_PASTE:
             if (record->event.pressed) {
-                if (is_macos) {
-                    SEND_STRING(SS_LGUI("q"));
-                } else {
-                    SEND_STRING(SS_LCTRL("q"));
-                }
+                register_mods(mod_config(MOD_LCTL));
+                register_code(KC_V);
+            } else {
+                unregister_mods(mod_config(MOD_LCTL));
+                unregister_code(KC_V);
             }
+            return false;
+        case KC_CUT:
+            if (record->event.pressed) {
+                register_mods(mod_config(MOD_LCTL));
+                register_code(KC_X);
+            } else {
+                unregister_mods(mod_config(MOD_LCTL));
+                unregister_code(KC_X);
+            }
+            return false;
             break;
+        case KC_UNDO:
+            if (record->event.pressed) {
+                register_mods(mod_config(MOD_LCTL));
+                register_code(KC_Z);
+            } else {
+                unregister_mods(mod_config(MOD_LCTL));
+                unregister_code(KC_Z);
+            }
+            return false;
+
     }
 
     return true;
@@ -178,11 +155,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [NAV] = LAYOUT(
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-      _______, TW_QUIT, TW_CLOS, TW_FIND, _______, _______,                                       KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,  KC_DEL,
+      _______, _______, _______, _______, _______, _______,                                       KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-   LCTL(KC_C), KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     TW_HOME, KC_LEFT, KC_DOWN, KC_RGHT,  TW_END, _______,
+   LCTL(KC_C), KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                    KC_LSTRT, KC_LEFT, KC_DOWN, KC_RGHT, KC_LEND, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-       KC_APP, TW_UNDO,  TW_CUT, TW_COPY, _______, TW_PSTE, _______, _______, _______, _______, RCS(KC_TAB),  KC_PGDN, KC_NO, KC_NO, C(KC_TAB), _______,
+       KC_APP, KC_UNDO,  KC_CUT, KC_COPY, _______, KC_PASTE, _______, _______, _______, _______, RCS(KC_TAB),  KC_PGDN, KC_NO, KC_NO, C(KC_TAB), _______,
   //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
                               //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
@@ -218,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
       _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, MAC_USER, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, DM_RSTP, _______, _______,                                   TOG_MACOS, _______, MAC_EMAIL, _______, _______, _______,
+      _______, _______, _______, DM_RSTP, _______, _______,                                    CG_TOGG, _______, MAC_EMAIL, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______, _______, DM_REC1, DM_REC2, _______, _______, _______, _______, _______, _______, _______,
   //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
@@ -248,8 +225,7 @@ static void render_status(void) {
     oled_write_ln_P(PSTR("Kyria rev1.0"), false);
     // OS
     oled_write_P(PSTR("OS: "), false);
-    // if (keymap_config.swap_lctl_lgui) {
-    if (is_macos) {
+    if (keymap_config.swap_lctl_lgui) {
         oled_write_P(PSTR("MAC"), false);
     } else {
         oled_write_P(PSTR("NIX"), false);
