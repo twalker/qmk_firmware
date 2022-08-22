@@ -38,7 +38,11 @@ enum custom_keycodes {
   TW_CUT,
   TW_UNDO,
   TW_HOME,
-  TW_END,
+  TW_END, 
+  TW_FIND,
+  // TW_ALL
+  TW_CLOS,
+  TW_QUIT,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -113,6 +117,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case TW_FIND:
+            if (record->event.pressed) {
+                if (is_macos) {
+                    SEND_STRING(SS_LGUI("f"));
+                } else {
+                    SEND_STRING(SS_LCTRL("f"));
+                }
+            }
+            break;
+        case TW_CLOS:
+            if (record->event.pressed) {
+                if (is_macos) {
+                    SEND_STRING(SS_LGUI("w"));
+                } else {
+                    SEND_STRING(SS_LCTRL("w"));
+                }
+            }
+            break;
+        case TW_QUIT:
+            if (record->event.pressed) {
+                if (is_macos) {
+                    SEND_STRING(SS_LGUI("q"));
+                } else {
+                    SEND_STRING(SS_LCTRL("q"));
+                }
+            }
+            break;
     }
 
     return true;
@@ -147,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [NAV] = LAYOUT(
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-      _______, _______, _______, _______, _______, _______,                                       KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,  KC_DEL,
+      _______, TW_QUIT, TW_CLOS, TW_FIND, _______, _______,                                       KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
    LCTL(KC_C), KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     TW_HOME, KC_LEFT, KC_DOWN, KC_RGHT,  TW_END, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
