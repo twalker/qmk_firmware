@@ -1,4 +1,6 @@
 #include QMK_KEYBOARD_H
+// Adapts from linux shortcuts to Mac OS BS shorcuts. 
+bool is_macos = false;
 
 enum layers {
     CDH = 0,
@@ -29,7 +31,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Macros
 enum custom_keycodes {
   MAC_USER = SAFE_RANGE,
-  MAC_EMAIL
+  MAC_EMAIL,
+  TOG_MACOS,
+  TW_COPY,
+  TW_PSTE,
+  TW_CUT,
+  TW_UNDO,
+  TW_HOME,
+  TW_END,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -41,10 +50,69 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
         case MAC_EMAIL:
-        if (record->event.pressed) {
-            SEND_STRING("tiwalker@starbucks.com");
-        }
-        break;
+            if (record->event.pressed) {
+                SEND_STRING("tiwalker@starbucks.com");
+            }
+          break;
+        case TOG_MACOS:
+            if (record->event.pressed) {
+                is_macos = !is_macos; 
+            }
+            return false;
+        case TW_COPY:
+            if (record->event.pressed) {
+                if (is_macos) {
+                    SEND_STRING(SS_LGUI("c"));
+                } else {
+                    SEND_STRING(SS_LCTRL("c"));
+                }
+            }
+            break;
+        case TW_PSTE:
+            if (record->event.pressed) {
+                if (is_macos) {
+                    SEND_STRING(SS_LGUI("v"));
+                } else {
+                    SEND_STRING(SS_LCTRL("v"));
+                }
+            }
+            break;
+        case TW_CUT:
+            if (record->event.pressed) {
+                if (is_macos) {
+                    SEND_STRING(SS_LGUI("x"));
+                } else {
+                    SEND_STRING(SS_LCTRL("x"));
+                }
+            }
+            break;
+        case TW_UNDO:
+            if (record->event.pressed) {
+                if (is_macos) {
+                    SEND_STRING(SS_LGUI("z"));
+                } else {
+                    SEND_STRING(SS_LCTRL("z"));
+                }
+            }
+            break;
+        case TW_HOME:
+            if (record->event.pressed) {
+                if (is_macos) {
+                    SEND_STRING(SS_LGUI(SS_TAP(X_LEFT)));
+                } else {
+                    register_code(KC_HOME);
+                }
+            }
+            break;
+        case TW_END:
+            if (record->event.pressed) {
+                if (is_macos) {
+                    SEND_STRING(SS_LGUI(SS_TAP(X_RGHT)));
+                } else {
+                    register_code(KC_END);
+                }
+            }
+            break;
     }
 
     return true;
@@ -81,9 +149,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
       _______, _______, _______, _______, _______, _______,                                       KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-      _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT,  KC_END, _______,
+      _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                     TW_HOME, KC_LEFT, KC_DOWN, KC_RGHT,  TW_END, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-       KC_APP, OS_UNDO,  OS_CUT, OS_COPY, OS_PSTE, OS_PSTE, _______, _______, _______, _______, RCS(KC_TAB),  KC_PGDN, KC_NO, KC_NO, C(KC_TAB), _______,
+       KC_APP, TW_UNDO,  TW_CUT, TW_COPY, _______, TW_PSTE, _______, _______, _______, _______, RCS(KC_TAB),  KC_PGDN, KC_NO, KC_NO, C(KC_TAB), _______,
   //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
                               //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
@@ -119,7 +187,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
       _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, MAC_USER, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, DM_RSTP, _______, _______,                                     _______, _______, MAC_EMAIL, _______, _______, _______,
+      _______, _______, _______, DM_RSTP, _______, _______,                                   TOG_MACOS, _______, MAC_EMAIL, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______, _______, DM_REC1, DM_REC2, _______, _______, _______, _______, _______, _______, _______,
   //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
@@ -146,7 +214,16 @@ static void render_qmk_logo(void) {
 static void render_status(void) {
     // QMK Logo and version information
     render_qmk_logo();
-    oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
+    oled_write_ln_P(PSTR("Kyria rev1.0"), false);
+    // OS
+    oled_write_P(PSTR("OS: "), false);
+    // if (keymap_config.swap_lctl_lgui) {
+    if (is_macos) {
+        oled_write_P(PSTR("MAC"), false);
+    } else {
+        oled_write_P(PSTR("NIX"), false);
+    }
+    oled_write_P(PSTR("\n"), false);
 
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
