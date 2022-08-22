@@ -32,6 +32,8 @@ enum custom_keycodes {
   MAC_EMAIL,
   KC_LSTRT,
   KC_LEND,
+  ZOOM_IN,
+  ZOOM_OUT,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -121,6 +123,45 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
+        case ZOOM_IN:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    register_mods(mod_config(MOD_LCTL));
+                    register_code(KC_EQL);
+                } else {
+                    register_mods(mod_config(MOD_LCTL));
+                    register_code(KC_EQL);
+                }
+            } else {
+                if (keymap_config.swap_lctl_lgui) {
+                    unregister_mods(mod_config(MOD_LCTL));
+                    unregister_code(KC_EQL);
+                } else {
+                    unregister_mods(mod_config(MOD_LCTL));
+                    unregister_code(KC_EQL);
+                }
+            }
+            break;
+
+        case ZOOM_OUT:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    register_mods(mod_config(MOD_LCTL));
+                    register_code(KC_MINS);
+                } else {
+                    register_mods(mod_config(MOD_LCTL));
+                    register_code(KC_MINS);
+                }
+            } else {
+                if (keymap_config.swap_lctl_lgui) {
+                    unregister_mods(mod_config(MOD_LCTL));
+                    unregister_code(KC_MINS);
+                } else {
+                    unregister_mods(mod_config(MOD_LCTL));
+                    unregister_code(KC_MINS);
+                }
+            }
+            break;
     }
 
     return true;
