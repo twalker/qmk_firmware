@@ -258,7 +258,7 @@ static void render_status(void) {
     if (keymap_config.swap_lctl_lgui) {
         oled_write_P(PSTR("MAC"), false);
     } else {
-        oled_write_P(PSTR("NIX"), false);
+        oled_write_P(PSTR("Linux"), false);
     }
     oled_write_P(PSTR("\n"), false);
 
