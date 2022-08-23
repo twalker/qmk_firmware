@@ -94,7 +94,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_C);
             }
             return false;
-        case KC_PASTE:
+        case KC_PSTE:
             if (record->event.pressed) {
                 register_mods(mod_config(MOD_LCTL));
                 register_code(KC_V);
@@ -200,7 +200,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
    LCTL(KC_C), KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                    KC_LSTRT, KC_LEFT, KC_DOWN, KC_RGHT, KC_LEND, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-       KC_APP, KC_UNDO,  KC_CUT, KC_COPY, _______, KC_PASTE, _______, _______, _______, _______, RCS(KC_TAB),  KC_PGDN, KC_NO, KC_NO, C(KC_TAB), _______,
+       KC_APP, KC_UNDO,  KC_CUT, KC_COPY, _______, KC_PSTE, _______, _______, _______, _______, RCS(KC_TAB),  KC_PGDN, KC_NO, KC_NO, C(KC_TAB), _______,
   //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
                               //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
