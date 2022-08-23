@@ -73,6 +73,5 @@
 #define WIN_LG LCA(KC_EQL)
 #define WIN_SM LCA(KC_MINS)
 #define WIN_FUL LCA(KC_ENT)
-#define WIN_PSC SCMD(KC_5)
 
 // TODO: Pop OS shortcuts to match

@@ -34,6 +34,7 @@ enum custom_keycodes {
   KC_LEND,
   ZOOM_IN,
   ZOOM_OUT,
+  SCRNSHT
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -52,7 +53,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_LSTRT:
             if (record->event.pressed) {
                 if (keymap_config.swap_lctl_lgui) {
-                     //CMD-arrow on Mac, but we have CTL and GUI swapped
+                    //CMD-arrow on Mac, but we have CTL and GUI swapped
                     register_mods(mod_config(MOD_LCTL));
                     register_code(KC_LEFT);
                 } else {
@@ -122,27 +123,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_Z);
             }
             return false;
-
         case ZOOM_IN:
             if (record->event.pressed) {
-                if (keymap_config.swap_lctl_lgui) {
-                    register_mods(mod_config(MOD_LCTL));
-                    register_code(KC_EQL);
-                } else {
-                    register_mods(mod_config(MOD_LCTL));
-                    register_code(KC_EQL);
-                }
+                register_mods(mod_config(MOD_LCTL));
+                register_code(KC_EQL);
             } else {
-                if (keymap_config.swap_lctl_lgui) {
-                    unregister_mods(mod_config(MOD_LCTL));
-                    unregister_code(KC_EQL);
-                } else {
-                    unregister_mods(mod_config(MOD_LCTL));
-                    unregister_code(KC_EQL);
-                }
+                unregister_mods(mod_config(MOD_LCTL));
+                unregister_code(KC_EQL);
             }
             break;
-
         case ZOOM_OUT:
             if (record->event.pressed) {
                 register_mods(mod_config(MOD_LCTL));
@@ -150,6 +139,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 unregister_mods(mod_config(MOD_LCTL));
                 unregister_code(KC_MINS);
+            }
+            break;
+        case SCRNSHT:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    // Shift+CMD+5 for Skitch capture.
+                    SEND_STRING(SS_LGUI(SS_LSFT("5")));
+                } else {
+                    tap_code16(KC_PSCR);
+                }
             }
             break;
     }
@@ -213,7 +212,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                                   ,-----------------------------------------------------.
         RESET, _______, _______, KC_VOLU, _______, _______,                                       KC_NO,  WIN_TL,   WIN_U,  WIN_TR,  WIN_LG, ZOOM_IN,
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-      _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,                                       KC_NO,   WIN_L,   WIN_D,   WIN_R, WIN_FUL, WIN_PSC,
+      _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,                                       KC_NO,   WIN_L,   WIN_D,   WIN_R, WIN_FUL, SCRNSHT,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, KC_VOLD, KC_MUTE, _______, _______, _______, _______, _______,   KC_NO,  WIN_BL,   KC_NO,  WIN_BR,  WIN_SM, ZOOM_OUT,
   //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
