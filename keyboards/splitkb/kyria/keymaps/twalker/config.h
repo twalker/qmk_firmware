@@ -73,11 +73,5 @@
 #define WIN_LG LCA(KC_EQL)
 #define WIN_SM LCA(KC_MINS)
 #define WIN_FUL LCA(KC_ENT)
-#define WIN_PSC SCMD(KC_5)
-#define ZOOM_IN LGUI(KC_EQL)
-#define ZOOM_OUT LGUI(KC_MINS)
 
-#define OS_COPY LGUI(KC_C)
-#define OS_UNDO LGUI(KC_Z)
-#define OS_PSTE LGUI(KC_V)
-#define OS_CUT LGUI(KC_X)
+// TODO: Pop OS shortcuts to match
