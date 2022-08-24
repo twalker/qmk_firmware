@@ -9,6 +9,14 @@ enum layers {
     MAC
 };
 
+void matrix_init_user(void) {
+  if (keymap_config.swap_lctl_lgui) {
+    set_unicode_input_mode(UC_OSX);
+  } else {
+    set_unicode_input_mode(UC_LNX);
+  }
+}
+
 // Tapping term per key
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -235,6 +243,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 	return OLED_ROTATION_180;
@@ -287,7 +296,6 @@ static void render_status(void) {
         default:
             oled_write_P(PSTR("Undefined\n"), false);
     }
-
 
     // Write host Keyboard LED Status to OLEDs
     led_t led_usb_state = host_keyboard_led_state();
