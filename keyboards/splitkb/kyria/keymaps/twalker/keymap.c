@@ -42,7 +42,9 @@ enum custom_keycodes {
   KC_LEND,
   ZOOM_IN,
   ZOOM_OUT,
-  SCRNSHT
+  SCRNSHT,
+  TAB_PRV,
+  TAB_NXT,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -131,6 +133,45 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_Z);
             }
             return false;
+
+        case TAB_NXT:
+            if (record->event.pressed) {
+                // CTL+TAB on Mac, but we have CTL and GUI swapped
+                if (keymap_config.swap_lctl_lgui) {
+                    register_mods(mod_config(MOD_LGUI));
+                } else {
+                    register_mods(mod_config(MOD_LCTL));
+                }
+                register_code(KC_TAB);
+            } else {
+                if (keymap_config.swap_lctl_lgui) {
+                    unregister_mods(mod_config(MOD_LGUI));
+                } else {
+                    unregister_mods(mod_config(MOD_LCTL));
+                }
+                unregister_code(KC_TAB);
+            }
+            break;
+        case TAB_PRV:
+            if (record->event.pressed) {
+                // CTL+SFT+TAB on Mac, but we have CTL and GUI swapped
+                if (keymap_config.swap_lctl_lgui) {
+                    register_mods(mod_config(MOD_LGUI));
+                } else {
+                    register_mods(mod_config(MOD_LCTL));
+                }
+                register_mods(mod_config(MOD_LSFT));
+                register_code(KC_TAB);
+            } else {
+                if (keymap_config.swap_lctl_lgui) {
+                    unregister_mods(mod_config(MOD_LGUI));
+                } else {
+                    unregister_mods(mod_config(MOD_LCTL));
+                }
+                unregister_mods(mod_config(MOD_LSFT));
+                unregister_code(KC_TAB);
+            }
+            break;
         case ZOOM_IN:
             if (record->event.pressed) {
                 register_mods(mod_config(MOD_LCTL));
@@ -197,7 +238,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
    LCTL(KC_C), KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                    KC_LSTRT, KC_LEFT, KC_DOWN, KC_RGHT, KC_LEND, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-       KC_APP, KC_UNDO,  KC_CUT, KC_COPY, _______, KC_PSTE, _______, _______, _______, _______, RCS(KC_TAB),  KC_PGDN, KC_NO, KC_NO, C(KC_TAB), _______,
+       KC_APP, KC_UNDO,  KC_CUT, KC_COPY, _______, KC_PSTE, _______, _______, _______, _______, TAB_PRV, KC_PGDN,   KC_NO,   KC_NO, TAB_NXT, _______,
   //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
                               //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
