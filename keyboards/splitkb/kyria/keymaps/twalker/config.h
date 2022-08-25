@@ -60,11 +60,6 @@
 #define CDHHM_O RCTL_T(KC_O)
 
 // Window management (rectange on macos)
-#define WIN_TL LCA(KC_U)
-#define WIN_TR LCA(KC_I)
-#define WIN_BL LCA(KC_J)
-#define WIN_BR LCA(KC_K)
-
 #define WIN_L LCA(KC_LEFT)
 #define WIN_R LCA(KC_RGHT)
 #define WIN_U LCA(KC_UP)
