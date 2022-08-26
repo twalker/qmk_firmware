@@ -45,6 +45,13 @@ enum custom_keycodes {
   SCRNSHT,
   TAB_PRV,
   TAB_NXT,
+  WIN_L,
+  WIN_R,
+  WIN_U,
+  WIN_D,
+  WIN_FUL,
+  WIN_LG,
+  WIN_SM
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -197,6 +204,74 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SEND_STRING(SS_LGUI(SS_LSFT("5")));
                 } else {
                     tap_code16(KC_PSCR);
+                }
+            }
+            break;
+        // Window management (rectange on macos)
+        case WIN_L:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    // Actual: (LCA(KC_LEFT))
+                    SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_LEFT))));
+                } else {
+                    // Pop OS
+                    SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_LEFT))));
+                }
+            }
+            break;
+        case WIN_R:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_RGHT))));
+                } else {
+                    SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_RGHT))));
+                }
+            }
+            break;
+        case WIN_U:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_UP))));
+                } else {
+                    SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_UP))));
+                }
+            }
+            break;
+        case WIN_D:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_DOWN))));
+                } else {
+                    SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_DOWN))));
+                }
+            }
+            break;
+        case WIN_FUL:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_ENTER))));
+                } else {
+                    SEND_STRING(SS_LGUI(SS_TAP(X_M)));
+                }
+            }
+            break;
+         
+        // TOREVISIT: SM and LG on Pop os 
+        case WIN_LG:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_EQL))));
+                } else {
+                    SEND_STRING(SS_LGUI(SS_TAP(X_ENTER)) SS_LSFT(SS_TAP(X_RGHT)) SS_TAP(X_ESC));
+                }
+            }
+            break;
+        case WIN_SM:
+            if (record->event.pressed) {
+                if (keymap_config.swap_lctl_lgui) {
+                    SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_MINS))));
+                } else {
+                    SEND_STRING(SS_LGUI(SS_TAP(X_ENTER)) SS_LSFT(SS_TAP(X_LEFT)) SS_TAP(X_ESC));
                 }
             }
             break;

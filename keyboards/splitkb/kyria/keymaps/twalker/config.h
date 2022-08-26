@@ -59,14 +59,5 @@
 #define CDHHM_I LALT_T(KC_I)
 #define CDHHM_O RCTL_T(KC_O)
 
-// Window management (rectange on macos)
-#define WIN_L LCA(KC_LEFT)
-#define WIN_R LCA(KC_RGHT)
-#define WIN_U LCA(KC_UP)
-#define WIN_D LCA(KC_DOWN)
 
-#define WIN_LG LCA(KC_EQL)
-#define WIN_SM LCA(KC_MINS)
-#define WIN_FUL LCA(KC_ENT)
-
-// TODO: Pop OS shortcuts to match
+// TODO: Application launcher with leader key
