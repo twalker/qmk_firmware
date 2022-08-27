@@ -114,7 +114,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           tap_code(KC_HOME);
         }
       }
-      break;
+      return false;
     case KC_LEND:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -123,31 +123,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           tap_code(KC_END);
         }
       }
-      break;
+      return false;
     case KC_COPY:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          SEND_STRING(SS_LGUI("c"));
+          SEND_STRING(SS_LGUI(SS_TAP(X_C)));
         } else {
-          SEND_STRING(SS_LCTL("c"));
+          SEND_STRING(SS_LCTL(SS_TAP(X_C)));
         }
       }
       return false;
     case KC_PSTE:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          SEND_STRING(SS_LGUI("v"));
+          SEND_STRING(SS_LGUI(SS_TAP(X_V)));
         } else {
-          SEND_STRING(SS_LCTL("v"));
+          SEND_STRING(SS_LCTL(SS_TAP(X_V)));
         }
       }
       return false;
     case KC_CUT:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          SEND_STRING(SS_LGUI("x"));
+          SEND_STRING(SS_LGUI(SS_TAP(X_X)));
         } else {
-          SEND_STRING(SS_LCTL("x"));
+          SEND_STRING(SS_LCTL(SS_TAP(X_X)));
         }
       }
       return false;
@@ -160,73 +160,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-
     case TAB_NXT:
       if (record->event.pressed) {
-        // CTL+TAB on Mac, but we have CTL and GUI swapped
-        if (user_config.is_macos) {
-          register_mods(mod_config(MOD_LGUI));
-        } else {
-          register_mods(mod_config(MOD_LCTL));
-        }
-        register_code(KC_TAB);
-      } else {
-        if (user_config.is_macos) {
-          unregister_mods(mod_config(MOD_LGUI));
-        } else {
-          unregister_mods(mod_config(MOD_LCTL));
-        }
-        unregister_code(KC_TAB);
+        SEND_STRING(SS_LCTL(SS_TAP(X_TAB)));
       }
-      break;
+      return false;
     case TAB_PRV:
       if (record->event.pressed) {
-        // CTL+SFT+TAB on Mac, but we have CTL and GUI swapped
-        if (user_config.is_macos) {
-          register_mods(mod_config(MOD_LGUI));
-        } else {
-          register_mods(mod_config(MOD_LCTL));
-        }
-        register_mods(mod_config(MOD_LSFT));
-        register_code(KC_TAB);
-      } else {
-        if (user_config.is_macos) {
-          unregister_mods(mod_config(MOD_LGUI));
-        } else {
-          unregister_mods(mod_config(MOD_LCTL));
-        }
-        unregister_mods(mod_config(MOD_LSFT));
-        unregister_code(KC_TAB);
+        SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_TAB))));
       }
-      break;
+      return false;
     case ZOOM_IN:
       if (record->event.pressed) {
-        register_mods(mod_config(MOD_LCTL));
-        register_code(KC_EQL);
-      } else {
-        unregister_mods(mod_config(MOD_LCTL));
-        unregister_code(KC_EQL);
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI(SS_TAP(X_EQL)));
+        } else {
+          SEND_STRING(SS_LCTL(SS_TAP(X_EQL)));
+        }
       }
-      break;
+      return false;
     case ZOOM_OUT:
       if (record->event.pressed) {
-        register_mods(mod_config(MOD_LCTL));
-        register_code(KC_MINS);
-      } else {
-        unregister_mods(mod_config(MOD_LCTL));
-        unregister_code(KC_MINS);
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI(SS_TAP(X_MINS)));
+        } else {
+          SEND_STRING(SS_LCTL(SS_TAP(X_MINS)));
+        }
       }
-      break;
+      return false;
     case SCRNSHT:
       if (record->event.pressed) {
         if (user_config.is_macos) {
           // Shift+CMD+5 for Skitch capture.
-          SEND_STRING(SS_LGUI(SS_LSFT("5")));
+          SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_5))));
         } else {
           tap_code16(KC_PSCR);
         }
       }
-      break;
+      return false;
     // Window management (rectange on macos)
     case WIN_L:
       if (record->event.pressed) {
@@ -238,7 +209,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_LEFT))));
         }
       }
-      break;
+      return false;
     case WIN_R:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -247,7 +218,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_RGHT))));
         }
       }
-      break;
+      return false;
     case WIN_U:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -256,7 +227,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_UP))));
         }
       }
-      break;
+      return false;
     case WIN_D:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -265,7 +236,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_DOWN))));
         }
       }
-      break;
+      return false;
     case WIN_FUL:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -274,7 +245,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_LGUI(SS_TAP(X_M)));
         }
       }
-      break;
+      return false;
      
     // TOREVISIT: SM and LG on Pop os 
     case WIN_LG:
@@ -285,7 +256,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_LGUI(SS_TAP(X_ENTER)) SS_LSFT(SS_TAP(X_RGHT)) SS_TAP(X_ESC));
         }
       }
-      break;
+      return false;
     case WIN_SM:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -294,7 +265,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING(SS_LGUI(SS_TAP(X_ENTER)) SS_LSFT(SS_TAP(X_LEFT)) SS_TAP(X_ESC));
         }
       }
-      break;
+      return false;
   }
 
   return true;
