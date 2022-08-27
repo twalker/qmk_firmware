@@ -17,10 +17,11 @@ BOTH_SHIFTS_TURNS_ON_CAPS_WORD = yes
 DYNAMIC_MACRO_ENABLE = yes
 
 # Combos
-COMBO_ENABLE = no
+COMBO_ENABLE = no # There's not enough memory to enable combos without disabling other features
 
 # Space savigs
 LTO_ENABLE = yes
+EXTRAKEY_ENABLE = yes # disables media key and volume control
 CONSOLE_ENABLE = no
+COMMAND_ENABLE = no
 MOUSEKEY_ENABLE = no
-EXTRAKEY_ENABLE = no

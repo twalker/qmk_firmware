@@ -59,5 +59,4 @@
 #define CDHHM_I LALT_T(KC_I)
 #define CDHHM_O RCTL_T(KC_O)
 
-
 // TODO: Application launcher with leader key
