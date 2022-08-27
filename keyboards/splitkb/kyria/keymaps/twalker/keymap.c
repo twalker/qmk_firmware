@@ -1,5 +1,25 @@
 #include QMK_KEYBOARD_H
 
+
+// Store is_macos in EEPROM.
+typedef union {
+  uint32_t raw;
+  struct {
+    bool is_macos :1;
+  };
+} user_config_t;
+
+user_config_t user_config;
+
+void keyboard_post_init_user(void) {
+  user_config.raw = eeconfig_read_user();
+}
+void eeconfig_init_user(void) {  // EEPROM is getting reset!
+  user_config.raw = 0;
+  user_config.is_macos = false; // Disable want mac OS by default
+  eeconfig_update_user(user_config.raw); // Write default value to EEPROM
+}
+
 enum layers {
   CDH = 0,
   SYM,
@@ -10,7 +30,7 @@ enum layers {
 };
 
 void matrix_init_user(void) {
-  if (keymap_config.swap_lctl_lgui) {
+  if (user_config.is_macos) {
     set_unicode_input_mode(UC_OSX);
   } else {
     set_unicode_input_mode(UC_LNX);
@@ -48,8 +68,9 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 #ifdef DYNAMIC_MACRO_ENABLE
 // Macros
 enum custom_keycodes {
-  MAC_USER = SAFE_RANGE,
-  MAC_EMAIL,
+  MACOS_TG = SAFE_RANGE,
+  USERNAME,
+  EMAIL,
   KC_LSTRT,
   KC_LEND,
   ZOOM_IN,
@@ -68,20 +89,26 @@ enum custom_keycodes {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case MAC_USER:
+    case MACOS_TG:
+      if (record->event.pressed) {
+        user_config.is_macos ^= 1; // Toggles the status
+        eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+      }
+      break;
+    case USERNAME:
       if (record->event.pressed) {
         SEND_STRING("tiwalker");
       }
       break;
 
-    case MAC_EMAIL:
+    case EMAIL:
       if (record->event.pressed) {
         SEND_STRING("tiwalker@starbucks.com");
       }
       break;
     case KC_LSTRT:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           //CMD-arrow on Mac, but we have CTL and GUI swapped
           register_mods(mod_config(MOD_LCTL));
           register_code(KC_LEFT);
@@ -89,7 +116,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           register_code(KC_HOME);
         }
       } else {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           unregister_mods(mod_config(MOD_LCTL));
           unregister_code(KC_LEFT);
         } else {
@@ -99,7 +126,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case KC_LEND:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           //CMD-arrow on Mac, but we have CTL and GUI swapped
           register_mods(mod_config(MOD_LCTL));
           register_code(KC_RIGHT);
@@ -107,7 +134,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           register_code(KC_END);
         }
       } else {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           unregister_mods(mod_config(MOD_LCTL));
           unregister_code(KC_RIGHT);
         } else {
@@ -155,14 +182,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TAB_NXT:
       if (record->event.pressed) {
         // CTL+TAB on Mac, but we have CTL and GUI swapped
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           register_mods(mod_config(MOD_LGUI));
         } else {
           register_mods(mod_config(MOD_LCTL));
         }
         register_code(KC_TAB);
       } else {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           unregister_mods(mod_config(MOD_LGUI));
         } else {
           unregister_mods(mod_config(MOD_LCTL));
@@ -173,7 +200,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TAB_PRV:
       if (record->event.pressed) {
         // CTL+SFT+TAB on Mac, but we have CTL and GUI swapped
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           register_mods(mod_config(MOD_LGUI));
         } else {
           register_mods(mod_config(MOD_LCTL));
@@ -181,7 +208,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         register_mods(mod_config(MOD_LSFT));
         register_code(KC_TAB);
       } else {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           unregister_mods(mod_config(MOD_LGUI));
         } else {
           unregister_mods(mod_config(MOD_LCTL));
@@ -210,7 +237,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case SCRNSHT:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           // Shift+CMD+5 for Skitch capture.
           SEND_STRING(SS_LGUI(SS_LSFT("5")));
         } else {
@@ -221,7 +248,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Window management (rectange on macos)
     case WIN_L:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           // Actual: (LCA(KC_LEFT))
           SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_LEFT))));
         } else {
@@ -232,7 +259,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case WIN_R:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_RGHT))));
         } else {
           SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_RGHT))));
@@ -241,7 +268,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case WIN_U:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_UP))));
         } else {
           SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_UP))));
@@ -250,7 +277,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case WIN_D:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_DOWN))));
         } else {
           SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_DOWN))));
@@ -259,7 +286,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case WIN_FUL:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_ENTER))));
         } else {
           SEND_STRING(SS_LGUI(SS_TAP(X_M)));
@@ -270,7 +297,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // TOREVISIT: SM and LG on Pop os 
     case WIN_LG:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_EQL))));
         } else {
           SEND_STRING(SS_LGUI(SS_TAP(X_ENTER)) SS_LSFT(SS_TAP(X_RGHT)) SS_TAP(X_ESC));
@@ -279,7 +306,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case WIN_SM:
       if (record->event.pressed) {
-        if (keymap_config.swap_lctl_lgui) {
+        if (user_config.is_macos) {
           SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_MINS))));
         } else {
           SEND_STRING(SS_LGUI(SS_TAP(X_ENTER)) SS_LSFT(SS_TAP(X_LEFT)) SS_TAP(X_ESC));
@@ -358,9 +385,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [MAC] = LAYOUT(
 //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-      RESET, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, MAC_USER, _______, _______,  RESET,
+      RESET, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, USERNAME, _______, _______,  RESET,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-    _______, _______, _______, DM_RSTP, _______, _______,                                    CG_TOGG, _______, MAC_EMAIL, _______, _______, _______,
+    _______, _______, _______, DM_RSTP, _______, _______,                                    MACOS_TG, _______,   EMAIL, _______, _______, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
     _______, _______, _______, _______, _______, _______, _______, DM_REC1, DM_REC2, _______, _______, _______, _______, _______, _______, _______,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
@@ -391,7 +418,7 @@ static void render_status(void) {
   oled_write_ln_P(PSTR("Kyria rev1.0"), false);
   // OS
   oled_write_P(PSTR("OS: "), false);
-  if (keymap_config.swap_lctl_lgui) {
+  if (user_config.is_macos) {
     oled_write_P(PSTR("MAC"), false);
   } else {
     oled_write_P(PSTR("Linux"), false);
