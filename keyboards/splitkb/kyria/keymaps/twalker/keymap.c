@@ -109,73 +109,55 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_LSTRT:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          //CMD-arrow on Mac, but we have CTL and GUI swapped
-          register_mods(mod_config(MOD_LCTL));
-          register_code(KC_LEFT);
+          SEND_STRING(SS_LGUI(SS_TAP(X_LEFT)));
         } else {
-          register_code(KC_HOME);
-        }
-      } else {
-        if (user_config.is_macos) {
-          unregister_mods(mod_config(MOD_LCTL));
-          unregister_code(KC_LEFT);
-        } else {
-          unregister_code(KC_HOME);
+          tap_code(KC_HOME);
         }
       }
       break;
     case KC_LEND:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          //CMD-arrow on Mac, but we have CTL and GUI swapped
-          register_mods(mod_config(MOD_LCTL));
-          register_code(KC_RIGHT);
+          SEND_STRING(SS_LGUI(SS_TAP(X_RGHT)));
         } else {
-          register_code(KC_END);
-        }
-      } else {
-        if (user_config.is_macos) {
-          unregister_mods(mod_config(MOD_LCTL));
-          unregister_code(KC_RIGHT);
-        } else {
-          unregister_code(KC_END);
+          tap_code(KC_END);
         }
       }
       break;
     case KC_COPY:
       if (record->event.pressed) {
-        register_mods(mod_config(MOD_LCTL));
-        register_code(KC_C);
-      } else {
-        unregister_mods(mod_config(MOD_LCTL));
-        unregister_code(KC_C);
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI("c"));
+        } else {
+          SEND_STRING(SS_LCTL("c"));
+        }
       }
       return false;
     case KC_PSTE:
       if (record->event.pressed) {
-        register_mods(mod_config(MOD_LCTL));
-        register_code(KC_V);
-      } else {
-        unregister_mods(mod_config(MOD_LCTL));
-        unregister_code(KC_V);
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI("v"));
+        } else {
+          SEND_STRING(SS_LCTL("v"));
+        }
       }
       return false;
     case KC_CUT:
       if (record->event.pressed) {
-        register_mods(mod_config(MOD_LCTL));
-        register_code(KC_X);
-      } else {
-        unregister_mods(mod_config(MOD_LCTL));
-        unregister_code(KC_X);
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI("x"));
+        } else {
+          SEND_STRING(SS_LCTL("x"));
+        }
       }
       return false;
     case KC_UNDO:
       if (record->event.pressed) {
-        register_mods(mod_config(MOD_LCTL));
-        register_code(KC_Z);
-      } else {
-        unregister_mods(mod_config(MOD_LCTL));
-        unregister_code(KC_Z);
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI("z"));
+        } else {
+          SEND_STRING(SS_LCTL("z"));
+        }
       }
       return false;
 
