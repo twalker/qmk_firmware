@@ -215,7 +215,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_LEFT))));
                 } else {
                     // Pop OS
-                    SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_LEFT))));
+                    SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_LEFT))));
                 }
             }
             break;
@@ -224,7 +224,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (keymap_config.swap_lctl_lgui) {
                     SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_RGHT))));
                 } else {
-                    SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_RGHT))));
+                    SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_RGHT))));
                 }
             }
             break;
