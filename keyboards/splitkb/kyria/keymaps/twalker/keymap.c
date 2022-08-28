@@ -73,6 +73,7 @@ enum custom_keycodes {
   EMAIL,
   KC_LSTRT,
   KC_LEND,
+  APP_MNU,
   ZOOM_IN,
   ZOOM_OUT,
   SCRNSHT,
@@ -100,12 +101,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING("tiwalker");
       }
       break;
-
     case EMAIL:
       if (record->event.pressed) {
         SEND_STRING("tiwalker@starbucks.com");
       }
       break;
+    case APP_MNU:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          // Opens mac OS's menu bar search 
+          SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_SLSH))));
+        } else {
+          // Application context menu on linux
+          // The quick brown fox  
+          SEND_STRING(SS_TAP(X_APP));
+        }
+      }
+      return false;
     case KC_LSTRT:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -280,9 +292,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
      KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                                        KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-   OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,  KC_NO,  KC_NO,   KC_NO, KC_NO,        KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
+   OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,   KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
-                                 KC_NO, KC_NO, MO(NUM), MO(SYM), LT(NAV, KC_BSPC), LT(NAV, KC_SPC), MO(WIN), KC_MEH, KC_NO, KC_NO
+                                 KC_NO,   KC_NO, MO(NUM), MO(SYM), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), MO(WIN), KC_MEH, KC_NO, KC_NO
                             //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
   ),
 
@@ -304,7 +316,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
     _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                    KC_LSTRT, KC_LEFT, KC_DOWN, KC_RGHT, KC_LEND, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-     KC_APP, KC_UNDO,  KC_CUT, KC_COPY, _______, KC_PSTE, _______, _______, _______, _______, TAB_PRV, KC_PGDN,   KC_NO,   KC_NO, TAB_NXT, _______,
+    _______, KC_UNDO,  KC_CUT, KC_COPY, APP_MNU, KC_PSTE, _______, _______, _______, _______, TAB_PRV, KC_PGDN,   KC_NO,   KC_NO, TAB_NXT, _______,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                                _______, _______,  KC_DEL, _______,  KC_DEL, _______, _______, _______, _______, _______
                             //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
