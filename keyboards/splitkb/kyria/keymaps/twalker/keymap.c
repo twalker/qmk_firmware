@@ -186,7 +186,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (user_config.is_macos) {
           SEND_STRING(SS_LGUI(SS_TAP(X_EQL)));
         } else {
-          SEND_STRING(SS_LCTL(SS_TAP(X_EQL)));
+          SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_EQL))));
         }
       }
       return false;
@@ -195,7 +195,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (user_config.is_macos) {
           SEND_STRING(SS_LGUI(SS_TAP(X_MINS)));
         } else {
-          SEND_STRING(SS_LCTL(SS_TAP(X_MINS)));
+          SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_MINS))));
         }
       }
       return false;
@@ -213,7 +213,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case WIN_L:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          // Actual: (LCA(KC_LEFT))
           SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_LEFT))));
         } else {
           // Pop OS
@@ -330,17 +329,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,   KC_F9,  KC_F10,  KC_F11,  KC_F12, _______, _______, _______, _______, _______,   KC_NO,    KC_1,    KC_2,    KC_3,   KC_NO, _______,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                                _______, _______, _______, _______, _______, _______,   KC_NO,    KC_0,  KC_DOT, _______
-                            //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
+    //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
   ),
 
 
   [WIN] = LAYOUT(
 //,-----------------------------------------------------.                                   ,-----------------------------------------------------.
-    _______, _______, _______, KC_VOLU, _______, _______,                                       KC_NO,   KC_NO,   WIN_U,   KC_NO,  WIN_LG, ZOOM_IN,
+    _______, _______, _______, KC_VOLU, _______, _______,                                       KC_NO, ZOOM_IN,   WIN_U,  WIN_LG,   KC_NO,   KC_NO,
 //| -------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
     _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,                                       KC_NO,   WIN_L,   WIN_D,   WIN_R, WIN_FUL, SCRNSHT,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-    _______, _______, _______, KC_VOLD, KC_MUTE, _______, _______, _______, _______, _______,   KC_NO,   KC_NO,   KC_NO,   KC_NO,  WIN_SM, ZOOM_OUT,
+    _______, _______, _______, KC_VOLD, KC_MUTE, _______, _______, _______, _______, _______,   KC_NO, ZOOM_OUT,  KC_NO,   WIN_SM,  KC_NO,   KC_NO,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                                _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
                             //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
