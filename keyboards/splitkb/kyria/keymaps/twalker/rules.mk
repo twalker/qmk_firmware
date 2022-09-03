@@ -4,7 +4,7 @@ ENCODER_ENABLE = yes # Enables the use of one or more encoders
 RGBLIGHT_ENABLE = no # Enable keyboard RGB underglow
 UNICODE_ENABLE = yes
 
-# Mirror Oryx tapping settings
+# Tapping settings
 IGNORE_MOD_TAP_INTERRUPT = yes
 TAPPING_FORCE_HOLD = no    # Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 PERMISSIVE_HOLD = no

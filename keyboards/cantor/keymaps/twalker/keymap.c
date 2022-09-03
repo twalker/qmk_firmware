@@ -1,58 +1,300 @@
 
 #include QMK_KEYBOARD_H
 #include <stdio.h>
+// Store is_macos in EEPROM.
+typedef union {
+  uint32_t raw;
+  struct {
+    bool is_macos :1;
+  };
+} user_config_t;
 
-enum layers { CDH = 0, SYM, NAV, NUM, WIN, MAC };
+user_config_t user_config;
+
+void keyboard_post_init_user(void) {
+  user_config.raw = eeconfig_read_user();
+}
+void eeconfig_init_user(void) {  // EEPROM is getting reset!
+  user_config.raw = 0;
+  user_config.is_macos = false; // Disable want mac OS by default
+  eeconfig_update_user(user_config.raw); // Write default value to EEPROM
+}
+
+enum layers {
+  CDH = 0,
+  SYM,
+  NAV,
+  NUM,
+  WIN,
+  MAC
+};
+
+void matrix_init_user(void) {
+  if (user_config.is_macos) {
+    set_unicode_input_mode(UC_OSX);
+  } else {
+    set_unicode_input_mode(UC_LNX);
+  }
+}
+
 // Tapping term per key
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case CDHHM_T:
-            return TT_SHIFT;
-        case CDHHM_N:
-            return TT_SHIFT;
-        case CDHHM_R:
-            return TT_ALT;
-        case CDHHM_I:
-            return TT_ALT;
-        default:
-            return TAPPING_TERM;
-    }
+  switch (keycode) {
+    case CDHHM_T:
+      return TT_SHIFT;
+    case CDHHM_N:
+      return TT_SHIFT;
+    case CDHHM_R:
+      return TT_ALT;
+    case CDHHM_I:
+      return TT_ALT;
+    default:
+      return TAPPING_TERM;
+  }
 };
 
+// Tapping force per key
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case LT(NAV, KC_BSPC):
+    case LT(NAV, KC_SPC):
+      return false;
+    default:
+      return true;
+  }
+}
+
+
+#ifdef DYNAMIC_MACRO_ENABLE
 // Macros
-enum custom_keycodes { MAC_USER = SAFE_RANGE, MAC_EMAIL };
+enum custom_keycodes {
+  MACOS_TG = SAFE_RANGE,
+  USERNAME,
+  EMAIL,
+  KC_LSTRT,
+  KC_LEND,
+  APP_MNU,
+  ZOOM_IN,
+  ZOOM_OUT,
+  SCRNSHT,
+  TAB_PRV,
+  TAB_NXT,
+  WIN_L,
+  WIN_R,
+  WIN_U,
+  WIN_D,
+  WIN_FUL,
+  WIN_LG,
+  WIN_SM
+};
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case MAC_USER:
-            if (record->event.pressed) {
-                SEND_STRING("tiwalker");
-            }
-            break;
+  switch (keycode) {
+    case MACOS_TG:
+      if (record->event.pressed) {
+        user_config.is_macos ^= 1; // Toggles the status
+        eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+      }
+      break;
+    case USERNAME:
+      if (record->event.pressed) {
+        SEND_STRING("tiwalker");
+      }
+      break;
+    case EMAIL:
+      if (record->event.pressed) {
+        SEND_STRING("tiwalker@starbucks.com");
+      }
+      break;
+    case APP_MNU:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          // Opens mac OS's menu bar search 
+          SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_SLSH))));
+        } else {
+          // Application context menu on linux
+          SEND_STRING(SS_TAP(X_APP));
+        }
+      }
+      return false;
+    case KC_LSTRT:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI(SS_TAP(X_LEFT)));
+        } else {
+          tap_code(KC_HOME);
+        }
+      }
+      return false;
+    case KC_LEND:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI(SS_TAP(X_RGHT)));
+        } else {
+          tap_code(KC_END);
+        }
+      }
+      return false;
+    case KC_COPY:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI(SS_TAP(X_C)));
+        } else {
+          SEND_STRING(SS_LCTL(SS_TAP(X_C)));
+        }
+      }
+      return false;
+    case KC_PSTE:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI(SS_TAP(X_V)));
+        } else {
+          SEND_STRING(SS_LCTL(SS_TAP(X_V)));
+        }
+      }
+      return false;
+    case KC_CUT:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI(SS_TAP(X_X)));
+        } else {
+          SEND_STRING(SS_LCTL(SS_TAP(X_X)));
+        }
+      }
+      return false;
+    case KC_UNDO:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI("z"));
+        } else {
+          SEND_STRING(SS_LCTL("z"));
+        }
+      }
+      return false;
+    case TAB_NXT:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTL(SS_TAP(X_TAB)));
+      }
+      return false;
+    case TAB_PRV:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_TAB))));
+      }
+      return false;
+    case ZOOM_IN:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI(SS_TAP(X_EQL)));
+        } else {
+          SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_EQL))));
+        }
+      }
+      return false;
+    case ZOOM_OUT:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LGUI(SS_TAP(X_MINS)));
+        } else {
+          SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_MINS))));
+        }
+      }
+      return false;
+    case SCRNSHT:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          // Shift+CMD+5 for Skitch capture.
+          SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_5))));
+        } else {
+          tap_code16(KC_PSCR);
+        }
+      }
+      return false;
+    // Window management (rectange on macos)
+    case WIN_L:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_LEFT))));
+        } else {
+          // Pop OS
+          SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_LEFT))));
+        }
+      }
+      return false;
+    case WIN_R:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_RGHT))));
+        } else {
+          SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_RGHT))));
+        }
+      }
+      return false;
+    case WIN_U:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_UP))));
+        } else {
+          SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_UP))));
+        }
+      }
+      return false;
+    case WIN_D:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_DOWN))));
+        } else {
+          SEND_STRING(SS_LGUI(SS_LCTRL(SS_TAP(X_DOWN))));
+        }
+      }
+      return false;
+    case WIN_FUL:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_ENTER))));
+        } else {
+          SEND_STRING(SS_LGUI(SS_TAP(X_M)));
+        }
+      }
+      return false;
+     
+    // TOREVISIT: SM and LG on Pop os 
+    case WIN_LG:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_EQL))));
+        } else {
+          SEND_STRING(SS_LGUI(SS_TAP(X_ENTER)) SS_LSFT(SS_TAP(X_RGHT)) SS_TAP(X_ESC));
+        }
+      }
+      return false;
+    case WIN_SM:
+      if (record->event.pressed) {
+        if (user_config.is_macos) {
+          SEND_STRING(SS_LCTRL(SS_LALT(SS_TAP(X_MINS))));
+        } else {
+          SEND_STRING(SS_LGUI(SS_TAP(X_ENTER)) SS_LSFT(SS_TAP(X_LEFT)) SS_TAP(X_ESC));
+        }
+      }
+      return false;
+  }
 
-        case MAC_EMAIL:
-            if (record->event.pressed) {
-                SEND_STRING("tiwalker@starbucks.com");
-            }
-            break;
-    }
+  return true;
+}
+#endif
 
-    return true;
-};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Colemak DH
   [CDH] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
+  //,--------+--------+--------+--------+--------+--------.                    ,--------+--------+--------+--------+--------+--------.
+       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                         KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            MO(NUM),   MO(SYM),  LT(NAV, KC_BSPC),    LT(NAV, KC_SPC), MO(WIN), MO(NUM)
+                                         MO(NUM), MO(SYM), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(WIN, KC_ENT), MO(NUM)
                                       //`--------------------------'  `--------------------------'
-
   ),
   // Symbols
   [SYM] = LAYOUT_split_3x6_3(
@@ -69,13 +311,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Nav
   [NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______, _______, _______, _______, _______,                        KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,  KC_DEL,
+      _______, _______, _______, _______, _______, _______,                        KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,  KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                      KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT,  KC_END, _______,
+      _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                     KC_LSTRT, KC_LEFT, KC_DOWN, KC_RGHT, KC_LEND, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       KC_APP, OS_UNDO,  OS_CUT, OS_COPY, OS_PSTE, OS_PSTE,                  RCS(KC_TAB), KC_PGDN,   KC_NO,  KC_NO, C(KC_TAB), _______,
+      _______, KC_UNDO,  KC_CUT, KC_COPY, APP_MNU, KC_PSTE,                      TAB_PRV, KC_PGDN,   KC_NO,   KC_NO, TAB_NXT, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______,  KC_DEL,    _______, _______, _______
+                                          _______, _______,  KC_DEL,     KC_TAB, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
   // Num
@@ -93,11 +335,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Win/Adjust
   [WIN] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        RESET, _______, _______, _______, _______, _______,                       KC_NO,   WIN_TL,   WIN_U,  WIN_TR,  WIN_LG, ZOOM_IN,
+      _______, _______, _______, KC_VOLU, _______, _______,                       KC_NO,  ZOOM_IN,   WIN_U,  WIN_LG,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______, _______,                       KC_NO,   WIN_L,    WIN_D,   WIN_R, WIN_FUL, WIN_PSC,
+      _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,                       KC_NO,   WIN_L,    WIN_D,   WIN_R, WIN_FUL, SCRNSHT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______, _______,                       KC_NO,  WIN_BL,   KC_NO,  WIN_BR,  WIN_SM, ZOOM_OUT,
+      _______, _______, _______, KC_VOLD, KC_MUTE, _______,                       KC_NO, ZOOM_OUT,   KC_NO,  WIN_SM,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______,  _______,   _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -106,13 +348,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Macros
   [MAC] = LAYOUT_split_3x6_3(
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-      _______, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, MAC_USER, _______, _______, _______,
+        RESET, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, USERNAME, _______, _______,  RESET,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, DM_RSTP, _______, _______,                                     _______, _______, MAC_EMAIL, _______, _______, _______,
+      _______, _______, _______, DM_RSTP, _______, _______,                                    MACOS_TG, _______,   EMAIL, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, DM_REC1,    DM_REC2, _______, _______
                                       //`--------------------------'  `--------------------------'
-    ),
+  ),
+
 };
