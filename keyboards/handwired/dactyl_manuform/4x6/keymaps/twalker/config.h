@@ -29,3 +29,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MASTER_RIGHT
 
 #define EE_HANDS
+
+// row-driven
+#undef MATRIX_ROW_PINS
+#define MATRIX_ROW_PINS { F0, F1, C7, D5, B7 }
+#undef MATRIX_COL_PINS
+#define MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
+
+/* COL2ROW or ROW2COL */
+#undef DIODE_DIRECTION
+#define DIODE_DIRECTION ROW2COL
+
+
+/* PMW3360 settings. */
+// try B0 F0
+// failed: B1, B0 -- success with F7 (Y is reversed)
+#define PMW33XX_CS_PIN F7
+
