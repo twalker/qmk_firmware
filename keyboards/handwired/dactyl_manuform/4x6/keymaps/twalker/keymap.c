@@ -1,21 +1,5 @@
 #include QMK_KEYBOARD_H
 
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//   // If console is enabled, it will print the matrix position and status of each key pressed
-// #ifdef CONSOLE_ENABLE
-//     uprintf("KL: kc: %u, col: %u, row: %u, pressed: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed);
-// #endif 
-//   return true;
-// }
-
-// void keyboard_post_init_user(void) {
-//   // Customise these values to desired behaviour
-//   debug_enable=true;
-//   debug_matrix=true;
-//   //debug_keyboard=true;
-//   //debug_mouse=true;
-// }
-
 #define _BASE 0
 #define _RAISE 1
 #define _LOWER 2
@@ -36,13 +20,13 @@
 #define LOWER MO(_LOWER)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /* Base (qwerty)
+    /* Base (colemac DH)
      * +-----------------------------------------+                             +-----------------------------------------+
-     * | ESC  |   q  |   w  |   e  |   r  |   t  |                             |   y  |   u  |   i  |   o  |   p  |      |
+     * | ESC  |   q  |   w  |   f  |   p  |   b  |                             |   j  |   l  |   u  |   y  |   ;  |      |
      * |------+------+------+------+------+------|                             |------+------+------+------+------+------|
-     * | TAB  |   a  |   s  |   d  |   f  |   g  |                             |   h  |   j  |   k  |   l  |   ;  |      |
+     * | TAB  |   a  |   r  |   s  |   t  |   g  |                             |   m  |   n  |   e  |   i  |   o  |      |
      * |------+------+------+------+------+------|                             |------+------+------+------+------+------|
-     * | SHFT |   z  |   x  |   c  |   v  |   b  |                             |   n  |   m  |   ,  |   .  |   /  |      |
+     * | SHFT |   z  |   x  |   c  |   d  |   v  |                             |   k  |   h  |   ,  |   .  |   /  |      |
      * +------+------+------+------+-------------+                             +-------------+------+------+------+------+
      *               |  [   |   ]  |                                                         |      |      |
      *               +-------------+-------------+                             +-------------+-------------+
@@ -57,13 +41,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                           +-------------+ +-------------+
      */
     [_BASE] = LAYOUT(
-        KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
-        KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,               KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
-                          KC_1, KC_2,                                                KC_1, KC_2,
-                                            KC_3,   KC_4,             KC_3,  KC_4,
-                                            KC_5,  KC_6,            KC_5,  KC_6,
-                                            KC_7, KC_8,             KC_7, KC_8
+        KC_ESC,  KC_Q,    KC_W,    KC_F,    KC_R,    KC_P,               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINS,
+        KC_TAB,  KC_A,    KC_R,    KC_S,    KC_F,    KC_T,               KC_M,    KC_N,    KC_E,    KC_I,       KC_O, KC_QUOT,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_D,               KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
+                          KC_LBRC, KC_RBRC,                                                KC_PLUS, KC_EQL,
+                                            RAISE,   KC_SPC,             KC_ENT,  LOWER,
+                                            KC_TAB,  KC_HOME,            KC_END,  KC_DEL,
+                                            KC_BSPC, KC_GRV,             KC_LGUI, KC_LALT
     ),
 
     [_LOWER] = LAYOUT(
