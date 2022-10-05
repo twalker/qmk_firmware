@@ -1,6 +1,15 @@
 #include QMK_KEYBOARD_H
 
-#define _BASE 0
+// enum layers {
+//   CDH = 0,
+//   SYM,
+//   NAV,
+//   NUM,
+//   WIN,
+//   MAC
+// };
+
+#define CDH 0
 #define _RAISE 1
 #define _LOWER 2
 
@@ -59,38 +68,48 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                           5      |      | 5      |      |
      *                                           +-------------+ +-------------+
      */
-    [_BASE] = LAYOUT(
-        KC_ESC,  KC_Q,    KC_W,    KC_F,    KC_R,    KC_P,               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINS,
-        KC_TAB,  KC_A,    KC_R,    KC_S,    KC_F,    KC_T,               KC_M,    KC_N,    KC_E,    KC_I,       KC_O, KC_QUOT,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_D,               KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
-                          KC_LBRC, KC_RBRC,                                                KC_PLUS, KC_EQL,
-                                            RAISE,   KC_SPC,             KC_ENT,  LOWER,
-                                            KC_TAB,  KC_HOME,            KC_END,  KC_DEL,
+
+    // [_LOWER] = LAYOUT(
+    //     _______,_______,_______,_______,_______,_______,            _______,_______,_______,_______,_______, _______,
+    //     _______,_______,_______,_______,_______,_______,            _______,_______,_______,_______,_______, _______,
+    //     _______,_______,_______,_______,_______,_______,            _______,_______,_______,_______,_______, _______,
+    //                      _______,_______,                                          _______, _______,
+    //                                             _______,_______,            _______,
+    //                                             _______,_______,            _______,
+    //                                             _______,_______,    _______,_______
+    // ),
+    [CDH] = LAYOUT(
+       QK_BOOT,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, QK_BOOT,
+        KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_G,               KC_M,    KC_N,    KC_E,    KC_I,       KC_O, KC_QUOT,
+         KC_NO,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,               KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
+                          KC_LBRC, KC_RBRC,                                                KC_MS_BTN1, KC_MS_BTN2,
+                                            RAISE,   KC_BSPC,                    KC_SPC,    
+                                            KC_TAB,  KC_HOME,                   KC_DEL,
                                             KC_BSPC, KC_GRV,             KC_LGUI, KC_LALT
-    ),
-
-    [_LOWER] = LAYOUT(
-        _______, _______, _______, _______, _______, KC_LBRC,             KC_RBRC, KC_P7,   KC_P8,   KC_P9,   QK_BOOT,   KC_PLUS,
-        _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END , KC_LPRN,             KC_RPRN, KC_P4,   KC_P5,   KC_P6,   KC_MINS, KC_PIPE,
-        _______, _______, _______, _______, _______, _______,             _______, KC_P1,   KC_P2,   KC_P3,   KC_EQL,  KC_UNDS,
-                          _______, KC_PSCR,                                                 _______, KC_P0,
-                                            _______, _______,             _______, _______,
-                                            _______, _______,             _______, _______,
-                                            _______, _______,             _______, _______
-    ),
-
-    [_RAISE] = LAYOUT(
-        _______, QK_BOOT,   _______, _______, _______, KC_LBRC,             KC_RBRC, _______, KC_NLCK, KC_INS,  KC_SLCK, KC_MUTE,
-        _______, KC_LEFT, KC_UP  , KC_DOWN, KC_RGHT, KC_LPRN,             KC_RPRN, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_VOLU,
-        _______, _______, _______, _______, _______, _______,             _______, _______, _______, _______, _______, KC_VOLD,
-                          _______, _______,                                                 KC_EQL,  _______,
-                                            _______, _______,             _______, _______,
-                                            _______, _______,             _______, _______,
-                                            _______, _______,             _______, _______
     )
+
+    // [_LOWER] = LAYOUT(
+    //     _______, _______, _______, _______, _______, KC_LBRC,             KC_RBRC, KC_P7,   KC_P8,   KC_P9,   QK_BOOT,   KC_PLUS,
+    //     _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END , KC_LPRN,             KC_RPRN, KC_P4,   KC_P5,   KC_P6,   KC_MINS, KC_PIPE,
+    //     _______, _______, _______, _______, _______, _______,             _______, KC_P1,   KC_P2,   KC_P3,   KC_EQL,  KC_UNDS,
+    //                       _______, KC_PSCR,                                                 _______, KC_P0,
+    //                                         _______, _______,             _______, _______,
+    //                                         _______, _______,             _______, _______,
+    //                                         _______, _______,             _______, _______
+    // ),
+
+    // [_RAISE] = LAYOUT(
+    //     _______, QK_BOOT,   _______, _______, _______, KC_LBRC,             KC_RBRC, _______, KC_NLCK, KC_INS,  KC_SLCK, KC_MUTE,
+    //     _______, KC_LEFT, KC_UP  , KC_DOWN, KC_RGHT, KC_LPRN,             KC_RPRN, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_VOLU,
+    //     _______, _______, _______, _______, _______, _______,             _______, _______, _______, _______, _______, KC_VOLD,
+    //                       _______, _______,                                                 KC_EQL,  _______,
+    //                                         _______, _______,             _______, _______,
+    //                                         _______, _______,             _______, _______,
+    //                                         _______, _______,             _______, _______
+    // )
 };
 
-void persistent_default_layer_set(uint16_t default_layer) {
-    eeconfig_update_default_layer(default_layer);
-    default_layer_set(default_layer);
-}
+// void persistent_default_layer_set(uint16_t default_layer) {
+//     eeconfig_update_default_layer(default_layer);
+//     default_layer_set(default_layer);
+// }
