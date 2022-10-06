@@ -20,4 +20,8 @@ POINTING_DEVICE_ENABLE = yes
 
 POINTING_DEVICE_DRIVER = pmw3389
 # MOUSE_SHARED_EP = yes
+# Dynamic macros will not fit on firmware!
+DYNAMIC_MACRO_ENABLE = yes 
 
+# Space savinges
+LTO_ENABLE = yes

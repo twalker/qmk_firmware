@@ -50,7 +50,7 @@
 
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
-// Configure the global tapping term (default: 200ms)
+ // Configure the global tapping term (default: 200ms)
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
 #define TT_SHIFT 120
