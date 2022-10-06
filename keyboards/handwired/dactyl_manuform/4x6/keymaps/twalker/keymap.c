@@ -316,16 +316,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // //                                    =======* =======*          =======* =======*
     // ),
    // MO(NUM), MO(SYM), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(WIN, KC_ENT),  MO(NUM)
+    // Pending positional placement: NUM, WIN 
     [CDH] = LAYOUT(
     //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
-      QK_BOOT,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,             KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, QK_BOOT,
+       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,             KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,   KC_NO,
        KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,             KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
-        KC_NO,    KC_Z,    KC_X,   KC_C,     KC_D,    KC_V,             KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_BSLS,
+     OSL(MAC),    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,             KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
     //                  =======* =======*                                              =======* =======*                
-                        KC_LBRC, MO(NUM),                                           KC_MS_BTN1, KC_MS_BTN2,
+                          KC_NO,   KC_NO,                                                KC_NO,   KC_NO,
                                           MO(SYM), LT(NAV, KC_BSPC), LT(NAV, KC_SPC),    
-                                          KC_TAB,  KC_HOME,          LT(WIN, KC_ENT),
-                                          KC_BSPC, MO(MSE),          KC_LGUI, KC_LALT
+                                            KC_NO, MO(NUM),          LT(WIN, KC_ENT),
+                                            KC_NO, MO(MSE),           KC_NO,   KC_NO
     //                                    =======* =======*          =======* =======*
     ),
     [SYM] = LAYOUT(
@@ -347,8 +348,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_UNDO,  KC_CUT, KC_COPY, APP_MNU, KC_PSTE,          TAB_PRV, KC_PGDN,   KC_NO,   KC_NO, TAB_NXT, _______,
     //                  =======* =======*                                              =======* =======*                
                         _______, _______,                                              _______, _______,
-                                          _______, _______,                    KC_DEL,
-                                          _______, _______,                    KC_TAB,
+                                          _______,  KC_DEL,                    KC_TAB,
+                                          _______, _______,                   _______,
                                           _______, _______,          _______, _______
     //                                    =======* =======*          =======* =======*
     ),
@@ -358,7 +359,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______,   KC_F5,   KC_F6,   KC_F7,   KC_F8, _______,            KC_NO,    KC_4,    KC_5,    KC_6,   KC_NO, _______,
       _______,   KC_F9,  KC_F10,  KC_F10,  KC_F12, _______,            KC_NO,    KC_1,    KC_2,    KC_3,   KC_NO, _______,
     //                  =======* =======*                                              =======* =======*                
-                        _______, _______,                                                 KC_0,  KC_DOT,
+                         KC_F13,  KC_F14,                                                 KC_0,  KC_DOT,
                                           _______, _______,                   _______,
                                           _______, _______,                   _______,
                                           _______, _______,          _______, _______
