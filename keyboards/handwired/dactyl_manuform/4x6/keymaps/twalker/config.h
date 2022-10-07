@@ -6,8 +6,8 @@
 //#define USE_I2C
 
 /* Select hand configuration */
-// #define MASTER_LEFT
-#define MASTER_RIGHT
+#define MASTER_LEFT
+// #define MASTER_RIGHT
 
 // #define EE_HANDS
 
@@ -48,9 +48,8 @@
 // | `PMW33XX_LIFTOFF_DISTANCE`   | (Optional) Sets the lift off distance at run time                                           | `0x02`                   |
 // | `ROTATIONAL_TRANSFORM_ANGLE` | (Optional) Allows for the sensor data to be rotated +/- 127 degrees directly in the sensor. | `0`                      |
 
-#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
- // Configure the global tapping term (default: 200ms)
+// Configure the global tapping term (default: 200ms)
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
 #define TT_SHIFT 120
@@ -78,3 +77,4 @@
 #define CDHHM_I LALT_T(KC_I)
 #define CDHHM_O RCTL_T(KC_O)
 
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD

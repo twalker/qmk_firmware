@@ -77,7 +77,8 @@ enum custom_keycodes {
   WIN_D,
   WIN_FUL,
   WIN_LG,
-  WIN_SM
+  WIN_SM, 
+  KC_ACCEL
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -316,7 +317,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // //                                    =======* =======*          =======* =======*
     // ),
    // MO(NUM), MO(SYM), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(WIN, KC_ENT),  MO(NUM)
-    // Pending positional placement: NUM, WIN 
+    // Pending positional placement: NUM, WIN, MSE
     [CDH] = LAYOUT(
     //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
        KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,             KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,   KC_NO,
@@ -386,7 +387,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         DM_REC1, DM_REC2,                                              _______, _______,
                                           _______, _______,                   _______,
                                           _______, _______,                   _______,
-                                          _______, _______,          _______, _______
+                                         _______, _______,          _______, _______
     //                                    =======* =======*          =======* =======*
     ),
 
@@ -403,4 +404,126 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                                    =======* =======*          =======* =======*
     )
 };
+
+
+
+
+
+
+// Auto mouse behavior
+static uint16_t mouse_timer           = 0;
+static uint16_t mouse_debounce_timer  = 0;
+static uint8_t  mouse_keycode_tracker = 0;
+bool            tap_toggling = false, enable_acceleration = false;
+
+#ifdef TAPPING_TERM_PER_KEY
+#    define TAP_CHECK get_tapping_term(KC_BTN1, NULL)
+#else
+#    ifndef TAPPING_TERM
+#        define TAPPING_TERM 200
+#    endif
+#    define TAP_CHECK TAPPING_TERM
+#endif
+
+__attribute__((weak)) report_mouse_t pointing_device_task_keymap(report_mouse_t mouse_report) {
+    return mouse_report;
+}
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    mouse_xy_report_t x = mouse_report.x, y = mouse_report.y;
+    mouse_report.x = 0;
+    mouse_report.y = 0;
+
+    if (x != 0 && y != 0) {
+        mouse_timer = timer_read();
+#ifdef OLED_ENABLE
+        oled_timer_reset();
+#endif
+        if (timer_elapsed(mouse_debounce_timer) > TAP_CHECK) {
+            if (enable_acceleration) {
+                x = (mouse_xy_report_t)(x > 0 ? x * x / 16 + x : -x * x / 16 + x);
+                y = (mouse_xy_report_t)(y > 0 ? y * y / 16 + y : -y * y / 16 + y);
+            }
+            mouse_report.x = x;
+            mouse_report.y = y;
+            if (!layer_state_is(MSE)) {
+                layer_on(MSE);
+            }
+        }
+    } else if (timer_elapsed(mouse_timer) > 650 && layer_state_is(MSE) && !mouse_keycode_tracker && !tap_toggling) {
+        layer_off(MSE);
+    } else if (tap_toggling) {
+        if (!layer_state_is(MSE)) {
+            layer_on(MSE);
+        }
+    }
+
+    return pointing_device_task_keymap(mouse_report);
+}
+
+bool process_record_pointing(uint16_t keycode, keyrecord_t* record) {
+    switch (keycode) {
+        case TT(MSE):
+            if (record->event.pressed) {
+                mouse_keycode_tracker++;
+            } else {
+#if TAPPING_TOGGLE != 0
+                if (record->tap.count == TAPPING_TOGGLE) {
+                    tap_toggling ^= 1;
+#    if TAPPING_TOGGLE == 1
+                    if (!tap_toggling) mouse_keycode_tracker -= record->tap.count + 1;
+#    else
+                    if (!tap_toggling) mouse_keycode_tracker -= record->tap.count;
+#    endif
+                } else {
+                    mouse_keycode_tracker--;
+                }
+#endif
+            }
+            mouse_timer = timer_read();
+            break;
+        case TG(MSE):
+            if (record->event.pressed) {
+                tap_toggling ^= 1;
+            }
+            break;
+        case MO(MSE):
+#if defined(KEYBOARD_ploopy)
+        case DPI_CONFIG:
+#elif (defined(KEYBOARD_bastardkb_charybdis) || defined(KEYBOARD_handwired_tractyl_manuform)) && !defined(NO_CHARYBDIS_KEYCODES)
+        case SAFE_RANGE ... (CHARYBDIS_SAFE_RANGE-1):
+#endif
+        case KC_MS_UP ... KC_MS_WH_RIGHT:
+            record->event.pressed ? mouse_keycode_tracker++ : mouse_keycode_tracker--;
+            mouse_timer = timer_read();
+            break;
+        case KC_ACCEL:
+            enable_acceleration = record->event.pressed;
+            record->event.pressed ? mouse_keycode_tracker++ : mouse_keycode_tracker--;
+            mouse_timer = timer_read();
+            break;
+#if 0
+        case QK_ONE_SHOT_MOD ... QK_ONE_SHOT_MOD_MAX:
+            break;
+#endif
+        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+            if (record->event.pressed || !record->tap.count) {
+                break;
+            }
+        default:
+            if (IS_NOEVENT(record->event)) break;
+            if ((keycode >= QK_LAYER_TAP && keycode <= QK_LAYER_TAP_MAX) && (((keycode >> 0x8) & 0xF) == MSE)) {
+                record->event.pressed ? mouse_keycode_tracker++ : mouse_keycode_tracker--;
+                mouse_timer = timer_read();
+                break;
+            }
+            if (layer_state_is(MSE) && !mouse_keycode_tracker && !tap_toggling) {
+                layer_off(MSE);
+            }
+            mouse_keycode_tracker = 0;
+            mouse_debounce_timer  = timer_read();
+            break;
+    }
+    return true;
+}
 
