@@ -6,6 +6,11 @@
 //#define USE_I2C
 
 /* Select hand configuration */
+/*
+NOTE: Specify which side when flashing: 
+ qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-left
+ qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-right
+*/
 #define MASTER_LEFT
 // #define MASTER_RIGHT
 
@@ -76,5 +81,4 @@
 #define CDHHM_E RGUI_T(KC_E)
 #define CDHHM_I LALT_T(KC_I)
 #define CDHHM_O RCTL_T(KC_O)
-
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
