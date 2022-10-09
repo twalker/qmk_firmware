@@ -81,4 +81,6 @@ NOTE: Specify which side when flashing:
 #define CDHHM_E RGUI_T(KC_E)
 #define CDHHM_I LALT_T(KC_I)
 #define CDHHM_O RCTL_T(KC_O)
+
+
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
