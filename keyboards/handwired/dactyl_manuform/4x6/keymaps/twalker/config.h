@@ -52,7 +52,7 @@ NOTE: Specify which side when flashing:
 // | `PMW33XX_SPI_DIVISOR`        | (Optional) Sets the SPI Divisor used for SPI communication.                                 | _varies_                 |
 // | `PMW33XX_LIFTOFF_DISTANCE`   | (Optional) Sets the lift off distance at run time                                           | `0x02`                   |
 // | `ROTATIONAL_TRANSFORM_ANGLE` | (Optional) Allows for the sensor data to be rotated +/- 127 degrees directly in the sensor. | `0`                      |
-
+#define MK_KINETIC_SPEED
 
 // Configure the global tapping term (default: 200ms)
 #define TAPPING_TERM 150
