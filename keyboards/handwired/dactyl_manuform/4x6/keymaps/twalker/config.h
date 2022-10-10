@@ -42,8 +42,9 @@ NOTE: Specify which side when flashing:
 
 #define POINTING_DEVICE_INVERT_Y
 // #define ROTATIONAL_TRANSFORM_ANGLE  -25
-#define ROTATIONAL_TRANSFORM_ANGLE  -20
-#define PMW33XX_CPI 750
+#define ROTATIONAL_TRANSFORM_ANGLE  -15
+// #define PMW33XX_CPI 750
+#define PMW33XX_CPI 650
 
 // | `PMW33XX_CS_PIN`             | (Required) Sets the Cable Select pin connected to the sensor.                               | `POINTING_DEVICE_CS_PIN` |
 // | `PMW33XX_CS_PINS`            | (Alternative) Sets the Cable Select pins connected to multiple sensors.                     | _not defined_            |
