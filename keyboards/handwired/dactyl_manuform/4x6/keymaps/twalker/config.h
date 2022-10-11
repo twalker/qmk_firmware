@@ -8,8 +8,8 @@
 /* Select hand configuration */
 /*
 NOTE: Specify which side when flashing: 
- qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-left
- qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-right
+qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-left
+qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-right
 */
 #define MASTER_LEFT
 // #define MASTER_RIGHT

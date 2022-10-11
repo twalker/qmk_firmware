@@ -92,7 +92,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
         if (user_config.is_macos) {
           process_magic(MAGIC_SWAP_CTL_GUI, record);
+          pointing_device_set_cpi(800);
         } else {
+          pointing_device_set_cpi(650);
           process_magic(MAGIC_UNSWAP_CTL_GUI, record);
         }
       }
@@ -394,7 +396,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MSE] = LAYOUT(
     //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
       _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______,          _______, KC_BTN1, KC_BTN2, KC_BTN3, _______, _______,
+      TO(CDH), _______, _______, _______, _______, _______,          _______, KC_BTN1, KC_BTN2, KC_BTN3, _______, _______,
       _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______,
     //                  =======* =======*                                              =======* =======*                
                         _______, _______,                                              _______, _______,
