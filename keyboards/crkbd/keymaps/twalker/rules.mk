@@ -1,6 +1,5 @@
 OLED_ENABLE = no
 OLED_DRIVER = SSD1306
-UNICODE_ENABLE = yes
 
 # Tapping settings
 IGNORE_MOD_TAP_INTERRUPT = yes
