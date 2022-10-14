@@ -54,7 +54,7 @@ qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-right
 // | `PMW33XX_LIFTOFF_DISTANCE`   | (Optional) Sets the lift off distance at run time                                           | `0x02`                   |
 // | `ROTATIONAL_TRANSFORM_ANGLE` | (Optional) Allows for the sensor data to be rotated +/- 127 degrees directly in the sensor. | `0`                      |
 #define MK_KINETIC_SPEED
-
+#define TAPPING_TOGGLE 1 
 // Configure the global tapping term (default: 200ms)
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
