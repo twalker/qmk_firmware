@@ -327,7 +327,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                  =======* =======*                                              =======* =======*                
                           KC_NO, OSL(MAC),                                            OSL(MAC),   KC_NO,
                                           MO(SYM), LT(NAV, KC_BSPC), LT(NAV, KC_SPC),    
-                                            KC_NO, MO(NUM),          LT(WIN, KC_ENT),
+                                          MO(MSE), MO(NUM),          LT(WIN, KC_ENT),
                                             KC_NO, MO(MSE),           KC_NO,   KC_NO
     //                                    =======* =======*          =======* =======*
     ),
