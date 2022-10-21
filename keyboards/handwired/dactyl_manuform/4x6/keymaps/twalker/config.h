@@ -38,13 +38,12 @@ qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-right
 #define POINTING_DEVICE_RIGHT
 
 // Limits the frequency that the sensor is polled for motion.
-#define POINTING_DEVICE_TASK_THROTTLE_MS 1
+// #define POINTING_DEVICE_TASK_THROTTLE_MS 1
 
 #define POINTING_DEVICE_INVERT_Y
 // #define ROTATIONAL_TRANSFORM_ANGLE  -25
 #define ROTATIONAL_TRANSFORM_ANGLE  -15
-// #define PMW33XX_CPI 750
-#define PMW33XX_CPI 650
+// #define PMW33XX_CPI 650 // sent in keymap based on OS.
 
 // | `PMW33XX_CS_PIN`             | (Required) Sets the Cable Select pin connected to the sensor.                               | `POINTING_DEVICE_CS_PIN` |
 // | `PMW33XX_CS_PINS`            | (Alternative) Sets the Cable Select pins connected to multiple sensors.                     | _not defined_            |
@@ -53,8 +52,9 @@ qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-right
 // | `PMW33XX_SPI_DIVISOR`        | (Optional) Sets the SPI Divisor used for SPI communication.                                 | _varies_                 |
 // | `PMW33XX_LIFTOFF_DISTANCE`   | (Optional) Sets the lift off distance at run time                                           | `0x02`                   |
 // | `ROTATIONAL_TRANSFORM_ANGLE` | (Optional) Allows for the sensor data to be rotated +/- 127 degrees directly in the sensor. | `0`                      |
-#define MK_KINETIC_SPEED
-#define TAPPING_TOGGLE 1 
+
+// #define MK_KINETIC_SPEED
+// #define TAPPING_TOGGLE 1 
 // Configure the global tapping term (default: 200ms)
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
