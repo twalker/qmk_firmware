@@ -7,19 +7,12 @@
 
 /* Select hand configuration */
 /* serial.c configuration for split keyboard */
-/*
-NOTE: Specify which side when flashing: 
-qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-left
-qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-right
-*/
-
 // Activate double tap run/reset on elite_pi
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 // #define SOFT_SERIAL_PIN D2
 // #define EE_HANDS
 #define MASTER_LEFT
 // #define MASTER_RIGHT
-
 
 // row-driven
 #undef MATRIX_ROW_PINS
@@ -32,6 +25,23 @@ qmk flash -kb handwired/dactyl_manuform/4x6 -km twalker -bl dfu-split-right
 #define DIODE_DIRECTION ROW2COL
 
 /* PMW3360 settings. */
+// try B0 F0
+// failed: B1, B0 -- success with F7 (Y is reversed)
+#define PMW33XX_CS_PIN F7
+
+// Enable use of pointing device on slave split.
+#define SPLIT_POINTING_ENABLE
+// Pointing device is on the right split.
+#define POINTING_DEVICE_RIGHT
+
+// Limits the frequency that the sensor is polled for motion.
+// #define POINTING_DEVICE_TASK_THROTTLE_MS 1
+
+#define POINTING_DEVICE_INVERT_Y
+// #define ROTATIONAL_TRANSFORM_ANGLE  -25
+#define ROTATIONAL_TRANSFORM_ANGLE  -15
+// #define PMW33XX_CPI 650 // sent in keymap based on OS.
+
 // | `PMW33XX_CS_PIN`             | (Required) Sets the Cable Select pin connected to the sensor.                               | `POINTING_DEVICE_CS_PIN` |
 // | `PMW33XX_CS_PINS`            | (Alternative) Sets the Cable Select pins connected to multiple sensors.                     | _not defined_            |
 // | `PMW33XX_CPI`                | (Optional) Sets counts per inch sensitivity of the sensor.                                  | _varies_                 |

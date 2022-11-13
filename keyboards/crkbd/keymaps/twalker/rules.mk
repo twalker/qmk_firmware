@@ -1,3 +1,6 @@
+CONVERT_TO=blok
+
+# TODO: Get OLED to work with Block
 OLED_ENABLE = no
 OLED_DRIVER = SSD1306
 
@@ -16,10 +19,10 @@ DYNAMIC_MACRO_ENABLE = yes
 # Combos
 COMBO_ENABLE = no
 
-# Space savigs
+# Space savings
 LTO_ENABLE = yes
 EXTRAKEY_ENABLE = yes # disables media key and volume control
-CONSOLE_ENABLE = no
-COMMAND_ENABLE = no
-MOUSEKEY_ENABLE = no # only used for right-click menu (adds 5% to the firmware size)
+CONSOLE_ENABLE = yes
+COMMAND_ENABLE = yes
+MOUSEKEY_ENABLE = yes # only used for right-click menu (adds 5% to the firmware size)
 
