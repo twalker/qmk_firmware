@@ -23,4 +23,4 @@ LTO_ENABLE = yes
 EXTRAKEY_ENABLE = yes # disables media key and volume control
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
-MOUSEKEY_ENABLE = no # only used for right-click menu (adds 5% to the firmware size)
+MOUSEKEY_ENABLE = yes # only used for right-click menu (adds 5% to the firmware size)
