@@ -26,7 +26,8 @@ enum layers {
   NUM,
   WIN,
   MAC,
-  MSE
+  MSE,
+  LIT,
 };
 
 // Tapping term per key
@@ -56,6 +57,37 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
   }
 }
 
+#ifdef RGBLIGHT_ENABLE 
+layer_state_t layer_state_set_user(layer_state_t state) {
+  switch (get_highest_layer(state)) {
+    case NAV:
+      rgblight_sethsv(HSV_TEAL);
+      break;
+    case SYM:
+      rgblight_sethsv(HSV_GREEN);
+      break;
+    case NUM:
+      rgblight_sethsv(HSV_ORANGE);
+      break;
+    case WIN:
+      rgblight_sethsv(HSV_YELLOW);
+      break;
+    case MAC:
+      rgblight_sethsv(HSV_RED);
+      break;
+    case MSE:
+      rgblight_sethsv(HSV_PURPLE);
+      break;
+    case LIT:
+      rgblight_sethsv(HSV_WHITE);
+      break;
+    default: // for any other layers, or the default layer
+      rgblight_sethsv(HSV_BLUE);
+      break;
+  }
+  return state;
+}
+#endif
 
 #ifdef DYNAMIC_MACRO_ENABLE
 // Macros
@@ -91,9 +123,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
         if (user_config.is_macos) {
           process_magic(MAGIC_SWAP_CTL_GUI, record);
-          pointing_device_set_cpi(800);
+          // The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI.
+          pointing_device_set_cpi(900);
         } else {
-          pointing_device_set_cpi(650);
+          pointing_device_set_cpi(350);
           process_magic(MAGIC_UNSWAP_CTL_GUI, record);
         }
       }
@@ -284,6 +317,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 #endif
 
+#ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
+void pointing_device_init_user(void) {
+    set_auto_mouse_layer(MSE); // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
+    set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
+}
+#endif /* POINTING_DEVICE_AUTO_MOUSE_ENABLE */
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Coordinates 
      * +-----------------------------------------+                             +-----------------------------------------+
@@ -321,16 +361,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // Pending positional placement: NUM, WIN, MSE
     [CDH] = LAYOUT(
     //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
-       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,             KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,   KC_NO,
+       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,             KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
        KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,             KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
-       KC_MEH,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,             KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
+     OSL(MAC),    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,             KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
     //                  =======* =======*                                              =======* =======*                
-                          KC_NO, OSL(MAC),                                            OSL(MAC),   KC_NO,
+                        MO(LIT), MO(NUM),                                               KC_NO,   KC_NO,
                                           MO(SYM), LT(NAV, KC_BSPC), LT(NAV, KC_SPC),    
                                           MO(MSE), MO(NUM),          LT(WIN, KC_ENT),
-                                            KC_NO,  KC_NO,           KC_NO,   KC_NO
+                                            KC_NO,   KC_NO,            KC_NO, KC_NO
     //                                    =======* =======*          =======* =======*
     ),
+
     [SYM] = LAYOUT(
     //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
       _______, KC_EXLM,   KC_AT, KC_LCBR, KC_RCBR, KC_PIPE,          KC_AMPR, KC_ASTR,   KC_LT,   KC_GT, KC_QUES, _______,
@@ -343,9 +384,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                           _______, _______,          _______, _______
     //                                    =======* =======*          =======* =======*
     ),
+
     [NAV] = LAYOUT(
     //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
-      _______, _______, _______, _______, _______, _______,            KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,   KC_NO,
+      _______, _______, _______, _______, _______, _______,            KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,  KC_DEL,
       _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,         KC_LSTRT, KC_LEFT, KC_DOWN, KC_RGHT, KC_LEND, _______,
       _______, KC_UNDO,  KC_CUT, KC_COPY, APP_MNU, KC_PSTE,          TAB_PRV, KC_PGDN,   KC_NO,   KC_NO, TAB_NXT, _______,
     //                  =======* =======*                                              =======* =======*                
@@ -367,6 +409,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                           _______, _______,          _______, _______
     //                                    =======* =======*          =======* =======*
     ),
+
     [WIN] = LAYOUT(
     //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
       _______, _______, _______, KC_VOLU, _______, _______,            KC_NO, ZOOM_IN,   WIN_U,  WIN_LG,   KC_NO,   KC_NO,
@@ -379,9 +422,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                           _______, _______,          _______, _______
     //                                    =======* =======*          =======* =======*
     ),
+
     [MAC] = LAYOUT(
     //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
-      QK_BOOT, _______, _______, _______, DM_PLY1, DM_PLY2,          _______, _______,USERNAME, _______, _______, QK_BOOT,
+      QK_BOOT, _______, _______, _______, DM_PLY1, DM_PLY2,          QK_BOOT, _______,USERNAME, _______, _______, _______,
       _______, _______, _______, DM_RSTP, _______, _______,         MACOS_TG, _______,   EMAIL, _______, _______, _______,
       _______, _______,_______,_______,_______,_______,              _______, _______, _______, _______, _______, _______,
     //                  =======* =======*                                              =======* =======*                
@@ -394,8 +438,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [MSE] = LAYOUT(
     //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
-      _______, _______, _______, KC_WH_D, _______, _______,          _______, _______, _______, _______, _______, _______,
-      TO(CDH), _______, KC_WH_L, KC_WH_U, KC_WH_R, _______,          _______, KC_BTN1, KC_BTN2, KC_BTN3, _______, _______,
+      _______, _______, _______, _______, _______, _______,          _______, KC_WH_U, _______, _______, _______, _______,
+      TO(CDH), _______, _______, _______, _______, _______,          KC_WH_L, KC_BTN1, KC_BTN2, KC_BTN3, KC_WH_R, _______,
+      _______, _______, _______, _______, _______, _______,          _______, KC_WH_D, _______, _______, _______, _______,
+    //                  =======* =======*                                              =======* =======*                
+                        _______, _______,                                              _______, _______,
+                                          _______, _______,                   _______,
+                                          _______, _______,                   _______,
+                                          _______, _______,          _______, _______
+    //                                    =======* =======*          =======* =======*
+    ),
+
+    [LIT] = LAYOUT(
+    //=======* =======* =======* =======* =======* =======*          =======* =======* =======* =======* =======* =======*
+      _______, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD, _______,          _______, _______, _______, _______, _______, _______,
+      RGB_TOG, RGB_SAD, RGB_HUD, RGB_VAD,RGB_RMOD, _______,          _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______,
     //                  =======* =======*                                              =======* =======*                
                         _______, _______,                                              _______, _______,

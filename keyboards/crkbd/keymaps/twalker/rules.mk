@@ -20,9 +20,9 @@ DYNAMIC_MACRO_ENABLE = yes
 COMBO_ENABLE = no
 
 # Space savings
-LTO_ENABLE = yes
+LTO_ENABLE = no
 EXTRAKEY_ENABLE = yes # disables media key and volume control
 CONSOLE_ENABLE = yes
-COMMAND_ENABLE = yes
+COMMAND_ENABLE = no
 MOUSEKEY_ENABLE = yes # only used for right-click menu (adds 5% to the firmware size)
 

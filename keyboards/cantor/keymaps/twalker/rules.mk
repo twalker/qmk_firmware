@@ -21,7 +21,7 @@ LTO_ENABLE = yes
 EXTRAKEY_ENABLE = yes # disables media key and volume control
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
-MOUSEKEY_ENABLE = no # only used for right-click menu (adds 5% to the firmware size)
+MOUSEKEY_ENABLE = mouse # only used for right-click menu (adds 5% to the firmware size)
 # Caps word
 CAPS_WORD_ENABLE = yes
 BOTH_SHIFTS_TURNS_ON_CAPS_WORD = yes
