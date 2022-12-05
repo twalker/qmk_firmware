@@ -17,11 +17,11 @@ BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 # AUDIO_ENABLE = yes          # Audio output
 
-RGB_MATRIX_ENABLE = yes     # Enable WS2812 RGB matrix
+RGB_MATRIX_ENABLE = no     # Enable WS2812 RGB matrix
 RGB_MATRIX_DRIVER = WS2812
 SPLIT_KEYBOARD = yes
 
-RGBLIGHT_SUPPORTED = yes
-RGB_MATRIX_SUPPORTED = yes
+RGBLIGHT_SUPPORTED = no
+RGB_MATRIX_SUPPORTED = no
 
-LAYOUTS = split_3x5_3
+LAYOUTS = split_3x6_3

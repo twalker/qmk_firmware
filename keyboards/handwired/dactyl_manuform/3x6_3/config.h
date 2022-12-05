@@ -21,24 +21,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* key matrix size */
 // Rows are doubled-up
 #define MATRIX_ROWS 8
-#define MATRIX_COLS 5
+#define MATRIX_COLS 6
 
 // wiring of each half
-#define MATRIX_COL_PINS { C6, D7, E6, B4, B5 }
+
+// from my tractly 
+// MATRIX_ROW_PINS { F0, F1, C7, D5, B7 }
+// MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
+// 3x5_3
+// MATRIX_COL_PINS { C6, D7, E6, B4, B5 }
+// MATRIX_ROW_PINS { B1, B3, B2, B6 }
+#define MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
 #define MATRIX_ROW_PINS { B1, B3, B2, B6 }
 
 #define DIODE_DIRECTION ROW2COL
-
-// WS2812 RGB LED strip input and number of LEDs
-#define RGB_DI_PIN D3
-#define RGB_MATRIX_LED_COUNT 36
-#define RGB_MATRIX_SPLIT { 18, 18 }
-#define RGB_MATRIX_CENTER { 133, 54 }
-
-/* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
-#undef LOCKING_SUPPORT_ENABLE
-/* Locking resynchronize hack */
-#undef LOCKING_RESYNC_ENABLE
 
 /* Enables This makes it easier for fast typists to use dual-function keys */
 #undef PERMISSIVE_HOLD
