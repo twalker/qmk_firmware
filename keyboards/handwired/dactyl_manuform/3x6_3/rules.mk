@@ -1,14 +1,17 @@
 # MCU name
-MCU = atmega32u4
+MCU = STM32F411
 
 # Bootloader selection
-BOOTLOADER = caterina
+# BOOTLOADER = stm32-dfu
+BOOTLOADER = tinyuf2
+CONVERT_TO = stemcell
 
+#PIN_COMPATIBLE = elite_c
 # Build Options
 #   change yes to no to disable
 #
 BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
-MOUSEKEY_ENABLE = yes       # Mouse keys
+MOUSEKEY_ENABLE = no       # Mouse keys
 EXTRAKEY_ENABLE = yes       # Audio control and System control
 CONSOLE_ENABLE = no         # Console for debug
 COMMAND_ENABLE = no         # Commands for debug and configuration
