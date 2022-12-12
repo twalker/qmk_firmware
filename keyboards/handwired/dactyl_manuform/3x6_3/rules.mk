@@ -1,12 +1,16 @@
 # MCU name
-MCU = STM32F411
+# MCU = STM32F411
 
 # Bootloader selection
-# BOOTLOADER = stm32-dfu
-BOOTLOADER = tinyuf2
-CONVERT_TO = stemcell
+# BOOTLOADER = tinyuf2
+# CONVERT_TO = stemcell
 
-#PIN_COMPATIBLE = elite_c
+# MCU name
+MCU = atmega32u4
+
+# Bootloader selection
+BOOTLOADER = atmel-dfu
+PIN_COMPATIBLE = elite_c
 # Build Options
 #   change yes to no to disable
 #
