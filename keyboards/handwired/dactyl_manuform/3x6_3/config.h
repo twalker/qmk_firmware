@@ -61,4 +61,4 @@ SOFT_SERIAL_PIN D2 // needs verification
 #define DIODE_DIRECTION ROW2COL
 
 /* Enables This makes it easier for fast typists to use dual-function keys */
-#undef PERMISSIVE_HOLD
+// #undef PERMISSIVE_HOLD
