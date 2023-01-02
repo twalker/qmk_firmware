@@ -23,20 +23,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS 8
 #define MATRIX_COLS 6
 
-// wiring of each half
-// from my 4x6 tractly 
-// MATRIX_ROW_PINS { F0, F1, C7, D5, B7 }
-// MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
-// 3x5_3
-// MATRIX_COL_PINS { C6, D7, E6, B4, B5 }
-// MATRIX_ROW_PINS { B1, B3, B2, B6 }
-// #define MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
-// #define MATRIX_ROW_PINS { B1, B3, B2, B6 }
-
-//default 4x6: pro micro -> SteMCell
-// #define MATRIX_ROW_PINS { F7 /*B0*/, B1 /*A5*/, B3 /*A6*/, B2 /*A7*/, B6 /*A4*/ }
-// #define MATRIX_COL_PINS { D4 /*A15*/, C6 /*B3*/, D7 /*B4*/, E6/*B5*/, B4, /*B8*/ B5 /*B9*/ }
-
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
@@ -46,9 +32,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Activate double tap run/reset on elite_pi
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
-// elite_c for elite pi from my tractly
+
+
+/*
+  elite_c == elite_pi pins:
+MATRIX_ROW_PINS { F0 == D16, F1 == D15, C7 == D14, D5 == D13 }
+MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
+*/
+// same elite_c for elite pi as my tractyl
 #define MATRIX_ROW_PINS { F0, F1, C7, D5 }
 #define MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
+
+
 /*
 serial.c configuration (for split keyboard). 
 SOFT_SERIAL_PIN D2 // needs verification
