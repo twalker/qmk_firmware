@@ -24,8 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_COLS 6
 
 // wiring of each half
-
-// from my tractly 
+// from my 4x6 tractly 
 // MATRIX_ROW_PINS { F0, F1, C7, D5, B7 }
 // MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
 // 3x5_3
@@ -33,32 +32,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // MATRIX_ROW_PINS { B1, B3, B2, B6 }
 // #define MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
 // #define MATRIX_ROW_PINS { B1, B3, B2, B6 }
-// from bastard for stemcell
-// #define MATRIX_ROW_PINS { F7, C6, D4, B5 }
-// #define MATRIX_COL_PINS { F5, B6, D7, E6, B4 }
-//
+
 //default 4x6: pro micro -> SteMCell
 // #define MATRIX_ROW_PINS { F7 /*B0*/, B1 /*A5*/, B3 /*A6*/, B2 /*A7*/, B6 /*A4*/ }
 // #define MATRIX_COL_PINS { D4 /*A15*/, C6 /*B3*/, D7 /*B4*/, E6/*B5*/, B4, /*B8*/ B5 /*B9*/ }
 
 /* COL2ROW or ROW2COL */
-// #define DIODE_DIRECTION COL2ROW
+#define DIODE_DIRECTION COL2ROW
 
-// I deduced for stemcel
-//#define MATRIX_ROW_PINS { B4, B5, B8, B9 }
-//#define MATRIX_COL_PINS { B1, B0, A5, A6, A7, A4 }
-// mapped from pro micro to StemCell:
-// #define MATRIX_ROW_PINS { A5, A6, A7, A4 }
-// #define MATRIX_COL_PINS { A15, B3, B4, B5, B8, B9 }
 // promicro pins
-#define MATRIX_ROW_PINS { B1, B3, B2, B6 }
+// #define MATRIX_ROW_PINS { B1, B3, B2, B6 }
+// #define MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
+
+// Activate double tap run/reset on elite_pi
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
+// elite_c for elite pi from my tractly
+#define MATRIX_ROW_PINS { F0, F1, C7, D5 }
 #define MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
 /*
 serial.c configuration (for split keyboard). 
 SOFT_SERIAL_PIN D2 // needs verification
 */
-
-#define DIODE_DIRECTION ROW2COL
 
 /* Enables This makes it easier for fast typists to use dual-function keys */
 // #undef PERMISSIVE_HOLD

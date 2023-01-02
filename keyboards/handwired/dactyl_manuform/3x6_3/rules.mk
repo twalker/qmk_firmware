@@ -1,15 +1,9 @@
 # MCU name
-# MCU = STM32F411
-
-# Bootloader selection
-# BOOTLOADER = tinyuf2
-# CONVERT_TO = stemcell
-
-# MCU name
 MCU = atmega32u4
 
 # Bootloader selection
 BOOTLOADER = atmel-dfu
+CONVERT_TO = elite_pi
 PIN_COMPATIBLE = elite_c
 
 # Tapping settings
