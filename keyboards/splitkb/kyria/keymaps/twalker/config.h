@@ -33,10 +33,17 @@
 // #define TAPPING_TERM_PER_KEY
 // #define TT_SHIFT 150
 // #define TT_ALT 220
-#define TAPPING_TERM 150
+//
+// #define TAPPING_TERM 150
+// #define TAPPING_TERM_PER_KEY
+// #define TT_SHIFT 120
+// #define TT_ALT 180
+
+#define TAPPING_TERM 120
 #define TAPPING_TERM_PER_KEY
-#define TT_SHIFT 120
-#define TT_ALT 180
+#define TT_SHIFT 110
+#define TT_ALT 150
+
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
