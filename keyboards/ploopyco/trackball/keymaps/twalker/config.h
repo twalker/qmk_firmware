@@ -5,7 +5,7 @@
  * PLOOPY_DPI_OPTIONS to set the array, and PLOOPY_DPI_DEFAULT.
  */
 
-//#define PLOOPY_DPI_DEFAULT 800
+// #define PLOOPY_DPI_DEFAULT 800
 // Trackball PSI on Tractyl Manuform: 900 for Mac, 350 for Linux
 #define PLOOPY_DPI_OPTIONS \
     { 350, 600, 900 }
@@ -13,7 +13,7 @@
 // Makes the key into a momentary key, rather than a toggle.
 #define PLOOPY_DRAGSCROLL_MOMENTARY
 // Sets the DPI multiplier to use when drag scroll is enabled.
-// #define PLOOPY_DRAGSCROLL_MULTIPLIER 0.30
+// #define PLOOPY_DRAGSCROLL_MULTIPLIER 0.3
 
 // Normally, when activating Drag Scroll, it uses a fraction of the current DPI. 
 // You can define this to use a specific, set DPI rather than a fraction of the current DPI.
