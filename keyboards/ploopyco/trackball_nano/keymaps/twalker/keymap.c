@@ -37,8 +37,11 @@ typedef enum {
     // You could theoretically define 0b00 and send it by having a macro send
     // the second tap after LED_CMD_TIMEOUT has elapsed.
     // CMD_EXTRA = 0b00,
-    TG_SCROLL = 0b01,
-    CYC_DPI   = 0b10,
+    // TG_SCROLL = 0b01,
+    // CYC_DPI   = 0b10,
+    // Swapped bits, becoause only numlock was successfully triggering.
+    CYC_DPI   = 0b01,
+    TG_SCROLL = 0b10,
     CMD_RESET = 0b11 // CMD_ prefix to avoid clash with QMK macro
 } led_cmd_t;
 
@@ -88,6 +91,11 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 void keyboard_post_init_user(void) {
     num_lock_state  = host_keyboard_led_state().num_lock;
     caps_lock_state = host_keyboard_led_state().caps_lock;
+    // Customise these values to desired behaviour
+    // debug_enable=true;
+    // debug_matrix=true;
+    // debug_keyboard=true;
+    // debug_mouse=true;
 }
 
 uint32_t command_timeout(uint32_t trigger_time, void *cb_arg) {
