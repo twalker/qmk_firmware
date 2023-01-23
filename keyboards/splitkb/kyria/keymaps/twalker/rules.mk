@@ -1,7 +1,13 @@
+# Elite-pi for my kyria rev3
+CONVERT_TO = elite_pi
+PIN_COMPATIBLE = elite_c
+
+RGB_MATRIX_ENABLE = no     # Disable keyboard RGB matrix, as it is enabled by default on rev3
+
 OLED_DRIVER = SSD1306 # Enables the use of OLED displays
-OLED_ENABLE = yes # Enables the use of OLED displays
+OLED_ENABLE = yes # Enables the use of OLED displays--not enough space with elite-c
 ENCODER_ENABLE = yes # Enables the use of one or more encoders
-RGBLIGHT_ENABLE = no # Enable keyboard RGB underglow
+RGBLIGHT_ENABLE = yes # Enable keyboard RGB underglow
 
 # Tapping settings
 IGNORE_MOD_TAP_INTERRUPT = yes
@@ -19,7 +25,7 @@ DYNAMIC_MACRO_ENABLE = yes
 COMBO_ENABLE = no # There's not enough memory to enable combos without disabling other features
 
 # Space savigs
-LTO_ENABLE = yes
+LTO_ENABLE = no
 EXTRAKEY_ENABLE = yes # disables media key and volume control
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
