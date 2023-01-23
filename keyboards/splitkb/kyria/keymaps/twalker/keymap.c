@@ -57,34 +57,6 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
   }
 }
 
-#ifdef RGBLIGHT_ENABLE 
-layer_state_t layer_state_set_user(layer_state_t state) {
-  switch (get_highest_layer(state)) {
-    case NAV:
-      rgblight_sethsv(HSV_TEAL);
-      break;
-    case SYM:
-      rgblight_sethsv(HSV_GREEN);
-      break;
-    case NUM:
-      rgblight_sethsv(HSV_ORANGE);
-      break;
-    case WIN:
-      rgblight_sethsv(HSV_YELLOW);
-      break;
-    case MAC:
-      rgblight_sethsv(HSV_RED);
-      break;
-    case MSE:
-      rgblight_sethsv(HSV_PURPLE);
-      break;
-    default: // for any other layers, or the default layer
-      rgblight_sethsv(HSV_BLUE);
-      break;
-  }
-  return state;
-}
-#endif
 
 #ifdef DYNAMIC_MACRO_ENABLE
 // Macros
@@ -329,7 +301,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
    OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,   KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
-                                 KC_NO,   KC_NO, MO(NUM), MO(SYM), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(WIN, KC_ENT),  MO(MSE), KC_NO, KC_NO
+                             KC_KB_MUTE,   KC_NO, MO(NUM), MO(SYM), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(WIN, KC_ENT),  MO(MSE), KC_NO, WIN_FUL
                             //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
   ),
 
@@ -428,7 +400,6 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         // QMK Logo and version
         render_qmk_logo();
-        oled_write_P(PSTR("Kyria\n\n"), false);
         // OS
         oled_write_P(PSTR("OS: "), false);
         if (user_config.is_macos) {
@@ -493,22 +464,74 @@ bool oled_task_user(void) {
 #endif
 
 #ifdef ENCODER_ENABLE
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
+
 bool encoder_update_user(uint8_t index, bool clockwise) {
   if (index == 0) {
     // Volume control
-    if (clockwise) {
+    if (!clockwise) {
       tap_code(KC_VOLU);
     } else {
       tap_code(KC_VOLD);
     }
   } else if (index == 1) {
-    // Page up/down
-    if (clockwise) {
-      tap_code(KC_WH_R);
+    // Alt-Tab window switcher
+    if (!clockwise) {
+      if (!is_alt_tab_active) {
+        is_alt_tab_active = true;
+        register_code(KC_LALT);
+      }
+      alt_tab_timer = timer_read();
+      tap_code16(KC_TAB);
     } else {
-      tap_code(KC_WH_L);
+      if (!is_alt_tab_active) {
+        is_alt_tab_active = true;
+        register_code(KC_LALT);
+      }
+      alt_tab_timer = timer_read();
+      tap_code16(S(KC_TAB));
     }
   }
   return false;
+}
+
+void matrix_scan_user(void) {
+  if (is_alt_tab_active) {
+    if (timer_elapsed(alt_tab_timer) > 1000) {
+      unregister_code(KC_LALT);
+      is_alt_tab_active = false;
+    }
+  }
+}
+
+#endif
+
+#ifdef RGBLIGHT_ENABLE 
+layer_state_t layer_state_set_user(layer_state_t state) {
+  switch (get_highest_layer(state)) {
+    case NAV:
+      rgblight_sethsv(HSV_TEAL);
+      break;
+    case SYM:
+      rgblight_sethsv(HSV_GREEN);
+      break;
+    case NUM:
+      rgblight_sethsv(HSV_ORANGE);
+      break;
+    case WIN:
+      rgblight_sethsv(HSV_YELLOW);
+      break;
+    case MAC:
+      rgblight_sethsv(HSV_RED);
+      break;
+    case MSE:
+      rgblight_sethsv(HSV_PURPLE);
+      break;
+    default: // for any other layers, or the default layer
+      rgblight_sethsv(HSV_BLUE);
+      break;
+  }
+  return state;
 }
 #endif
