@@ -8,6 +8,7 @@ OLED_DRIVER = SSD1306 # Enables the use of OLED displays
 OLED_ENABLE = yes # Enables the use of OLED displays--not enough space with elite-c
 ENCODER_ENABLE = yes # Enables the use of one or more encoders
 RGBLIGHT_ENABLE = yes # Enable keyboard RGB underglow
+RGBLIGHT_LIMIT_VAL = 80
 
 # Tapping settings
 IGNORE_MOD_TAP_INTERRUPT = yes

@@ -57,6 +57,34 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
   }
 }
 
+#ifdef RGBLIGHT_ENABLE 
+layer_state_t layer_state_set_user(layer_state_t state) {
+  switch (get_highest_layer(state)) {
+    case NAV:
+      rgblight_sethsv(HSV_TEAL);
+      break;
+    case SYM:
+      rgblight_sethsv(HSV_GREEN);
+      break;
+    case NUM:
+      rgblight_sethsv(HSV_ORANGE);
+      break;
+    case WIN:
+      rgblight_sethsv(HSV_YELLOW);
+      break;
+    case MAC:
+      rgblight_sethsv(HSV_RED);
+      break;
+    case MSE:
+      rgblight_sethsv(HSV_PURPLE);
+      break;
+    default: // for any other layers, or the default layer
+      rgblight_sethsv(HSV_BLUE);
+      break;
+  }
+  return state;
+}
+#endif
 
 #ifdef DYNAMIC_MACRO_ENABLE
 // Macros
@@ -359,7 +387,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
     QK_BOOT, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, USERNAME, _______, _______,QK_BOOT,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-    _______, _______, _______, DM_RSTP, _______, _______,                                    MACOS_TG, _______,   EMAIL, _______, _______, _______,
+    RGB_TOG, _______, _______, DM_RSTP, _______, _______,                                    MACOS_TG, _______,   EMAIL, _______, _______, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
     _______, _______, _______, _______, _______, _______, _______, DM_REC1, DM_REC2, _______, _______, _______, _______, _______, _______, _______,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
