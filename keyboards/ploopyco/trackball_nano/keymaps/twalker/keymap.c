@@ -23,12 +23,13 @@
 #define NUM_LOCK_BITMASK 0b01
 #define CAPS_LOCK_BITMASK 0b10
 
+// Defaults:
 // #define PLOOPY_DPI_DEFAULT 1
 // #define PLOOPY_DPI_OPTIONS { 375, 750, 1375}
-// #define PLOOPY_DPI_OPTIONS { 200, 800, 1600}
-// World record for fastest index finger tapping is 1092 taps per minute, which
-// is 55ms for a single tap.
-// https://recordsetter.com/world-record/index-finger-taps-minute/46066
+
+#define PLOOPY_DPI_DEFAULT 1
+#define PLOOPY_DPI_OPTIONS { 200, 800, 1200}
+
 #define LED_CMD_TIMEOUT 50
 #define DELTA_X_THRESHOLD 60
 #define DELTA_Y_THRESHOLD 15
