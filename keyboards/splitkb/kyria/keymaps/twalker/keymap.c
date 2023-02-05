@@ -459,7 +459,7 @@ static void render_status(void) {
     default:
       oled_write_P(PSTR("Undefined\n"), false);
   }
-   
+
   // Write host Keyboard LED Status to OLEDs
   led_t led_usb_state = host_keyboard_led_state();
   oled_write_P(led_usb_state.num_lock    ? PSTR("NUMLCK ") : PSTR("       "), false);
