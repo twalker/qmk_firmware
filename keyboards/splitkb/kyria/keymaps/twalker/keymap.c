@@ -280,8 +280,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Ploopy Nano commands
     case NAN_DPI:
       if (record->event.pressed) {
+        // Capslock works for macro on MacOS, and numlock works for macro on linux.
+        // Using capslock on MacOS, and numlock on Linux to cycle DPI. 
         if (user_config.is_macos) {
-          SEND_STRING(SS_TAP(X_NUM_LOCK) SS_TAP(X_NUM_LOCK));
+          SEND_STRING(SS_TAP(X_CAPS_LOCK) SS_TAP(X_CAPS_LOCK));
         } else {
           SEND_STRING(SS_TAP(X_NUM_LOCK) SS_TAP(X_NUM_LOCK));
         }

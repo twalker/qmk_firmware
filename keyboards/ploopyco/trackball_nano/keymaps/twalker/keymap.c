@@ -28,9 +28,9 @@
 // #define PLOOPY_DPI_OPTIONS { 375, 750, 1375}
 
 #define PLOOPY_DPI_DEFAULT 1
-#define PLOOPY_DPI_OPTIONS { 200, 800, 1200}
+#define PLOOPY_DPI_OPTIONS { 200, 600, 900}
  
-#define LED_CMD_TIMEOUT 50
+#define LED_CMD_TIMEOUT 100
 #define DELTA_X_THRESHOLD 60
 #define DELTA_Y_THRESHOLD 15
 
@@ -38,11 +38,8 @@ typedef enum {
     // You could theoretically define 0b00 and send it by having a macro send
     // the second tap after LED_CMD_TIMEOUT has elapsed.
     // CMD_EXTRA = 0b00,
-    // TG_SCROLL = 0b01,
-    // CYC_DPI   = 0b10,
-    // Swapped bits, becoause only numlock was successfully triggering.
-    CYC_DPI   = 0b01,
-    TG_SCROLL = 0b10,
+    TG_SCROLL = 0b01,
+    CYC_DPI   = 0b10,
     CMD_RESET = 0b11 // CMD_ prefix to avoid clash with QMK macro
 } led_cmd_t;
 
@@ -105,12 +102,15 @@ uint32_t command_timeout(uint32_t trigger_time, void *cb_arg) {
     uprintf("Received command 0b%02b (", cmd_window_state->led_cmd);
 #   endif
     switch (cmd_window_state->led_cmd) {
+        // Capslock works for macro on MacOS, and numlock works for macro on linux.
+        // Using capslock on MacOS, and numlock on Linux to cycle DPI. 
         case TG_SCROLL:
-#           ifdef CONSOLE_ENABLE
-            uprint("TG_SCROLL)\n");
-#           endif
-            scroll_enabled = !scroll_enabled;
-            break;
+// #           ifdef CONSOLE_ENABLE
+//             uprint("TG_SCROLL)\n");
+// #           endif
+//             scroll_enabled = !scroll_enabled;
+//             cycle_dpi(); 
+//             break;
         case CYC_DPI:
 #           ifdef CONSOLE_ENABLE
             uprint("CYC_DPI)\n");
