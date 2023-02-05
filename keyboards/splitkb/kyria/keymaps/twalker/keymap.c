@@ -78,7 +78,6 @@ enum custom_keycodes {
   WIN_FUL,
   WIN_LG,
   WIN_SM,
-  NAN_SCR,
   NAN_DPI
 };
 
@@ -281,9 +280,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Ploopy Nano commands
     case NAN_DPI:
       if (record->event.pressed) {
-        SEND_STRING(SS_TAP(X_NUM_LOCK));
-        SEND_STRING(SS_TAP(X_NUM_LOCK));
+        if (user_config.is_macos) {
+          SEND_STRING(SS_TAP(X_NUM_LOCK) SS_TAP(X_NUM_LOCK));
+        } else {
+          SEND_STRING(SS_TAP(X_NUM_LOCK) SS_TAP(X_NUM_LOCK));
+        }
       }
+    return false;
   }
 
   return true;
@@ -298,7 +301,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
      KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                                        KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-   OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,   KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
+   OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,   KC_NO,   KC_NO,  MO(MSE),  KC_NO,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                              KC_KB_MUTE,   KC_NO, MO(NUM), MO(SYM), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(WIN, KC_ENT),  MO(MSE), KC_NO, WIN_FUL
                             //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
