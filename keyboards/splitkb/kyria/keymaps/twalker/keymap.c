@@ -530,7 +530,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_sethsv(HSV_TEAL);
       break;
     case SYM:
-      rgblight_sethsv(HSV_GREEN);
+      rgblight_sethsv(HSV_CHARTREUSE);
       break;
     case NUM:
       rgblight_sethsv(HSV_ORANGE);
@@ -545,7 +545,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgblight_sethsv(HSV_PURPLE);
       break;
     default: // for any other layers, or the default layer
-      rgblight_sethsv(HSV_BLUE);
+      if (user_config.is_macos) {
+        rgblight_sethsv(HSV_BLUE);
+      } else {
+        rgblight_sethsv(HSV_GREEN);
+      }
       break;
   }
   return state;
