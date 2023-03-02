@@ -1,4 +1,5 @@
 # Elite-pi for my kyria rev3
+# comment out for for rev1
 CONVERT_TO = elite_pi
 PIN_COMPATIBLE = elite_c
 
