@@ -6,8 +6,8 @@
 
 // Use Liatris's power LED as caps lock indicator.
 // Comment out for kyria rev1
-// #define LED_CAPS_LOCK_PIN 24
-// #define LED_PIN_ON_STATE 0
+#define LED_CAPS_LOCK_PIN 24
+#define LED_PIN_ON_STATE 0
 
 // EC11K encoders have a different resolution than other EC11 encoders.
 // When using the default resolution of 4, if you notice your encoder skipping
