@@ -79,7 +79,8 @@ enum custom_keycodes {
   WIN_D,
   WIN_FUL,
   WIN_LG,
-  WIN_SM
+  WIN_SM,
+  NAN_DPI
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -278,6 +279,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
+    // Ploopy Nano commands
+    case NAN_DPI:
+      if (record->event.pressed) {
+        // Capslock works for macro on MacOS, and numlock works for macro on linux.
+        // Using capslock on MacOS, and numlock on Linux to cycle DPI. 
+        if (user_config.is_macos) {
+          SEND_STRING(SS_TAP(X_CAPS_LOCK) SS_TAP(X_CAPS_LOCK));
+        } else {
+          SEND_STRING(SS_TAP(X_NUM_LOCK) SS_TAP(X_NUM_LOCK));
+        }
+      }
+    return false;
   }
 
   return true;
@@ -363,7 +376,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Mouse
   [MSE] = LAYOUT_split_3x6_3(
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-      TO(CDH), _______,   KC_NO, KC_MS_U,   KC_NO, _______,                                     _______, KC_WH_U, _______, _______, _______, _______,
+      TO(CDH), _______,   KC_NO, KC_MS_U,   KC_NO, _______,                                     NAN_DPI, KC_WH_U, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
       _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,                                     KC_WH_L, KC_BTN1, KC_BTN2, KC_BTN3, KC_WH_R, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
