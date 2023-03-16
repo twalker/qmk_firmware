@@ -1,4 +1,4 @@
-/* Copyright 2022 DZTECH <moyi4681@Live.cn>
+/* Copyright 2023 Cipulot
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,5 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
-#include "tiger80.h"
+
+#pragma once
+
+#define HAL_USE_ADC TRUE
+
+#include_next <halconf.h>
