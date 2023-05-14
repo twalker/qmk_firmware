@@ -456,6 +456,9 @@ static void render_icon(void) {
     case MSE:
       render_mouse_icon();
       break;
+    case MAC:
+      render_cat_icon();
+      break;
     default:
       if (user_config.is_macos) {
         render_base_icon_macos();
