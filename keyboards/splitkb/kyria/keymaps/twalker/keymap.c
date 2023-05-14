@@ -487,9 +487,17 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
   if (index == 0) {
     // Volume control
     if (!clockwise) {
-      tap_code(KC_VOLU);
+      if (user_config.is_macos) {
+        tap_code(KC_VOLD);
+      } else {
+        tap_code(KC_VOLU);
+      }
     } else {
-      tap_code(KC_VOLD);
+      if (user_config.is_macos) {
+        tap_code(KC_VOLU);
+      } else {
+        tap_code(KC_VOLD);
+      }
     }
   } else if (index == 1) {
     // Alt-Tab window switcher
