@@ -441,9 +441,6 @@ static void render_status(void) {
 
 static void render_icon(void) {
   switch (get_highest_layer(layer_state)) {
-    case CDH:
-      render_base_icon();
-      break;
     case SYM:
       render_sym_icon();
       break;
@@ -456,14 +453,15 @@ static void render_icon(void) {
     case WIN:
       render_win_icon();
       break;
-    case MAC:
-      render_base_icon();
-      break;
     case MSE:
       render_mouse_icon();
       break;
     default:
-      render_base_icon();
+      if (user_config.is_macos) {
+        render_base_icon_macos();
+      } else {
+        render_base_icon_linux();
+      }
   }
 }
 
