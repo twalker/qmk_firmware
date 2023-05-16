@@ -1,5 +1,8 @@
 #include QMK_KEYBOARD_H
-#include "icons.h"
+
+#ifdef OLED_ENABLE
+  #include "icons.h" // disabled in rev1 due to lack of memory
+#endif
 
 // Store is_macos in EEPROM.
 typedef union {

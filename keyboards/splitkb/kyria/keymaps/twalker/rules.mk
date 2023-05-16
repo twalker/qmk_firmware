@@ -6,7 +6,7 @@
 RGB_MATRIX_ENABLE = no     # Disable keyboard RGB matrix, as it is enabled by default on rev3
 
 OLED_DRIVER = SSD1306 # Enables the use of OLED displays
-OLED_ENABLE = yes # Enables the use of OLED displays
+OLED_ENABLE = no # Enables the use of OLED displays
 ENCODER_ENABLE = yes # Enables the use of one or more encoders
 RGBLIGHT_ENABLE = no # Enable keyboard RGB underglow--disable on rev1 for space savings
 RGBLIGHT_LIMIT_VAL = 80
