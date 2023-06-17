@@ -90,7 +90,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         user_config.is_macos ^= 1; // Toggles the status
         eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
         // Swap Control and Super/GUI keys when in mac OS.
-        // Unlike register_mods(mod_config(MOD_LCTL)), 
+        // Unlike register_mods(mod_config(MOD_LCTL)),
         // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
         if (user_config.is_macos) {
           process_magic(MAGIC_SWAP_CTL_GUI, record);
@@ -112,7 +112,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case APP_MNU:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          // Opens mac OS's menu bar search 
+          // Opens mac OS's menu bar search
           SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_SLSH))));
         } else {
           // Application context menu on linux
@@ -259,8 +259,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-     
-    // TOREVISIT: SM and LG on Pop os 
+
+    // TOREVISIT: SM and LG on Pop os
     case WIN_LG:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -283,7 +283,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case NAN_DPI:
       if (record->event.pressed) {
         // Capslock works for macro on MacOS, and numlock works for macro on linux.
-        // Using capslock on MacOS, and numlock on Linux to cycle DPI. 
+        // Using capslock on MacOS, and numlock on Linux to cycle DPI.
         if (user_config.is_macos) {
           SEND_STRING(SS_TAP(X_CAPS_LOCK) SS_TAP(X_CAPS_LOCK));
         } else {
