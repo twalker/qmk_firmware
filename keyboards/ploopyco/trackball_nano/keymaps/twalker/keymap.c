@@ -28,8 +28,9 @@
 // #define PLOOPY_DPI_OPTIONS { 375, 750, 1375}
 
 #define PLOOPY_DPI_DEFAULT 1
-#define PLOOPY_DPI_OPTIONS { 100, 500, 800}
- 
+// #define PLOOPY_DPI_OPTIONS { 100, 500, 800}
+#define PLOOPY_DPI_OPTIONS { 100, 300, 500}
+
 #define LED_CMD_TIMEOUT 100
 #define DELTA_X_THRESHOLD 60
 #define DELTA_Y_THRESHOLD 15
@@ -103,13 +104,13 @@ uint32_t command_timeout(uint32_t trigger_time, void *cb_arg) {
 #   endif
     switch (cmd_window_state->led_cmd) {
         // Capslock works for macro on MacOS, and numlock works for macro on linux.
-        // Using capslock on MacOS, and numlock on Linux to cycle DPI. 
+        // Using capslock on MacOS, and numlock on Linux to cycle DPI.
         case TG_SCROLL:
 // #           ifdef CONSOLE_ENABLE
 //             uprint("TG_SCROLL)\n");
 // #           endif
 //             scroll_enabled = !scroll_enabled;
-//             cycle_dpi(); 
+//             cycle_dpi();
 //             break;
         case CYC_DPI:
 #           ifdef CONSOLE_ENABLE
