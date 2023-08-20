@@ -41,11 +41,18 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 #define MATRIX_ROW_PINS { F0, F1, C7, D5 }
 #define MATRIX_COL_PINS { D4, C6, D7, E6, B4, B5 }
 
-
 /*
 serial.c configuration (for split keyboard).
-SOFT_SERIAL_PIN D2 // needs verification
+SOFT_SERIAL_PIN D2
 */
+// #define SERIAL_USART_FULL_DUPLEX     // Enable full duplex operation mode.
+// #define SERIAL_USART_DRIVER SD1
+
+#define SOFT_SERIAL_PIN D0
+
+// #define SERIAL_USART_FULL_DUPLEX
+// #define SERIAL_USART_TX_PIN A9
+// #define SERIAL_USART_RX_PIN A10
 
 /* Enables This makes it easier for fast typists to use dual-function keys */
 // #undef PERMISSIVE_HOLD

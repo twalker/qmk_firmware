@@ -1,8 +1,8 @@
 # MCU name
 MCU = atmega32u4
-
 # Bootloader selection
 BOOTLOADER = atmel-dfu
+
 CONVERT_TO = elite_pi
 PIN_COMPATIBLE = elite_c
 
