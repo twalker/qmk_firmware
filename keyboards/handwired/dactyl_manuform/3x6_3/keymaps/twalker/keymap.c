@@ -91,7 +91,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         user_config.is_macos ^= 1; // Toggles the status
         eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
         // Swap Control and Super/GUI keys when in mac OS.
-        // Unlike register_mods(mod_config(MOD_LCTL)), 
+        // Unlike register_mods(mod_config(MOD_LCTL)),
         // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
         if (user_config.is_macos) {
           process_magic(MAGIC_SWAP_CTL_GUI, record);
@@ -113,7 +113,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case APP_MNU:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          // Opens mac OS's menu bar search 
+          // Opens mac OS's menu bar search
           SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_SLSH))));
         } else {
           // Application context menu on linux
@@ -260,8 +260,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-     
-    // TOREVISIT: SM and LG on Pop os 
+
+    // TOREVISIT: SM and LG on Pop os
     case WIN_LG:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -305,17 +305,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Colemak DH (real)
   [CDH] = LAYOUT_split_3x6_3(
-       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
-       KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                         KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
-     OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
-                                         MO(NUM), MO(SYM), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(WIN, KC_ENT), MO(MSE)
+        KC_NO,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                      KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT,   KC_NO,
+        KC_NO, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                      KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O,   KC_NO,
+     OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,                      KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,   KC_NO,
+                                  MO(NUM), LT(SYM, KC_ESC), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(MSE, KC_ENT),  MO(WIN)
   ),
- 
-  // Symbols
+
+ // Symbols
   [SYM] = LAYOUT_split_3x6_3(
-      _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                      KC_AMPR, KC_ASTR,  KC_LT,    KC_GT, KC_QUES, _______,
-      _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                       KC_MINS,  KC_EQL, KC_PLUS, KC_UNDS, KC_SCLN, KC_QUOT,
-      _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,                      KC_BSLS,   KC_NO, KC_COMM,  KC_DOT, KC_SLSH, _______,
+      _______, KC_EXLM,   KC_AT, KC_LCBR, KC_RCBR, KC_PIPE,                      KC_AMPR, KC_ASTR,   KC_LT,   KC_GT, KC_QUOT, _______,
+      _______, KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN,  KC_GRV,                      KC_MINS,  KC_EQL, KC_PLUS, KC_UNDS, KC_SCLN, _______,
+      _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,                      KC_BSLS, KC_COLN, KC_COMM,  KC_DOT, KC_SLSH, _______,
                                           _______, _______, _______,    _______, _______, _______
   ),
   // Nav
