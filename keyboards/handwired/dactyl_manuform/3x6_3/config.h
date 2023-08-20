@@ -16,8 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "config_common.h"
-
 /* key matrix size */
 // Rows are doubled-up
 #define MATRIX_ROWS 8
@@ -45,7 +43,7 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 
 
 /*
-serial.c configuration (for split keyboard). 
+serial.c configuration (for split keyboard).
 SOFT_SERIAL_PIN D2 // needs verification
 */
 
