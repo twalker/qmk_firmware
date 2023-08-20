@@ -88,7 +88,7 @@
 // TODO: LED strip
 // WS2812 RGB LED strip input and number of LEDs
 // https://www.diykeyboards.com/projects/add-underglow-to-qmk-boards
-#undef RGB_DI_PIN      
+#undef RGB_DI_PIN
 #define RGB_DI_PIN      D3
 #undef RGBLED_NUM
 #define RGBLED_NUM      20
@@ -119,16 +119,13 @@
 #define TT_SHIFT 120
 #define TT_ALT 180
 
-// Prevent normal rollover on alphas from accidentally triggering mods.
-#define IGNORE_MOD_TAP_INTERRUPT
-
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD true
 #define TAPPING_FORCE_HOLD_PER_KEY
 
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
- 
+
 // COLEMAK DH homerow mods
 // Left-hand
 #define CDHHM_A LCTL_T(KC_A)

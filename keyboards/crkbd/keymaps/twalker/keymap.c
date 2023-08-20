@@ -88,7 +88,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         user_config.is_macos ^= 1; // Toggles the status
         eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
         // Swap Control and Super/GUI keys when in mac OS.
-        // Unlike register_mods(mod_config(MOD_LCTL)), 
+        // Unlike register_mods(mod_config(MOD_LCTL)),
         // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
         if (user_config.is_macos) {
           process_magic(MAGIC_SWAP_CTL_GUI, record);
@@ -110,7 +110,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case APP_MNU:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          // Opens mac OS's menu bar search 
+          // Opens mac OS's menu bar search
           SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_SLSH))));
         } else {
           // Application context menu on linux
@@ -257,8 +257,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-     
-    // TOREVISIT: SM and LG on Pop os 
+
+    // TOREVISIT: SM and LG on Pop os
     case WIN_LG:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -361,11 +361,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
   // Mouse
-    [MSE] = LAYOUT_split_3x6_3(
+  [MSE] = LAYOUT_split_3x6_3(
   //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-      TO(CDH), _______, _______, _______, _______, _______,                                     _______, KC_WH_U, _______, _______, _______, _______,
+      TO(CDH), _______,   KC_NO, KC_MS_U,   KC_NO, _______,                                     _______, KC_WH_U, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______, _______,                                     KC_WH_L, KC_BTN1, KC_BTN2, KC_BTN3, KC_WH_R, _______,
+      _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,                                     KC_WH_L, KC_BTN1, KC_BTN3, KC_BTN2, KC_WH_R, _______,
   //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,                                     _______, KC_WH_D, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|

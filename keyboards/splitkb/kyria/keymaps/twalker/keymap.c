@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-
+#include "icons.h"
 
 // Store is_macos in EEPROM.
 typedef union {
@@ -78,7 +78,8 @@ enum custom_keycodes {
   WIN_D,
   WIN_FUL,
   WIN_LG,
-  WIN_SM
+  WIN_SM,
+  NAN_DPI
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -88,7 +89,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         user_config.is_macos ^= 1; // Toggles the status
         eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
         // Swap Control and Super/GUI keys when in mac OS.
-        // Unlike register_mods(mod_config(MOD_LCTL)), 
+        // Unlike register_mods(mod_config(MOD_LCTL)),
         // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
         if (user_config.is_macos) {
           process_magic(MAGIC_SWAP_CTL_GUI, record);
@@ -110,7 +111,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case APP_MNU:
       if (record->event.pressed) {
         if (user_config.is_macos) {
-          // Opens mac OS's menu bar search 
+          // Opens mac OS's menu bar search
           SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_SLSH))));
         } else {
           // Application context menu on linux
@@ -257,8 +258,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-     
-    // TOREVISIT: SM and LG on Pop os 
+
+    // TOREVISIT: SM and LG on Pop os
     case WIN_LG:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -277,6 +278,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
+    // Ploopy Nano commands
+    case NAN_DPI:
+      if (record->event.pressed) {
+        // Capslock works for macro on MacOS, and numlock works for macro on linux.
+        // Using capslock on MacOS, and numlock on Linux to cycle DPI.
+        if (user_config.is_macos) {
+          SEND_STRING(SS_TAP(X_CAPS_LOCK) SS_TAP(X_CAPS_LOCK));
+        } else {
+          SEND_STRING(SS_TAP(X_NUM_LOCK) SS_TAP(X_NUM_LOCK));
+        }
+      }
+    return false;
   }
 
   return true;
@@ -287,23 +300,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [CDH] = LAYOUT(
 //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-     KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,   KC_NO,
+      KC_NO,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT,   KC_NO,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-     KC_ESC, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                                        KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O, KC_QUOT,
+      KC_NO, CDHHM_A, CDHHM_R, CDHHM_S, CDHHM_T,    KC_G,                                        KC_M, CDHHM_N, CDHHM_E, CDHHM_I, CDHHM_O,   KC_NO,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-   OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,   KC_NO,   KC_NO,   KC_NO,   KC_NO,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
+   OSL(MAC),    KC_Z,    KC_X,     KC_C,   KC_D,    KC_V,   KC_NO,   KC_NO,  MO(MSE),  KC_NO,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,   KC_NO,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
-                                 KC_NO,   KC_NO, MO(NUM), MO(SYM), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(WIN, KC_ENT),  MO(MSE), KC_NO, KC_NO
+                             KC_KB_MUTE,   KC_NO, MO(NUM), LT(SYM, KC_ESC), LT(NAV, KC_BSPC),  LT(NAV, KC_SPC), LT(MSE, KC_ENT),  MO(WIN), KC_NO, WIN_FUL
                             //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
   ),
 
   [SYM] = LAYOUT(
 //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-    _______, KC_EXLM,   KC_AT, KC_LCBR, KC_RCBR, KC_PIPE,                                     KC_AMPR, KC_ASTR,   KC_LT,   KC_GT, KC_QUES, _______,
+    _______, KC_EXLM,   KC_AT, KC_LCBR, KC_RCBR, KC_PIPE,                                     KC_AMPR, KC_ASTR,   KC_LT,   KC_GT, KC_QUOT, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-    _______, KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN,  KC_GRV,                                     KC_MINS,  KC_EQL, KC_PLUS, KC_UNDS, KC_SCLN, KC_QUOT,
+    _______, KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN,  KC_GRV,                                     KC_MINS,  KC_EQL, KC_PLUS, KC_UNDS, KC_SCLN, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-    _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_BSLS,   KC_NO, KC_COMM,  KC_DOT, KC_SLSH, _______,
+    _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_BSLS, KC_COLN, KC_COMM,  KC_DOT, KC_SLSH, _______,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                                _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
                             //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
@@ -311,7 +324,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [NAV] = LAYOUT(
 //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-    _______, _______, _______, _______, _______, _______,                                       KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS,  KC_DEL,
+    _______, _______, _______, _______, _______, _______,                                       KC_NO, KC_PGUP,   KC_UP,   KC_NO,  KC_INS, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
     _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,                                    KC_LSTRT, KC_LEFT, KC_DOWN, KC_RGHT, KC_LEND, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
@@ -338,7 +351,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //,-----------------------------------------------------.                                   ,-----------------------------------------------------.
     _______, _______, _______, KC_VOLU, _______, _______,                                       KC_NO, ZOOM_IN,   WIN_U,  WIN_LG,   KC_NO,   KC_NO,
 //| -------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-    _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,                                       KC_NO,   WIN_L,   WIN_D,   WIN_R, WIN_FUL, SCRNSHT,
+    _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______,                                     SCRNSHT,   WIN_L,   WIN_D,   WIN_R, WIN_FUL,   KC_NO,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
     _______, _______, _______, KC_VOLD, KC_MUTE, _______, _______, _______, _______, _______,   KC_NO,ZOOM_OUT,   KC_NO,   WIN_SM,  KC_NO,   KC_NO,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
@@ -351,7 +364,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
     QK_BOOT, _______, _______, _______, DM_PLY1, DM_PLY2,                                     _______, _______, USERNAME, _______, _______,QK_BOOT,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-    _______, _______, _______, DM_RSTP, _______, _______,                                    MACOS_TG, _______,   EMAIL, _______, _______, _______,
+    RGB_TOG, _______, _______, DM_RSTP, _______, _______,                                    MACOS_TG, _______,   EMAIL, _______, _______, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
     _______, _______, _______, _______, _______, _______, _______, DM_REC1, DM_REC2, _______, _______, _______, _______, _______, _______, _______,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
@@ -361,11 +374,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [MSE] = LAYOUT(
 //,--------+--------+--------+--------+--------+--------.                                   ,--------+--------+--------+--------+--------+--------.
-    TO(CDH), _______,   KC_NO, KC_MS_U,   KC_NO, _______,                                     _______, KC_WH_U, _______, _______, _______, _______,
+    _______, _______,   KC_NO, KC_MS_U,   KC_NO, _______,                                     NAN_DPI, KC_WH_U, _______, _______, _______, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-    _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,                                     KC_WH_L, KC_BTN1, KC_BTN2, KC_BTN3, KC_WH_R, _______,
+    _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,                                     KC_WH_L, KC_BTN1, KC_BTN3, KC_BTN2, KC_WH_R, _______,
 //|--------+--------+--------+--------+--------+--------|                                   |--------+--------+--------+--------+--------+--------|
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_WH_D, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, KC_LCTL, KC_LSFT, _______, _______, _______, KC_WH_D, _______, _______, _______, _______,
 //`--------+--------+--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------+--------+--------.
                                _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
                             //`---O---+--------+--------+--------+--------|--------+--------+--------+--------+---O----'
@@ -374,23 +387,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 #ifdef OLED_ENABLE
+
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-	return OLED_ROTATION_180;
-}
-
-static void render_qmk_logo(void) {
-  static const char PROGMEM qmk_logo[] = {
-    0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
-    0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
-    0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
-
-  oled_write_P(qmk_logo, false);
+  return OLED_ROTATION_180;
 }
 
 static void render_status(void) {
-  // QMK Logo and version information
+  // QMK Logo and version
   render_qmk_logo();
-  oled_write_ln_P(PSTR("Kyria rev1.0"), false);
   // OS
   oled_write_P(PSTR("OS: "), false);
   if (user_config.is_macos) {
@@ -402,7 +406,6 @@ static void render_status(void) {
 
   // Host Keyboard Layer Status
   oled_write_P(PSTR("Layer: "), false);
-
   switch (get_highest_layer(layer_state)) {
     case CDH:
       oled_write_P(PSTR("Colemak DH\n"), false);
@@ -436,29 +439,128 @@ static void render_status(void) {
   oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
 }
 
-bool oled_task_user(void) {
-  render_status();
-  return false;
+static void render_icon(void) {
+  switch (get_highest_layer(layer_state)) {
+    case SYM:
+      render_sym_icon();
+      break;
+    case NUM:
+      render_num_icon();
+      break;
+    case NAV:
+      render_nav_icon();
+      break;
+    case WIN:
+      render_win_icon();
+      break;
+    case MSE:
+      render_mouse_icon();
+      break;
+    case MAC:
+      render_cat_icon();
+      break;
+    default:
+      if (user_config.is_macos) {
+        render_base_icon_macos();
+      } else {
+        render_base_icon_linux();
+      }
+  }
 }
+
+
+bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+      render_icon();
+    } else {
+      render_status();
+    }
+    return false;
+}
+
 #endif
 
 #ifdef ENCODER_ENABLE
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
+
 bool encoder_update_user(uint8_t index, bool clockwise) {
   if (index == 0) {
-    // Page up/down
-    if (clockwise) {
-      tap_code(KC_WH_R);
+    // Volume control
+    if (!clockwise) {
+      if (user_config.is_macos) {
+        tap_code(KC_VOLD);
+      } else {
+        tap_code(KC_VOLU);
+      }
     } else {
-      tap_code(KC_WH_L);
+      if (user_config.is_macos) {
+        tap_code(KC_VOLU);
+      } else {
+        tap_code(KC_VOLD);
+      }
     }
   } else if (index == 1) {
-    //  Tab next/previous
-    if (clockwise) {
-      tap_code16(TAB_NXT);
+    // Alt-Tab window switcher
+    if (!clockwise) {
+      if (!is_alt_tab_active) {
+        is_alt_tab_active = true;
+        register_code(KC_LALT);
+      }
+      alt_tab_timer = timer_read();
+      tap_code16(KC_TAB);
     } else {
-      tap_code16(TAB_PRV);
+      if (!is_alt_tab_active) {
+        is_alt_tab_active = true;
+        register_code(KC_LALT);
+      }
+      alt_tab_timer = timer_read();
+      tap_code16(S(KC_TAB));
     }
   }
   return false;
+}
+
+void matrix_scan_user(void) {
+  if (is_alt_tab_active) {
+    if (timer_elapsed(alt_tab_timer) > 1000) {
+      unregister_code(KC_LALT);
+      is_alt_tab_active = false;
+    }
+  }
+}
+
+#endif
+
+#ifdef RGBLIGHT_ENABLE
+layer_state_t layer_state_set_user(layer_state_t state) {
+  switch (get_highest_layer(state)) {
+    case NAV:
+      rgblight_sethsv(HSV_TEAL);
+      break;
+    case SYM:
+      rgblight_sethsv(HSV_CHARTREUSE);
+      break;
+    case NUM:
+      rgblight_sethsv(HSV_ORANGE);
+      break;
+    case WIN:
+      rgblight_sethsv(HSV_YELLOW);
+      break;
+    case MAC:
+      rgblight_sethsv(HSV_RED);
+      break;
+    case MSE:
+      rgblight_sethsv(HSV_PURPLE);
+      break;
+    default: // for any other layers, or the default layer
+      if (user_config.is_macos) {
+        rgblight_sethsv(HSV_BLUE);
+      } else {
+        rgblight_sethsv(HSV_GREEN);
+      }
+      break;
+  }
+  return state;
 }
 #endif

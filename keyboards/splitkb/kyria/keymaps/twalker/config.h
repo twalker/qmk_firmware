@@ -4,6 +4,11 @@
   #define OLED_DISPLAY_128X64
 #endif
 
+// Use Liatris's power LED as caps lock indicator.
+// Comment out for kyria rev1
+#define LED_CAPS_LOCK_PIN 24
+#define LED_PIN_ON_STATE 0
+
 // EC11K encoders have a different resolution than other EC11 encoders.
 // When using the default resolution of 4, if you notice your encoder skipping
 // every other tick, lower the resolution to 2.
@@ -41,11 +46,8 @@
 
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
-#define TT_SHIFT 100
-#define TT_ALT 150
-
-// Prevent normal rollover on alphas from accidentally triggering mods.
-#define IGNORE_MOD_TAP_INTERRUPT
+#define TT_SHIFT 110
+#define TT_ALT 160
 
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD true
@@ -53,7 +55,7 @@
 
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
- 
+
 // COLEMAK DH homerow mods
 // Left-hand
 #define CDHHM_A LCTL_T(KC_A)
