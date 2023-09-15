@@ -1,7 +1,7 @@
 // Copyright 2022 QMK
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include QMK_KEYBOARD_H
-
+#include "process_magic.h"
 #include <stdio.h>
 
 // Store is_macos in EEPROM.
