@@ -28,8 +28,8 @@ enum layers {
     CDH = 0,
     SYM,
     NAV,
-    NUM
-    // WIN,
+    NUM,
+    WIN
     // MSE
 };
 
@@ -57,8 +57,23 @@ enum layers {
 #define KC_COPY LGUI(KC_C)
 #define APP_MNU KC_APP
 #define KC_PSTE LGUI(KC_V)
+
+#define KC_LSTRT LGUI(KC_LEFT)
+#define KC_LEND  LGUI(KC_RIGHT)
+// #define APP_MNU,
+#define ZOOM_IN LGUI(KC_EQUAL)
+#define ZOOM_OUT LGUI(KC_MINUS)
+#define SCRNSHT LGUI(LSFT(KC_5))
 #define TAB_PRV LSFT(LCTL(KC_TAB))
 #define TAB_NXT LCTL(KC_TAB)
+#define WIN_L LCTL(LALT(KC_LEFT))
+#define WIN_R LCTL(LALT(KC_RIGHT))
+#define WIN_U LCTL(LALT(KC_UP))
+#define WIN_D LCTL(LALT(KC_DOWN))
+#define WIN_FUL LCTL(LALT(KC_ENT))
+#define WIN_LG LCTL(LALT(KC_EQL))
+#define WIN_SM LCTL(LALT(KC_MINS))
+#define NAN_DPI KC_NO
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ K E Y M A P S                                                                                                          │
@@ -96,6 +111,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               KC_F5,    KC_F6,    KC_F7,    KC_F8,    _______,   KC_NO,    KC_4,     KC_5,     KC_6,     KC_NO,
     _______,  KC_F9,   KC_F10,    KC_F11,   KC_F12,   _______,   KC_NO,    KC_1,     KC_2,     KC_3,     KC_NO,    _______,
                                   _______, _______,   _______,   KC_NO,    KC_0,  KC_DOT
+ ),
+   [WIN] = LAYOUT(
+ //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+              _______,  _______,  KC_VOLU,  _______,  _______,   KC_NO,    ZOOM_IN,  WIN_U,    WIN_LG,   KC_NO,
+              _______,  KC_MPRV,  KC_MPLY,  KC_MNXT,  _______,   SCRNSHT,  WIN_L,    WIN_D,    WIN_R,    WIN_FUL,
+    _______,  _______,  _______,  KC_VOLD,  KC_MUTE,  _______,   _______,  ZOOM_OUT, KC_NO,    WIN_SM,   KC_NO,    _______,
+                                  _______, _______,   _______,   _______,  _______,  _______
  ),
 /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
