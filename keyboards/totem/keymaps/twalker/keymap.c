@@ -27,8 +27,8 @@
 enum layers {
     CDH = 0,
     SYM,
-    NAV
-    // NUM,
+    NAV,
+    NUM
     // WIN,
     // MSE
 };
@@ -89,6 +89,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               KC_LCTL,  KC_LALT,  KC_LGUI,  KC_LSFT,  _______,   KC_HOME,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_END,
     _______,  KC_UNDO,  KC_CUT,   KC_COPY,  APP_MNU,  KC_PSTE,   TAB_PRV,  KC_PGDN,  KC_NO,    KC_NO,    TAB_NXT,  _______,
                                   _______,  _______,   KC_DEL,   KC_TAB,   _______,  _______
+ ),
+   [NUM] = LAYOUT(
+ //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+              KC_F1,    KC_F2,    KC_F3,    KC_F4,    _______,   KC_NO,    KC_7,     KC_8,     KC_9,     KC_NO,
+              KC_F5,    KC_F6,    KC_F7,    KC_F8,    _______,   KC_NO,    KC_4,     KC_5,     KC_6,     KC_NO,
+    _______,  KC_F9,   KC_F10,    KC_F11,   KC_F12,   _______,   KC_NO,    KC_1,     KC_2,     KC_3,     KC_NO,    _______,
+                                  _______, _______,   _______,   KC_NO,    KC_0,  KC_DOT
  ),
 /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
