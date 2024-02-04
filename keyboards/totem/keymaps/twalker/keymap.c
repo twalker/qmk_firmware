@@ -27,7 +27,7 @@
 enum layers {
     CDH = 0,
     SYM,
-    // NAV,
+    NAV
     // NUM,
     // WIN,
     // MSE
@@ -52,6 +52,13 @@ enum layers {
 #define ALT_I LALT_T(KC_I)
 #define CTL_O RCTL_T(KC_O)
 
+#define KC_UNDO RGUI(KC_C)
+#define KC_CUT LGUI(KC_X)
+#define KC_COPY LGUI(KC_C)
+#define APP_MNU KC_APP
+#define KC_PSTE LGUI(KC_V)
+#define TAB_PRV LSFT(LCTL(KC_TAB))
+#define TAB_NXT LCTL(KC_TAB)
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ K E Y M A P S                                                                                                          │
@@ -72,10 +79,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
               KC_EXLM,  KC_AT,    KC_LCBR,  KC_RCBR,  KC_PIPE,   KC_AMPR,  KC_ASTR,  KC_LT,    KC_GT,    KC_QUOT,
               KC_HASH,  KC_DLR,   KC_LPRN,  KC_RPRN,  KC_GRV,    KC_MINS,  KC_EQL,   KC_PLUS,  KC_UNDS,  KC_SCLN,
-    KC_NO,    KC_PERC,  KC_CIRC,  KC_LBRC,  KC_RBRC,  KC_TILD,   KC_BSLS,  KC_COLN, KC_COMM,   KC_DOT,   KC_SLSH,   KC_NO,
-                                  KC_NO,    KC_ESC,   KC_BSPC,   KC_SPC,   KC_ENT,   KC_BSPC
+    _______,  KC_PERC,  KC_CIRC,  KC_LBRC,  KC_RBRC,  KC_TILD,   KC_BSLS,  KC_COLN, KC_COMM,   KC_DOT,   KC_SLSH,  _______,
+                                  _______,  _______,  _______,   _______,  _______,  _______
  ),
 
+   [NAV] = LAYOUT(
+ //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+              _______,  _______,  _______,  _______,  _______,   KC_NO,    KC_PGUP,  KC_UP,    KC_NO,    KC_INS,
+              KC_LCTL,  KC_LALT,  KC_LGUI,  KC_LSFT,  _______,   KC_HOME,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_END,
+    _______,  KC_UNDO,  KC_CUT,   KC_COPY,  APP_MNU,  KC_PSTE,   TAB_PRV,  KC_PGDN,  KC_NO,    KC_NO,    TAB_NXT,  _______,
+                                  _______,  _______,   KC_DEL,   KC_TAB,   _______,  _______
+ ),
 /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
 
