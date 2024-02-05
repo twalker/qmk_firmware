@@ -89,6 +89,7 @@ enum custom_keycodes {
   MACOS_TG = SAFE_RANGE,
   USERNAME,
   EMAIL,
+  OS_OUT,
   KC_LSTRT,
   KC_LEND,
   APP_MNU,
@@ -133,6 +134,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case EMAIL:
       if (record->event.pressed) {
         SEND_STRING("tiwalker@starbucks.com");
+      }
+      break;
+    case OS_OUT:
+      if (record->event.pressed) {
+        SEND_STRING(user_config.is_macos ? "macOS" : "linux");
       }
       break;
     case APP_MNU:
@@ -372,9 +378,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [MSE] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-              KC_NO,    KC_MS_U,  KC_NO,    _______,  NAN_DPI,   KC_WH_U,  _______,  _______,  _______,  _______,
-              KC_MS_L,  KC_MS_D,  KC_MS_R,  _______,  KC_WH_L,   KC_BTN1,  KC_BTN3,  KC_BTN2,  KC_WH_R,  _______,
-     _______, _______,  _______,  _______,  _______,  _______,   KC_WH_D,  _______,  _______,  _______,  _______, _______,
+              _______,  KC_NO,    KC_MS_U,  KC_NO,    _______,   NAN_DPI,  KC_WH_U,  _______,  _______,  _______,
+              _______, KC_MS_L,   KC_MS_D,  KC_MS_R,  _______,   KC_WH_L,  KC_BTN1,  KC_BTN3,  KC_BTN2,  KC_WH_R,
+     _______, _______,  _______,  _______,  _______,  _______,   _______,  KC_WH_D,  _______,  _______,  _______,  _______,
                                   _______, _______,   _______,   _______,  _______,  _______
  ),
 
@@ -382,7 +388,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
 
               QK_BOOT,  _______,  _______,  DM_PLY1,  DM_PLY2,   _______,  _______,  USERNAME, _______,  QK_BOOT,
-              _______,  _______,  DM_RSTP,  _______,  _______,   MACOS_TG, _______,  EMAIL,    _______,  _______,
+              _______,  _______,  DM_RSTP,  _______,  _______,   MACOS_TG, _______,  EMAIL,     OS_OUT,  _______,
     _______,  _______,  _______,  _______,  _______,  _______,   _______,  DM_REC1,  DM_REC2,  _______,  _______,  _______,
                                   _______,  _______,   _______,  _______,  _______,  _______
  ),
