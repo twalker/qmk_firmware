@@ -17,15 +17,4 @@
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
 
-// COLEMAK DH homerow mods
-// Left-hand
-/* #define CDHHM_A LCTL_T(KC_A) */
-/* #define CDHHM_R LALT_T(KC_R) */
-/* #define CDHHM_S LGUI_T(KC_S) */
-/* #define CDHHM_T LSFT_T(KC_T) */
-/* // Right-hand */
-/* #define CDHHM_N RSFT_T(KC_N) */
-/* #define CDHHM_E RGUI_T(KC_E) */
-/* #define CDHHM_I LALT_T(KC_I) */
-/* #define CDHHM_O RCTL_T(KC_O) */
-
+#define ENABLE_CTL_GUI_SWAP false

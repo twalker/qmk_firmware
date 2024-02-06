@@ -114,16 +114,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         user_config.is_macos ^= 1; // Toggles the status
         eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
-        // Swap Control and Super/GUI keys when in mac OS.
-        // Unlike register_mods(mod_config(MOD_LCTL)),
-        // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
-
-        // Use swap by karabiner instead of in firmware.
-        // if (user_config.is_macos) {
-        //   process_magic(MAGIC_SWAP_CTL_GUI, record);
-        // } else {
-        //   process_magic(MAGIC_UNSWAP_CTL_GUI, record);
-        // }
+        if (ENABLE_CTL_GUI_SWAP) {
+          // Swap Control and Super/GUI keys when in mac OS.
+          // Unlike register_mods(mod_config(MOD_LCTL)),
+          // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
+          // Use swap by karabiner instead of in firmware.
+          if (user_config.is_macos) {
+            process_magic(MAGIC_SWAP_CTL_GUI, record);
+          } else {
+            process_magic(MAGIC_UNSWAP_CTL_GUI, record);
+          }
+        }
       }
       break;
     case USERNAME:
