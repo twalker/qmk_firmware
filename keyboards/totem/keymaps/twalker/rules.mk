@@ -10,4 +10,5 @@ BOTH_SHIFTS_TURNS_ON_CAPS_WORD = yes
 # Macros
 DYNAMIC_MACRO_ENABLE = yes
 
+EXTRAKEY_ENABLE = yes # enable/disable media key and volume control
 MOUSEKEY_ENABLE = yes
