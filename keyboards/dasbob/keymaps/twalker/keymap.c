@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
+#include "process_magic.h"
 
 // Store is_macos in EEPROM.
 typedef union {
