@@ -1,6 +1,7 @@
 #pragma once
 
 // Configure the global tapping term (default: 200ms)
+#undef TAPPING_TERM
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
 #define TT_SHIFT 110
