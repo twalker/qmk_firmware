@@ -35,7 +35,7 @@ RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 # AUDIO_ENABLE = yes          # Audio output
 
 RGB_MATRIX_ENABLE = no     # Enable WS2812 RGB matrix
-RGB_MATRIX_DRIVER = WS2812
+RGB_MATRIX_DRIVER = ws2812
 SPLIT_KEYBOARD = yes
 
 RGBLIGHT_SUPPORTED = no

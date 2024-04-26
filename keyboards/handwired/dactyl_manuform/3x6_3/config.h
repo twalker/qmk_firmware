@@ -48,7 +48,7 @@ SOFT_SERIAL_PIN D2
 // #define SERIAL_USART_FULL_DUPLEX     // Enable full duplex operation mode.
 // #define SERIAL_USART_DRIVER SD1
 
-#define SOFT_SERIAL_PIN D0
+//#define SOFT_SERIAL_PIN D0
 
 // #define SERIAL_USART_FULL_DUPLEX
 // #define SERIAL_USART_TX_PIN A9
