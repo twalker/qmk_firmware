@@ -5,7 +5,6 @@ PIN_COMPATIBLE = elite_c
 
 RGB_MATRIX_ENABLE = no     # Disable keyboard RGB matrix, as it is enabled by default on rev3
 
-OLED_DRIVER = SSD1306 # Enables the use of OLED displays
 OLED_ENABLE = yes # Enables the use of OLED displays--not enough space with elite-c
 ENCODER_ENABLE = yes # Enables the use of one or more encoders
 RGBLIGHT_ENABLE = yes # Enable keyboard RGB underglow--disable on rev1 for space savings

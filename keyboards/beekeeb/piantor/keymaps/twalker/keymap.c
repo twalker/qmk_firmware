@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "process_magic.h"
 
 #include <stdio.h>
 

@@ -30,7 +30,6 @@
   #define RGBLIGHT_VAL_STEP 8
   #define RGBLIGHT_SLEEP
 #endif
-
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 // Configure the global tapping term (default: 200ms)
