@@ -1,5 +1,5 @@
 # MCU name
-MCU = RP2040
+# MCU = RP2040
 
 # Bootloader selection
 BOOTLOADER = rp2040
@@ -16,10 +16,10 @@ WS2812_DRIVER = vendor
 
 # CONVERTER - if you use a listed MCU comment the first line and uncomment the appropiate line
 CONVERT_TO = promicro_rp2040
-#CONVERT_TO = kb2040
+# CONVERT_TO = rp2040
 #CONVERT_TO = blok
 #CONVERT_TO = elite_pi
 
-# AUDIO 
+# AUDIO
 AUDIO_ENABLE = yes
 AUDIO_DRIVER = pwm_hardware
