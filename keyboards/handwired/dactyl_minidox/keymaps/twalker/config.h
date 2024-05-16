@@ -5,7 +5,7 @@
 /* Select hand configuration */
 /* serial.c configuration for split keyboard */
 // Activate double tap run/reset on elite_pi
-#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
+/* #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET */
 // #define EE_HANDS
 #define MASTER_LEFT
 
@@ -19,13 +19,24 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 #undef MATRIX_ROW_PINS
 #define MATRIX_ROW_PINS { F0, F1, C7, D5 }
 #undef MATRIX_COL_PINS
-#define MATRIX_COL_PINS { D4, C6, D7, E6, B4 }
+#define MATRIX_COL_PINS { C6, D7, E6, B4, B5 }
 
 /* COL2ROW or ROW2COL */
 #undef DIODE_DIRECTION
 #define DIODE_DIRECTION ROW2COL
 
-/* PMW3360 settings. */
+/* PMW3389 settings. */
+/*
+ * Pinout:
+ * MI = MISO
+ * MO = MOSI
+ * SS = Slave Select / Chip Select
+ * SC = SPI Clock
+ * MT = Motion (active low interrupt line)
+ * RS = Reset
+ * GD = Ground
+ * VI = Voltage in up to +5.5V
+ */
 
 // Enable use of pointing device on slave split.
 /* #define SPLIT_POINTING_ENABLE */
@@ -49,13 +60,6 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 
 
 #define PMW33XX_CS_PIN F7
-#undef SPI_SCK_PIN
-#define SPI_SCK_PIN B1
-#undef SPI_MOSI_PIN
-#define SPI_MOSI_PIN B2
-#undef SPI_MISO_PIN
-#define SPI_MISO_PIN B3
-#define SPI_DRIVER SPID0
 // Sensor pins: SS to F7, SC to B1, MO to B2, MI to B3
 #undef SPI_SCK_PIN
 #define SPI_SCK_PIN B1
@@ -63,7 +67,7 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 #define SPI_MOSI_PIN B2
 #undef SPI_MISO_PIN
 #define SPI_MISO_PIN B3
-
+#define SPI_DRIVER SPID0
 
 // The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI.
 #define PMW33XX_CPI 900 // also sent in keymap based on OS.
