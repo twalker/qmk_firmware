@@ -21,9 +21,6 @@
 #include "process_magic.h"
 #include <string.h>
 #include "klor.h"
-#ifdef HAPTIC_ENABLE
-#include "drivers/haptic/DRV2605L.h"
-#endif //HAPTIC ENABLE
 
 
 
@@ -103,25 +100,12 @@ enum custom_keycodes {
 #define CTL_O RCTL_T(KC_O)
 
 
-// ┌───────────────────────────────────────────────────────────┐
-// │ d e f i n e   s o u n d s                                 │
-// └───────────────────────────────────────────────────────────┘
-
-#ifdef AUDIO_ENABLE
-  #define WINXP_SOUND W__NOTE(_DS6), Q__NOTE(_DS5), H__NOTE(_AS5), H__NOTE(_GS5), H__NOTE(_DS5), H__NOTE(_DS6), H__NOTE(_AS5)
-  #define MAC_SOUND S__NOTE(_CS5), B__NOTE(_C5)
-
-  float winxp_song[][2] = SONG(WINXP_SOUND);
-  float mac_song[][2] = SONG(MAC_SOUND);
-#endif // AUDIO_ENABLE
-
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ K E Y M A P S                                                                                                                              │
 // └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
 
 /*
    ┌───────────────────────────────────────────────────────────┐
@@ -281,13 +265,6 @@ void render_os_lock_status(void) {
     static const char PROGMEM n_lock[] = {0x91, 0x92, 0};
     static const char PROGMEM c_lock[] = {0x93, 0x94, 0};
     static const char PROGMEM b_lock[] = {0xE1, 0xE1, 0};
-    #ifdef AUDIO_ENABLE
-      static const char PROGMEM aud_en[] = {0xAF, 0xB0, 0};
-      static const char PROGMEM aud_di[] = {0xCF, 0xD0, 0};
-    #endif
-    #ifdef HAPTIC_ENABLE
-      static const char PROGMEM hap_en[] = {0xB1, 0xB2, 0};
-    #endif
 
 // os mode status ────────────────────────────────────────┐
 
@@ -336,25 +313,6 @@ void render_os_lock_status(void) {
 // hardware feature status ──────────────────────────────┐
 
     oled_write_P(sep_h2, false);
-
-    #ifndef AUDIO_ENABLE
-        oled_write_P(b_lock, false);
-    #endif
-    #ifndef HAPTIC_ENABLE
-        oled_write_P(b_lock, false);
-    #endif
-
-    #ifdef AUDIO_ENABLE // ────────────────── AUDIO
-        if (is_audio_on()) {
-          oled_write_P(aud_en, false);
-        } else {
-          oled_write_P(aud_di, false);
-        }
-    #endif // AUDIO ENABLE
-
-     #ifdef HAPTIC_ENABLE // ─────────────── HAPTIC
-        oled_write_P(hap_en, false);
-     #endif // HAPTIC ENABLE
 }
 
 
@@ -462,16 +420,16 @@ bool oled_task_kb(void) {
 
 
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case SHT_T:
-            return TAPPING_TERM - 150;
-        case SHT_N:
-            return TAPPING_TERM - 150;
-        default:
-            return TAPPING_TERM;
-    }
-}
+// uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         case SHT_T:
+//             return TAPPING_TERM - 150;
+//         case SHT_N:
+//             return TAPPING_TERM - 150;
+//         default:
+//             return TAPPING_TERM;
+//     }
+// }
 
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
