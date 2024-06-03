@@ -122,7 +122,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Unlike register_mods(mod_config(MOD_LCTL)), 
         // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
         if (user_config.is_macos) {
-          process_magic(MAGIC_SWAP_CTL_GUI, record);
+          process_magic(QK_MAGIC_SWAP_CTL_GUI, record);
           // The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI.
           pointing_device_set_cpi(900);
         } else {
