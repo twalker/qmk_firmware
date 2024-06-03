@@ -124,9 +124,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
           // Use swap by karabiner instead of in firmware.
           if (user_config.is_macos) {
-            process_magic(MAGIC_SWAP_CTL_GUI, record);
+            process_magic(QK_MAGIC_SWAP_CTL_GUI, record);
           } else {
-            process_magic(MAGIC_UNSWAP_CTL_GUI, record);
+            process_magic(QK_MAGIC_UNSWAP_CTL_GUI, record);
           }
         }
       }
