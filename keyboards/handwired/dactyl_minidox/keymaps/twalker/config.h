@@ -23,7 +23,7 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 
 /* COL2ROW or ROW2COL */
 #undef DIODE_DIRECTION
-#define DIODE_DIRECTION ROW2COL
+#define DIODE_DIRECTION COL_2ROW
 
 /* PMW3389 settings. */
 /*
