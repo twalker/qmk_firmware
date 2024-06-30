@@ -23,7 +23,7 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 
 /* COL2ROW or ROW2COL */
 #undef DIODE_DIRECTION
-#define DIODE_DIRECTION COL_2ROW
+#define DIODE_DIRECTION COL2ROW
 
 /* PMW3389 settings. */
 /*
@@ -39,15 +39,16 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
  */
 
 // Enable use of pointing device on slave split.
-/* #define SPLIT_POINTING_ENABLE */
+#define SPLIT_POINTING_ENABLE
 // Pointing device is on the right split.
 /* #define POINTING_DEVICE_RIGHT */
+#define POINTING_DEVICE_LEFT
 
 // Limits the frequency that the sensor is polled for motion.
 // #define POINTING_DEVICE_TASK_THROTTLE_MS 1
 
 #define POINTING_DEVICE_INVERT_Y
-#define ROTATIONAL_TRANSFORM_ANGLE  -15
+/*#define ROTATIONAL_TRANSFORM_ANGLE  -15*/
 // #define PMW33XX_CPI 650 // sent in keymap based on OS.
 
 // | `PMW33XX_CS_PIN`             | (Required) Sets the Cable Select pin connected to the sensor.                               | `POINTING_DEVICE_CS_PIN` |
@@ -60,7 +61,7 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 
 
 #define PMW33XX_CS_PIN F7
-// Sensor pins: SS to F7, SC to B1, MO to B2, MI to B3
+// Sensor pins: SS to F7, SC to B1, MI to B2, M0 to B3
 #undef SPI_SCK_PIN
 #define SPI_SCK_PIN B1
 #undef SPI_MOSI_PIN
@@ -68,6 +69,8 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 #undef SPI_MISO_PIN
 #define SPI_MISO_PIN B3
 #define SPI_DRIVER SPID0
+// TODO: revisit distance
+#define PMW33XX_LIFTOFF_DISTANCE 0x05
 
 // The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI.
 #define PMW33XX_CPI 900 // also sent in keymap based on OS.
