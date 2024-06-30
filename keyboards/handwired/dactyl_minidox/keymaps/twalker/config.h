@@ -75,3 +75,21 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 // The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI.
 #define PMW33XX_CPI 900 // also sent in keymap based on OS.
 
+// Configure the global tapping term (default: 200ms)
+#undef TAPPING_TERM
+#define TAPPING_TERM 150
+#define TAPPING_TERM_PER_KEY
+#define TT_SHIFT 110
+#define TT_ALT 160
+
+// Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
+#define TAPPING_FORCE_HOLD true
+#define TAPPING_FORCE_HOLD_PER_KEY
+
+// Apply the modifier on keys that are tapped during a short hold of a modtap
+#define PERMISSIVE_HOLD
+
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+
+#define ENABLE_CTL_GUI_SWAP false
+
