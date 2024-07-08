@@ -69,11 +69,10 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 #undef SPI_MISO_PIN
 #define SPI_MISO_PIN B3
 #define SPI_DRIVER SPID0
-// TODO: revisit distance
-#define PMW33XX_LIFTOFF_DISTANCE 0x05
+#define PMW33XX_LIFTOFF_DISTANCE 0x02
 
 // The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI.
-#define PMW33XX_CPI 900 // also sent in keymap based on OS.
+#define PMW33XX_CPI 1500 // also sent in keymap based on OS.
 
 // Configure the global tapping term (default: 200ms)
 #undef TAPPING_TERM
@@ -90,6 +89,4 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 #define PERMISSIVE_HOLD
 
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
-
-#define ENABLE_CTL_GUI_SWAP false
 

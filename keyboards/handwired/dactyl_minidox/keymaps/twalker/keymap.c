@@ -17,7 +17,7 @@ user_config_t user_config;
 void keyboard_post_init_user(void) {
   user_config.raw = eeconfig_read_user();
 }
-void eeconfig_init_user(void) {  // EEPROM is getting reset!
+void eeconfig_init_user(void) {  // EEPROM is getting reset
   user_config.raw = 0;
   user_config.is_macos = true; // mac OS by default
   eeconfig_update_user(user_config.raw); // Write default value to EEPROM
@@ -95,7 +95,6 @@ enum custom_keycodes {
   WIN_LG,
   WIN_SM,
   NAN_DPI,
-
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -104,7 +103,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         user_config.is_macos ^= 1; // Toggles the status
         eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
-        if (ENABLE_CTL_GUI_SWAP) {
           // Swap Control and Super/GUI keys when in mac OS.
           // Unlike register_mods(mod_config(MOD_LCTL)),
           // SEND_STRING does not apply the swapped modifiers--CTL is CTL, GUI is GUI.
@@ -115,7 +113,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             process_magic(QK_MAGIC_UNSWAP_CTL_GUI, record);
           }
         }
-      }
       break;
     case USERNAME:
       if (record->event.pressed) {
