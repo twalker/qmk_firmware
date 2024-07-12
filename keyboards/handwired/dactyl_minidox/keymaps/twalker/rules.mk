@@ -1,6 +1,10 @@
-MCU = atmega32u4
+# MCU = atmega32u4
 # Bootloader selection
-BOOTLOADER = atmel-dfu
+# BOOTLOADER = atmel-dfu
+
+CONVERT_TO = helios # elite_pi
+PIN_COMPATIBLE = elite_c
+
 # CONVERT_TO = elite_c
 POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = pmw3389

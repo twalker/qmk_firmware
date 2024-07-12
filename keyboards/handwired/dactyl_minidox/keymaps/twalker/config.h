@@ -17,6 +17,7 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 // same elite_c for elite pi as my tractyl
 // row-driven
 #undef MATRIX_ROW_PINS
+// #define MATRIX_ROW_PINS { F0, F1, C7, D5 }
 #define MATRIX_ROW_PINS { F0, F1, C7, D5 }
 #undef MATRIX_COL_PINS
 #define MATRIX_COL_PINS { C6, D7, E6, B4, B5 }
