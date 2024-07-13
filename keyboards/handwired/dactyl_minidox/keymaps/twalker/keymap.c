@@ -72,6 +72,13 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
   }
 }
 
+#ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
+void pointing_device_init_user(void) {
+  set_auto_mouse_layer(MSE);
+  set_auto_mouse_enable(true);
+}
+#endif
+
 #ifdef DYNAMIC_MACRO_ENABLE
 // Macros
 enum custom_keycodes {
