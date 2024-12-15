@@ -65,10 +65,10 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 #define PMW3360_CPI 400
 #undef SPI_SCK_PIN
 #define SPI_SCK_PIN B1
-#undef SPI_MOSI_PIN
-#define SPI_MOSI_PIN B2
 #undef SPI_MISO_PIN
 #define SPI_MISO_PIN B3
+#undef SPI_MOSI_PIN
+#define SPI_MOSI_PIN B2
 #define SPI_DRIVER SPID0
 // #define PMW33XX_LIFTOFF_DISTANCE 0x03
 
