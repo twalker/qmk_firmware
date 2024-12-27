@@ -19,7 +19,7 @@
         "pin": "D3"
     },
     "rgb_matrix": {
-        "driver": "ws2812",
+        "driver": "custom",
         "split_count": [18, 18],
         "layout": [
             {"matrix": [3, 4], "x": 102, "y": 64, "flags": 4},
@@ -69,7 +69,7 @@
         "enabled": true,
         "soft_serial_pin": "D0"
     },
-    "development_board": "promicro",
+    "development_board": "elite_pi",
     "community_layouts": ["split_3x5_3"],
     "layouts": {
         "LAYOUT_split_3x5_3": {

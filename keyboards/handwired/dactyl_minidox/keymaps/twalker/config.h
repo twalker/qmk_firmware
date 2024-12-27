@@ -1,7 +1,8 @@
 /* Select hand configuration */
 /* serial.c configuration for split keyboard */
 #define USE_SERIAL
-
+#undef SOFT_SERIAL_PIN
+#define SOFT_SERIAL_PIN GP3
 /* Select hand configuration */
 /* serial.c configuration for split keyboard */
 // Activate double tap run/reset on elite_pi
@@ -18,9 +19,10 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 // row-driven
 #undef MATRIX_ROW_PINS
 // #define MATRIX_ROW_PINS { F0, F1, C7, D5 }
-#define MATRIX_ROW_PINS { F0, F1, C7, D5 }
+#define MATRIX_ROW_PINS { GP16, GP15, GP14, GP13 }
 #undef MATRIX_COL_PINS
-#define MATRIX_COL_PINS { C6, D7, E6, B4, B5 }
+// #define MATRIX_COL_PINS { C6, D7, E6, B4, B5 }
+#define MATRIX_COL_PINS { GP5, GP6, GP7, GP8, GP9 }
 
 /* COL2ROW or ROW2COL */
 #undef DIODE_DIRECTION
@@ -61,14 +63,14 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 // | `ROTATIONAL_TRANSFORM_ANGLE` | (Optional) Allows for the sensor data to be rotated +/- 127 degrees directly in the sensor. | `0`                      |
 
 
-#define PMW33XX_CS_PIN F7
+#define PMW33XX_CS_PIN GP26
 // Sensor pins: SS to F7, SC to B1, MI to B2, M0 to B3
 #undef SPI_SCK_PIN
-#define SPI_SCK_PIN B1
+#define SPI_SCK_PIN GP22
 #undef SPI_MOSI_PIN
-#define SPI_MOSI_PIN B2
+#define SPI_MOSI_PIN PG23
 #undef SPI_MISO_PIN
-#define SPI_MISO_PIN B3
+#define SPI_MISO_PIN GP20
 #define SPI_DRIVER SPID0
 #define PMW33XX_LIFTOFF_DISTANCE 0x03
 

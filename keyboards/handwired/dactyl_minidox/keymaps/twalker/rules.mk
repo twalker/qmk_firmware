@@ -1,9 +1,10 @@
 # MCU = atmega32u4
 # Bootloader selection
 # BOOTLOADER = atmel-dfu
-
-CONVERT_TO = helios # elite_pi
-PIN_COMPATIBLE = elite_c
+# MCU = RP2040
+# DEVELOPMENT_BOARD = elite_pi
+# CONVERT_TO = helios # elite_pi
+# PIN_COMPATIBLE = elite_c
 
 # CONVERT_TO = elite_c
 POINTING_DEVICE_ENABLE = yes
