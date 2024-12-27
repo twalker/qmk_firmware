@@ -3,8 +3,7 @@
 #define USE_SERIAL
 #undef SOFT_SERIAL_PIN
 #define SOFT_SERIAL_PIN GP3
-/* Select hand configuration */
-/* serial.c configuration for split keyboard */
+
 // Activate double tap run/reset on elite_pi
 /* #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET */
 // #define EE_HANDS
@@ -12,10 +11,9 @@
 
 /*
   elite_c == elite_pi pins:
-MATRIX_ROW_PINS { F0 == D16, F1 == D15, C7 == D14, D5 == D13 }
-MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
+MATRIX_ROW_PINS { F0 == GP16, F1 == GP15, C7 == GP14, D5 == GP13 }
+MATRIX_COL_PINS { C6 == GP5, D7 == GP6, E6 == GP7, B4 == GP8, B5 == GP9 }
 */
-// same elite_c for elite pi as my tractyl
 // row-driven
 #undef MATRIX_ROW_PINS
 // #define MATRIX_ROW_PINS { F0, F1, C7, D5 }
@@ -68,7 +66,7 @@ MATRIX_COL_PINS { D4 == D4, C6 == D5, D7 == D6, E6 == D7, B4 == D8, B5 == D9 }
 #undef SPI_SCK_PIN
 #define SPI_SCK_PIN GP22
 #undef SPI_MOSI_PIN
-#define SPI_MOSI_PIN PG23
+#define SPI_MOSI_PIN GP23
 #undef SPI_MISO_PIN
 #define SPI_MISO_PIN GP20
 #define SPI_DRIVER SPID0

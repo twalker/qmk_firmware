@@ -13,6 +13,9 @@ POINTING_DEVICE_DRIVER = pmw3389
 IGNORE_MOD_TAP_INTERRUPT = yes
 TAPPING_FORCE_HOLD = no # Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 PERMISSIVE_HOLD = no
+# Workaround for compile error with rp2040: ___
+#  error: implicit declaration of function 'palWaitLineTimeout'; did you mean 'oqWriteTimeou'? [-Werror=implicit-function-declaration]
+SERIAL_DRIVER = vendor
 
 # Caps word
 CAPS_WORD_ENABLE = yes
