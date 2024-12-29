@@ -3,9 +3,9 @@
 // Enable use of pointing device on slave split.
 #define SPLIT_POINTING_ENABLE
 #define POINTING_DEVICE_LEFT
-
 #define POINTING_DEVICE_DRIVER pmw3360
 #define SPI_DRIVER SPID0
+#define PMW33XX_LIFTOFF_DISTANCE 0x03
 #define PMW33XX_CS_PIN GP26
 #define SPI_SCK_PIN GP22
 #define SPI_MOSI_PIN GP23
@@ -28,3 +28,14 @@
 // pmw3360 -- The CPI range is 100-12000, in increments of 100. Defaults to 1600 CPI.
 // pmw3389 -- The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI
 // #define PMW33XX_CPI 650 // also sent in keymap based on OS.
+
+// Configure the global tapping term (default: 200ms)
+#undef TAPPING_TERM
+#define TAPPING_TERM 150
+#define TAPPING_TERM_PER_KEY
+#define TT_SHIFT 110
+#define TT_ALT 160
+
+// Apply the modifier on keys that are tapped during a short hold of a modtap
+#define PERMISSIVE_HOLD
+// #define POINTING_DEVICE_AUTO_MOUSE_ENABLE

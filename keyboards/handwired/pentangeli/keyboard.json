@@ -24,7 +24,6 @@
         "bootmagic": true,
         "mousekey": true,
         "extrakey": true,
-        "pointing_device": false,
         "nkro": true,
         "caps_word": true,
         "tri_layer": true,
