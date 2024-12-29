@@ -28,7 +28,6 @@
         "caps_word": true,
         "tri_layer": true,
         "dynamic_macro": true,
-        "ignore_mod_tap_interrupt": true,
         "tapping_force_hold": false,
         "permissive_hold": false,
         "command": false,

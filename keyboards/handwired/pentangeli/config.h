@@ -1,9 +1,9 @@
 #pragma once
 
+#define PMW33XX_CS_PIN GP26
 // Enable use of pointing device on slave split.
 #define SPLIT_POINTING_ENABLE
 #define POINTING_DEVICE_LEFT
-#define POINTING_DEVICE_DRIVER pmw3360
 #define SPI_DRIVER SPID0
 #define PMW33XX_LIFTOFF_DISTANCE 0x03
 #define PMW33XX_CS_PIN GP26
