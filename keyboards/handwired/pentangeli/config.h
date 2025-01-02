@@ -7,7 +7,7 @@
 // 0x04 is decent but janky
 // 0x03 is also janky, about the same
 // 0x02 the default, which  is a bit less janky
-#define PMW33XX_LIFTOFF_DISTANCE 0x03
+//#define PMW33XX_LIFTOFF_DISTANCE 0x03
 #define PMW33XX_CS_PIN GP26
 #define SPI_SCK_PIN GP22
 #define SPI_MOSI_PIN GP23
@@ -24,11 +24,13 @@
 // | `PMW33XX_LIFTOFF_DISTANCE`   | (Optional) Sets the lift off distance at run time                                           | `0x02`                   |
 // | `ROTATIONAL_TRANSFORM_ANGLE` | (Optional) Allows for the sensor data to be rotated +/- 127 degrees directly in the sensor. | `0`                      |
 
-//#define POINTING_DEVICE_TASK_THROTTLE_MS 1
 // The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI.
 // pmw3360 -- The CPI range is 100-12000, in increments of 100. Defaults to 1600 CPI.
 // pmw3389 -- The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI
 // #define PMW33XX_CPI 650 // also sent in keymap based on OS.
+//#define PMW33XX_CPI 1300 // also sent in keymap based on OS.
+// #define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
+//#define POINTING_DEVICE_GESTURES_CURSOR_CURSOR_GLIDE_ENABLE
 
 // Configure the global tapping term (default: 200ms)
 #undef TAPPING_TERM
