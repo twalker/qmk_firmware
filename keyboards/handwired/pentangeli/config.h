@@ -6,9 +6,8 @@
 #define SPI_DRIVER SPID0
 // 0x04 is decent but janky
 // 0x03 is also janky, about the same
-// 0x02 is janky.
-// the default is a bit less janky
-//#define PMW33XX_LIFTOFF_DISTANCE 0x02
+// 0x02 the default, which  is a bit less janky
+#define PMW33XX_LIFTOFF_DISTANCE 0x03
 #define PMW33XX_CS_PIN GP26
 #define SPI_SCK_PIN GP22
 #define SPI_MOSI_PIN GP23
