@@ -374,7 +374,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      _______,  KC_NO,    KC_MS_U,  KC_NO,    _______,   NAN_DPI,  KC_WH_U,  _______,  _______,  _______,
      _______, KC_MS_L,   KC_MS_D,  KC_MS_R,  _______,   KC_WH_L,  KC_BTN1,  KC_BTN3,  KC_BTN2,  KC_WH_R,
      _______,  _______,  _______,  _______,  _______,   _______,  KC_WH_D,  _______,  _______,  _______,
-               _______,  KC_LCTL,  KC_LSFT,  _______,  _______,   _______,  _______,  _______
+               _______,  KC_LCTL,  KC_LSFT,  _______,   _______,  KC_LSFT,  KC_LGUI,  _______
 
  ),
 
