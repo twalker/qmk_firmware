@@ -131,7 +131,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case OS_OUT:
       if (record->event.pressed) {
-        // SEND_STRING(user_config.is_macos ? "macOS" : "linux");
+        SEND_STRING(user_config.is_macos ? "macOS" : "linux");
       }
       break;
     case APP_MNU:
@@ -321,24 +321,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-// macro layer on simultaneous outer thumbs
-layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, NUM, WIN, MAC);
-}
-
 #endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [CDH] = LAYOUT_split_3x5_4(
-  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
      KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,      KC_J,     KC_L,     KC_U,     KC_Y,     KC_QUOT,
      CTL_A,    ALT_R,    GUI_S,    SHT_T,    KC_G,      KC_M,     SHT_N,    GUI_E,    ALT_I,    CTL_O,
      KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,      KC_K,     KC_H,     KC_COMM,  KC_DOT,   KC_SLSH,
-               MO(NUM),  LT(SYM, KC_ESC), LT(NAV, KC_BSPC), LT(MSE, KC_ESC),/**/LT(MSE, KC_ENT), LT(NAV, KC_SPC), LT(MSE, KC_ENT),  MO(WIN)
+               MO(NUM),  LT(SYM, KC_ESC), LT(NAV, KC_BSPC), MO(MSE),/**/MO(MAC), LT(NAV, KC_SPC), LT(SYM, KC_ENT),  MO(WIN)
  ),
 
    [SYM] = LAYOUT_split_3x5_4(
-  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
      KC_EXLM,  KC_AT,    KC_LCBR,  KC_RCBR,  KC_PIPE,   KC_AMPR,  KC_ASTR,  KC_LT,    KC_GT,    KC_QUOT,
      KC_HASH,  KC_DLR,   KC_LPRN,  KC_RPRN,  KC_GRV,    KC_MINS,  KC_EQL,   KC_PLUS,  KC_UNDS,  KC_SCLN,
      KC_PERC,  KC_CIRC,  KC_LBRC,  KC_RBRC,  KC_TILD,   KC_BSLS,  KC_COLN, KC_COMM,   KC_DOT,   KC_SLSH,
@@ -346,7 +341,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  ),
 
    [NAV] = LAYOUT_split_3x5_4(
-  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
      _______,  _______,  _______,  _______,  _______,   KC_NO,    KC_PGUP,  KC_UP,    KC_NO,    KC_INS,
      KC_LCTL,  KC_LALT,  KC_LGUI,  KC_LSFT,  _______,   KC_HOME,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_END,
      KC_UNDO,  KC_CUT,   KC_COPY,  APP_MNU,  KC_PSTE,   TAB_PRV,  KC_PGDN,  KC_NO,    KC_NO,    TAB_NXT,
@@ -354,7 +349,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  ),
 
    [NUM] = LAYOUT_split_3x5_4(
-  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
      KC_F1,    KC_F2,    KC_F3,    KC_F4,    _______,   KC_NO,    KC_7,     KC_8,     KC_9,     KC_NO,
      KC_F5,    KC_F6,    KC_F7,    KC_F8,    _______,   KC_NO,    KC_4,     KC_5,     KC_6,     KC_NO,
      KC_F9,    KC_F10,   KC_F11,   KC_F12,   _______,   KC_NO,    KC_1,     KC_2,     KC_3,     KC_NO,
@@ -362,7 +357,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  ),
 
    [WIN] = LAYOUT_split_3x5_4(
-  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
      _______,  _______,  KC_VOLU,  _______,  _______,   KC_NO,    ZOOM_IN,  WIN_U,    WIN_LG,   KC_NO,
      _______,  KC_MPRV,  KC_MPLY,  KC_MNXT,  _______,   SCRNSHT,  WIN_L,    WIN_D,    WIN_R,    WIN_FUL,
      _______,  _______,  KC_VOLD,  KC_MUTE,  _______,   _______,  ZOOM_OUT, KC_NO,    WIN_SM,   KC_NO,
@@ -370,7 +365,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  ),
 
    [MSE] = LAYOUT_split_3x5_4(
-  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
      _______,  KC_NO,    KC_MS_U,  KC_NO,    _______,   NAN_DPI,  KC_WH_U,  _______,  _______,  _______,
      _______, KC_MS_L,   KC_MS_D,  KC_MS_R,  _______,   KC_WH_L,  KC_BTN1,  KC_BTN3,  KC_BTN2,  KC_WH_R,
      _______,  _______,  _______,  _______,  _______,   _______,  KC_WH_D,  _______,  _______,  _______,
@@ -379,7 +374,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  ),
 
    [MAC] = LAYOUT_split_3x5_4(
-  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
      QK_BOOT,  _______,  _______,  DM_PLY1,  DM_PLY2,   _______,  _______,  USERNAME, _______,  QK_BOOT,
      _______,  _______,  DM_RSTP,  _______,  _______,   MACOS_TG, _______,  EMAIL,     OS_OUT,  _______,
      _______,  _______,  _______,  _______,  _______,   _______,  DM_REC1,  DM_REC2,  _______,  _______,
