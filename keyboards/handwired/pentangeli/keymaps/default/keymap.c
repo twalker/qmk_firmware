@@ -78,11 +78,43 @@ void pointing_device_init_user(void) {
 #endif
 
 #ifdef POINTING_DEVICE_ENABLE
+// mouse DPI speed toggling (sniper mode)
 const int mouse_dpi_settings[] = MSE_DPI_OPTIONS;
 int current_dpi_index = 0;
 void cycle_dpi(void){
   current_dpi_index = (current_dpi_index + 1) % (sizeof(mouse_dpi_settings) / sizeof(mouse_dpi_settings[0]));
   pointing_device_set_cpi(mouse_dpi_settings[current_dpi_index]);
+}
+
+// Drag scroll
+bool set_scrolling = false;
+// Modify these values to adjust the scrolling speed
+#define SCROLL_DIVISOR_H 100.0
+#define SCROLL_DIVISOR_V 100.0
+// Variables to store accumulated scroll values
+float scroll_accumulated_h = 0;
+float scroll_accumulated_v = 0;
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    // Check if drag scrolling is active
+    if (set_scrolling) {
+        // Calculate and accumulate scroll values based on mouse movement and divisors
+        scroll_accumulated_h += (float)mouse_report.x / SCROLL_DIVISOR_H;
+        scroll_accumulated_v += (float)mouse_report.y / SCROLL_DIVISOR_V;
+
+        // Assign integer parts of accumulated scroll values to the mouse report
+        mouse_report.h = (int8_t)scroll_accumulated_h;
+        mouse_report.v = (int8_t)scroll_accumulated_v;
+
+        // Update accumulated scroll values by subtracting the integer parts
+        scroll_accumulated_h -= (int8_t)scroll_accumulated_h;
+        scroll_accumulated_v -= (int8_t)scroll_accumulated_v;
+
+        // Clear the X and Y values of the mouse report
+        mouse_report.x = 0;
+        mouse_report.y = 0;
+    }
+    return mouse_report;
 }
 #endif
 
@@ -109,6 +141,7 @@ enum custom_keycodes {
   WIN_LG,
   WIN_SM,
   MSE_DPI,
+  MSE_DRG,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -318,7 +351,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Cycle trackball DPI
         cycle_dpi();
       }
-    return false;
+      return false;
+    case MSE_DRG:
+      // Toggle set_scrolling when DRAG_SCROLL key is pressed or released
+      set_scrolling = record->event.pressed;
+      return false;
   }
 
   return true;
@@ -369,7 +406,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [MSE] = LAYOUT_split_3x5_4(
   //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
-     _______,  KC_NO,    KC_MS_U,  KC_NO,    _______,   MSE_DPI,  KC_WH_U,  _______,  _______,  _______,
+     _______,  KC_NO,    KC_MS_U,  KC_NO,    _______,   MSE_DPI,  KC_WH_U,  MSE_DRG,  _______,  _______,
      _______, KC_MS_L,   KC_MS_D,  KC_MS_R,  _______,   KC_WH_L,  KC_BTN1,  KC_BTN3,  KC_BTN2,  KC_WH_R,
      _______,  _______,  _______,  _______,  _______,   _______,  KC_WH_D,  _______,  _______,  _______,
                _______,  KC_LCTL,  KC_LSFT,  _______,   _______,  KC_LSFT,  KC_LGUI,  _______
