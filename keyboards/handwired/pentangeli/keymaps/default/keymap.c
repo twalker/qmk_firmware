@@ -77,6 +77,15 @@ void pointing_device_init_user(void) {
 }
 #endif
 
+#ifdef POINTING_DEVICE_ENABLE
+const int mouse_dpi_settings[] = MSE_DPI_OPTIONS;
+int current_dpi_index = 0;
+void cycle_dpi(void){
+  current_dpi_index = (current_dpi_index + 1) % (sizeof(mouse_dpi_settings) / sizeof(mouse_dpi_settings[0]));
+  pointing_device_set_cpi(mouse_dpi_settings[current_dpi_index]);
+}
+#endif
+
 #ifdef DYNAMIC_MACRO_ENABLE
 // Macros
 enum custom_keycodes {
@@ -99,7 +108,7 @@ enum custom_keycodes {
   WIN_FUL,
   WIN_LG,
   WIN_SM,
-  NAN_DPI,
+  MSE_DPI,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -285,7 +294,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
 
-    // TOREVISIT: SM and LG on Pop os
     case WIN_LG:
       if (record->event.pressed) {
         if (user_config.is_macos) {
@@ -304,16 +312,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
-    // Ploopy Nano commands
-    case NAN_DPI:
+    // Trackball commands
+    case MSE_DPI:
       if (record->event.pressed) {
-        // Capslock works for macro on MacOS, and numlock works for macro on linux.
-        // Using capslock on MacOS, and numlock on Linux to cycle DPI.
-        if (user_config.is_macos) {
-          SEND_STRING(SS_TAP(X_CAPS_LOCK) SS_TAP(X_CAPS_LOCK));
-        } else {
-          SEND_STRING(SS_TAP(X_NUM_LOCK) SS_TAP(X_NUM_LOCK));
-        }
+        // Cycle trackball DPI
+        cycle_dpi();
       }
     return false;
   }
@@ -366,7 +369,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [MSE] = LAYOUT_split_3x5_4(
   //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
-     _______,  KC_NO,    KC_MS_U,  KC_NO,    _______,   NAN_DPI,  KC_WH_U,  _______,  _______,  _______,
+     _______,  KC_NO,    KC_MS_U,  KC_NO,    _______,   MSE_DPI,  KC_WH_U,  _______,  _______,  _______,
      _______, KC_MS_L,   KC_MS_D,  KC_MS_R,  _______,   KC_WH_L,  KC_BTN1,  KC_BTN3,  KC_BTN2,  KC_WH_R,
      _______,  _______,  _______,  _______,  _______,   _______,  KC_WH_D,  _______,  _______,  _______,
                _______,  KC_LCTL,  KC_LSFT,  _______,   _______,  KC_LSFT,  KC_LGUI,  _______
