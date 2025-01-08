@@ -26,7 +26,8 @@
 // pmw3360 -- The CPI range is 100-12000, in increments of 100. Defaults to 1600 CPI.
 // pmw3389 -- The CPI range is 50-16000, in increments of 50. Defaults to 2000 CPI
 #define MSE_DPI_OPTIONS { 1300, 400}
-#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+// #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+// #define AUTO_MOUSE_TIME 400
 
 // Configure the global tapping term (default: 200ms)
 #undef TAPPING_TERM
