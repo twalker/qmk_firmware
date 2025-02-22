@@ -38,3 +38,7 @@
 
 // Apply the modifier on keys that are tapped during a short hold of a modtap
 #define PERMISSIVE_HOLD
+// qmk flash -kb handwired/pentangeli -km default -bl uf2-split-left
+// qmk flash -kb handwired/pentangeli -km default -bl uf2-split-right
+#define EE_HANDS
+
