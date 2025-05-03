@@ -28,7 +28,8 @@ enum layers {
   NUM,
   WIN,
   MSE,
-  MAC
+  MAC,
+  VIM
 };
 
 // COLEMAK DH homerow mods
@@ -142,6 +143,12 @@ enum custom_keycodes {
   WIN_SM,
   MSE_DPI,
   MSE_DRG,
+  VIM_TABL,
+  VIM_TABR,
+  VIM_W_L,
+  VIM_W_R,
+  VIM_W_U,
+  VIM_W_D,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -357,6 +364,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // Toggle set_scrolling when DRAG_SCROLL key is pressed or released
       set_scrolling = record->event.pressed;
       return false;
+
+    // Vim commands
+    case VIM_TABL:
+      if (record->event.pressed) {
+        // <S-h>
+        SEND_STRING(SS_LSFT(SS_TAP(X_H)));
+      }
+      return false;
+    case VIM_TABR:
+      if (record->event.pressed) {
+        // <S-l>
+        SEND_STRING(SS_LSFT(SS_TAP(X_L)));
+      }
+      return false;
+    case VIM_W_L:
+      if (record->event.pressed) {
+        // <C-w>h
+        SEND_STRING(SS_LCTL(SS_TAP(X_W)) SS_TAP(X_H));
+      }
+      return false;
+    case VIM_W_D:
+      if (record->event.pressed) {
+        // <C-w>j
+        SEND_STRING(SS_LCTL(SS_TAP(X_W)) SS_TAP(X_J));
+      }
+      return false;
+    case VIM_W_U:
+      if (record->event.pressed) {
+        // <C-w>k
+        SEND_STRING(SS_LCTL(SS_TAP(X_W)) SS_TAP(X_K));
+      }
+      return false;
+    case VIM_W_R:
+      if (record->event.pressed) {
+        // <C-w>l
+        SEND_STRING(SS_LCTL(SS_TAP(X_W)) SS_TAP(X_L));
+      }
+      return false;
   }
 
   return true;
@@ -370,7 +415,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,      KC_J,     KC_L,     KC_U,     KC_Y,     KC_QUOT,
      CTL_A,    ALT_R,    GUI_S,    SHT_T,    KC_G,      KC_M,     SHT_N,    GUI_E,    ALT_I,    CTL_O,
      KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,      KC_K,     KC_H,     KC_COMM,  KC_DOT,   KC_SLSH,
-               MO(NUM),  LT(SYM, KC_ESC), LT(NAV, KC_BSPC), MO(MSE),/**/MO(MAC), LT(NAV, KC_SPC), LT(MSE, KC_ENT),  MO(WIN)
+               MO(NUM),  LT(SYM, KC_ESC), LT(NAV, KC_BSPC), MO(MSE),/**/MO(MAC), LT(NAV, KC_SPC), LT(VIM, KC_ENT),  MO(WIN)
  ),
 
    [SYM] = LAYOUT_split_3x5_4(
@@ -419,6 +464,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      QK_BOOT,  _______,  _______,  DM_PLY1,  DM_PLY2,   _______,  _______,  USERNAME, _______,  QK_BOOT,
      _______,  _______,  DM_RSTP,  _______,  _______,   MACOS_TG, _______,  EMAIL,     OS_OUT,  _______,
      _______,  _______,  _______,  _______,  _______,   _______,  DM_REC1,  DM_REC2,  _______,  _______,
+               _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______
+ ),
+   [VIM] = LAYOUT_split_3x5_4(
+  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
+     _______,  _______,  _______,  _______,  _______,   _______,  _______,  VIM_W_U, _______,  _______,
+     _______,  _______,  _______,  _______,  _______,   _______,  VIM_W_L,  VIM_W_D, VIM_W_R,  _______,
+     _______,  _______,  _______,  _______,  _______,  VIM_TABL,  _______,  _______,  _______, VIM_TABR,
                _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______
  ),
 };
