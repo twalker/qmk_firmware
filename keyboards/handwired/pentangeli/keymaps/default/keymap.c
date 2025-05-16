@@ -251,12 +251,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case TAB_NXT:
       if (record->event.pressed) {
-        SEND_STRING(SS_LCTL(SS_TAP(X_TAB)));
+        // SEND_STRING(SS_LCTL(SS_TAP(X_TAB)));
+        SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_RBRC))));
       }
       return false;
     case TAB_PRV:
-      if (record->event.pressed) {
-        SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_TAB))));
+        if (record->event.pressed) {
+        //SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_TAB))));
+        SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_LBRC))));
       }
       return false;
     case ZOOM_IN:
