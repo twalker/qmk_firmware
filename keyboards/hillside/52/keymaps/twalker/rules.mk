@@ -1,0 +1,7 @@
+CAPS_WORD_ENABLE = yes
+
+CONVERT_TO=helios
+USER_NAME=holykeebs
+POINTING_DEVICE=trackpoint
+POINTING_DEVICE_POSITION=right
+OLED=yes
