@@ -454,9 +454,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [MSE] = LAYOUT_split_3x5_4(
   //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷
-     _______,  KC_NO,    KC_MS_U,  KC_NO,    _______,   MSE_DPI,  KC_WH_U,  MSE_DRG,  _______,  _______,
-     _______, KC_MS_L,   KC_MS_D,  KC_MS_R,  _______,   KC_WH_L,  KC_BTN1,  KC_BTN3,  KC_BTN2,  KC_WH_R,
-     _______,  _______,  _______,  _______,  _______,   _______,  KC_WH_D,  _______,  _______,  _______,
+     _______,  KC_NO,    MS_UP,    KC_NO,     _______,   MSE_DPI,  MS_WHLU,  MSE_DRG,  _______,  _______,
+     _______,  MS_LEFT,  MS_DOWN,  MS_RGHT,  _______,   MS_WHLL,  MS_BTN1,  MS_BTN3,  MS_BTN2,  MS_WHLR,
+     _______,  _______,  _______,  _______,  _______,   _______,   MS_WHLD,  _______,  _______,  _______,
                _______,  KC_LCTL,  KC_LSFT,  _______,   _______,  KC_LSFT,  KC_LGUI,  _______
 
  ),
