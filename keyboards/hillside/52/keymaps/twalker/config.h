@@ -24,6 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define MASTER_RIGHT
 #endif
 
+#define RGBLIGHT_ENABLE_MODE_STATIC_LIGHT
+#define RGBLIGHT_CONFIG_HUE 128
+#define RGBLIGHT_CONFIG_SAT 255
+#define RGBLIGHT_CONFIG_VAL 255
+
 // #ifdef RGBLIGHT_ENABLE
 //     #define RGBLIGHT_EFFECT_BREATHING
 //     #define RGBLIGHT_EFFECT_RAINBOW_MOOD

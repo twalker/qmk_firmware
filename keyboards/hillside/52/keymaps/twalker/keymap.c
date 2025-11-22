@@ -9,6 +9,72 @@ enum layers {
     _SYM,
     _ADJUST,
 };
+#ifdef OLED_ENABLE
+bool oled_task_user(void) {
+    // Host Keyboard Layer Status
+    oled_write_P(PSTR("Layer: "), false);
+
+    // switch (get_highest_layer(layer_state)) {
+    //     case _QWERTY:
+    //         oled_write_P(PSTR("Default\n"), false);
+    //         break;
+    //     case _NAV:
+    //         oled_write_P(PSTR("NAV\n"), false);
+    //         break;
+    //     case _SYM:
+    //         oled_write_P(PSTR("SYM\n"), false);
+    //         break;
+    //     case _ADJUST:
+    //         oled_write_P(PSTR("ADJ\n"), false);
+    //         break;
+    //     default:
+    //         // Or use the write_ln shortcut over adding '\n' to the end of your string
+    //         oled_write_ln_P(PSTR("Undefined"), false);
+    // }
+
+    // Host Keyboard LED Status
+    led_t led_state = host_keyboard_led_state();
+    oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
+    oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
+    oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+
+    return false;
+}
+#endif
+
+#ifdef RGBLIGHT_ENABLE
+// WORKS!
+layer_state_t layer_state_set_user(layer_state_t state) {
+  rgblight_sethsv(HSV_TEAL);
+  // switch (get_highest_layer(state)) {
+  //   case NAV:
+  //     rgblight_sethsv(HSV_TEAL);
+  //     break;
+  //   case SYM:
+  //     rgblight_sethsv(HSV_GREEN);
+  //     break;
+  //   case NUM:
+  //     rgblight_sethsv(HSV_ORANGE);
+  //     break;
+  //   case WIN:
+  //     rgblight_sethsv(HSV_YELLOW);
+  //     break;
+  //   case MAC:
+  //     rgblight_sethsv(HSV_RED);
+  //     break;
+  //   case MSE:
+  //     rgblight_sethsv(HSV_PURPLE);
+  //     break;
+  //   case LIT:
+  //     rgblight_sethsv(HSV_WHITE);
+  //     break;
+  //   default: // for any other layers, or the default layer
+  //     rgblight_sethsv(HSV_BLUE);
+  //     break;
+  // }
+  return state;
+}
+#endif
 
 #define xxxxxxx KC_NO
 
